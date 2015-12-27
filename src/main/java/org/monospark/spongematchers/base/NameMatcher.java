@@ -25,7 +25,7 @@ public final class NameMatcher implements Matcher<String> {
         for (Entry<String, String> entry : REPLACEMENTS.entrySet()) {
             toAppend.append("|").append(entry.getKey());
         }
-        return Pattern.compile("(?:\\w" + toAppend.toString() + ")");
+        return Pattern.compile("[a-zA-Z](?:\\w" + toAppend.toString() + ")+");
     }
     
     private Pattern regex;
