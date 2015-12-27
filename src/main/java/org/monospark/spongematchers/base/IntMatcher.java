@@ -70,4 +70,76 @@ public abstract class IntMatcher implements Matcher<Integer> {
             return Arrays.stream(values).anyMatch(i -> o.intValue() == i);
         }
     }
+    
+    public static final class GreaterThan extends IntMatcher {
+        
+        private int value;
+        
+        public GreaterThan(int value) {
+            if (value < 0) {
+                throw new IllegalArgumentException("Value must be positive");
+            }
+            
+            this.value = value;
+        }
+
+        @Override
+        public boolean matches(Integer o) {
+            return o.intValue() > value;
+        }
+    }
+    
+    public static final class GreaterThanOrEqual extends IntMatcher {
+        
+        private int value;
+        
+        public GreaterThanOrEqual(int value) {
+            if (value < 0) {
+                throw new IllegalArgumentException("Value must be positive");
+            }
+            
+            this.value = value;
+        }
+
+        @Override
+        public boolean matches(Integer o) {
+            return o.intValue() >= value;
+        }
+    }
+    
+    public static final class LessThan extends IntMatcher {
+        
+        private int value;
+        
+        public LessThan(int value) {
+            if (value < 0) {
+                throw new IllegalArgumentException("Value must be positive");
+            }
+            
+            this.value = value;
+        }
+
+        @Override
+        public boolean matches(Integer o) {
+            return o.intValue() < value;
+        }
+    }
+    
+    public static final class LessThanOrEqual extends IntMatcher {
+        
+        private int value;
+        
+        public LessThanOrEqual(int value) {
+            if (value < 0) {
+                throw new IllegalArgumentException("Value must be positive");
+            }
+            
+            this.value = value;
+        }
+
+        @Override
+        public boolean matches(Integer o) {
+            return o.intValue() <= value;
+        }
+    } 
 }
