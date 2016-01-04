@@ -22,7 +22,7 @@ public final class ItemStackMatcher implements SpongeMatcher<ItemStack> {
     @Override
     public boolean matches(ItemStack stack) {
         return type.matches(stack.getItem()) &&
-                damage.matches(stack.toContainer().getInt(new DataQuery("UnsafeDamage")).get()) &&
+                damage.matches(stack.toContainer().getInt(DataQuery.of("UnsafeDamage")).get()) &&
                 amount.matches(stack.getQuantity());
     }
     
