@@ -1,24 +1,25 @@
 package org.monospark.spongematchers;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class MatcherParser<M extends Matcher<?>> {
+public abstract class SpongeMatcherParser<M extends SpongeMatcher<?>> {
 
     private Pattern acceptanceRegex;
     
-    protected MatcherParser() {
+    protected SpongeMatcherParser() {
         acceptanceRegex = createAcceptanceRegex();
     }
 
     protected abstract Pattern createAcceptanceRegex();
     
-    public final M parseMatcher(String string) throws MatcherFormatException {
+    public final M parseMatcher(String string) throws SpongeMatcherFormatException {
         Objects.requireNonNull(string);
         
-        java.util.regex.Matcher matcher = acceptanceRegex.matcher(string);
+        Matcher matcher = acceptanceRegex.matcher(string);
         if (!matcher.matches()) {
-            throw new MatcherFormatException("Invalid input: " + string);
+            throw new SpongeMatcherFormatException("Invalid input: " + string);
         }
         
         return parse(matcher);
@@ -27,11 +28,11 @@ public abstract class MatcherParser<M extends Matcher<?>> {
     public final M parseMatcherUnsafe(String string) {
         Objects.requireNonNull(string);
         
-        java.util.regex.Matcher matcher = acceptanceRegex.matcher(string);
+        Matcher matcher = acceptanceRegex.matcher(string);
         return parse(matcher);
     }
     
-    protected abstract M parse(java.util.regex.Matcher matcher);
+    protected abstract M parse(Matcher matcher);
 
     public Pattern getAcceptanceRegex() {
         return acceptanceRegex;

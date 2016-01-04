@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.Matcher;
+import org.monospark.spongematchers.SpongeMatcher;
 
-public final class NameMatcher implements Matcher<String> {
+public final class NameMatcher implements SpongeMatcher<String> {
     
     public static final Map<String, String> REPLACEMENTS = createReplacements();
     

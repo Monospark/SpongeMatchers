@@ -2,17 +2,17 @@ package org.monospark.spongematchers;
 
 import java.util.Set;
 
-public final class MatcherAmount<T> implements Matcher<T> {
+public final class SpongeMatcherAmount<T> implements SpongeMatcher<T> {
 
-    private Set<Matcher<T>> matchers;
+    private Set<SpongeMatcher<T>> matchers;
 
-    public MatcherAmount(Set<Matcher<T>> matchers) {
+    public SpongeMatcherAmount(Set<SpongeMatcher<T>> matchers) {
         this.matchers = matchers;
     }
 
     @Override
     public boolean matches(T o) {
-        for (Matcher<T> m : matchers) {
+        for (SpongeMatcher<T> m : matchers) {
             if (m.matches(o)) {
                 return true;
             }

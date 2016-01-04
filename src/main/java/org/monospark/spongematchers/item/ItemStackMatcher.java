@@ -1,11 +1,11 @@
 package org.monospark.spongematchers.item;
 
-import org.monospark.spongematchers.Matcher;
+import org.monospark.spongematchers.SpongeMatcher;
 import org.monospark.spongematchers.base.IntMatcher;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.item.inventory.ItemStack;
 
-public final class ItemStackMatcher implements Matcher<ItemStack> {
+public final class ItemStackMatcher implements SpongeMatcher<ItemStack> {
 
     private ItemTypeMatcher type;
     
@@ -39,8 +39,8 @@ public final class ItemStackMatcher implements Matcher<ItemStack> {
         private IntMatcher amount;
         
         private Builder() {
-            damage = Matcher.wildcard();
-            amount = Matcher.wildcard();
+            damage = SpongeMatcher.wildcard();
+            amount = SpongeMatcher.wildcard();
         }
         
         public Builder type(ItemTypeMatcher type) {

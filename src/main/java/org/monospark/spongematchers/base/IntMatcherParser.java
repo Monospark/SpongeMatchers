@@ -3,10 +3,10 @@ package org.monospark.spongematchers.base;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.MatcherParser;
+import org.monospark.spongematchers.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
-public final class IntMatcherParser extends MatcherParser<IntMatcher> {
+public final class IntMatcherParser extends SpongeMatcherParser<IntMatcher> {
 
     @Override
     protected Pattern createAcceptanceRegex() {

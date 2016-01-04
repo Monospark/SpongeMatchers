@@ -2,11 +2,11 @@ package org.monospark.spongematchers.item;
 
 import java.util.Objects;
 
-import org.monospark.spongematchers.Matcher;
+import org.monospark.spongematchers.SpongeMatcher;
 import org.monospark.spongematchers.base.NameMatcher;
 import org.spongepowered.api.item.ItemType;
 
-public final class ItemTypeMatcher implements Matcher<ItemType> {
+public final class ItemTypeMatcher implements SpongeMatcher<ItemType> {
 
     private NameMatcher modName;
     

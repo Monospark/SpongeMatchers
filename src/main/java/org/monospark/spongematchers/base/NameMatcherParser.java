@@ -3,9 +3,9 @@ package org.monospark.spongematchers.base;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.MatcherParser;
+import org.monospark.spongematchers.SpongeMatcherParser;
 
-public final class NameMatcherParser extends MatcherParser<NameMatcher> {
+public final class NameMatcherParser extends SpongeMatcherParser<NameMatcher> {
 
     @Override
     protected Pattern createAcceptanceRegex() {

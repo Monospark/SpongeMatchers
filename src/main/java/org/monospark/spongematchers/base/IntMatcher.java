@@ -2,9 +2,9 @@ package org.monospark.spongematchers.base;
 
 import java.util.Arrays;
 
-import org.monospark.spongematchers.Matcher;
+import org.monospark.spongematchers.SpongeMatcher;
 
-public abstract class IntMatcher implements Matcher<Integer> {
+public abstract class IntMatcher implements SpongeMatcher<Integer> {
 
     public static final class Value extends IntMatcher {
         

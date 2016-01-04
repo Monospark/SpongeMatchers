@@ -1,10 +1,10 @@
 package org.monospark.spongematchers;
 
-public interface Matcher<T> {
+public interface SpongeMatcher<T> {
 
-    public static <T, M extends Matcher<T>> M wildcard() {
+    public static <T, M extends SpongeMatcher<T>> M wildcard() {
         @SuppressWarnings("unchecked")
-        M matcher = (M) new Matcher<T>() {
+        M matcher = (M) new SpongeMatcher<T>() {
 
             @Override
             public boolean matches(T o) {
