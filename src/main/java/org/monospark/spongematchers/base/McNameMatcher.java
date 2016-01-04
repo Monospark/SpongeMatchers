@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.SpongeMatcher;
 
-public final class NameMatcher implements SpongeMatcher<String> {
+public final class McNameMatcher implements SpongeMatcher<String> {
     
     public static final Map<String, String> REPLACEMENTS = createReplacements();
     
@@ -30,7 +30,7 @@ public final class NameMatcher implements SpongeMatcher<String> {
     
     private Pattern regex;
 
-    public NameMatcher(String regex) {
+    public McNameMatcher(String regex) {
         if (!NAME_REGEX.matcher(regex).matches()) {
             throw new IllegalArgumentException("Invalid name regex: " + regex);
         }
@@ -38,7 +38,7 @@ public final class NameMatcher implements SpongeMatcher<String> {
         this.regex = Pattern.compile(regex);
     }
     
-    NameMatcher(Pattern regex) {
+    McNameMatcher(Pattern regex) {
         this.regex = regex;
     }
 

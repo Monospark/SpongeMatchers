@@ -3,16 +3,16 @@ package org.monospark.spongematchers.item;
 import java.util.Objects;
 
 import org.monospark.spongematchers.SpongeMatcher;
-import org.monospark.spongematchers.base.NameMatcher;
+import org.monospark.spongematchers.base.McNameMatcher;
 import org.spongepowered.api.item.ItemType;
 
 public final class ItemTypeMatcher implements SpongeMatcher<ItemType> {
 
-    private NameMatcher modName;
+    private McNameMatcher modName;
     
-    private NameMatcher typeName;
+    private McNameMatcher typeName;
     
-    public ItemTypeMatcher(NameMatcher modName, NameMatcher typeName) {
+    public ItemTypeMatcher(McNameMatcher modName, McNameMatcher typeName) {
         this.modName = Objects.requireNonNull(modName);
         this.typeName = Objects.requireNonNull(typeName);
     }

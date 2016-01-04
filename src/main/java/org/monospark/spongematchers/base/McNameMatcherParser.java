@@ -5,20 +5,20 @@ import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.SpongeMatcherParser;
 
-public final class NameMatcherParser extends SpongeMatcherParser<NameMatcher> {
+public final class McNameMatcherParser extends SpongeMatcherParser<McNameMatcher> {
 
     @Override
     protected Pattern createAcceptanceRegex() {
-        return NameMatcher.NAME_REGEX;
+        return McNameMatcher.NAME_REGEX;
     }
     
-    public NameMatcher parse(java.util.regex.Matcher matcher) {
+    public McNameMatcher parse(java.util.regex.Matcher matcher) {
         String regex = matcher.group();
-        for (Entry<String, String> entry : NameMatcher.REPLACEMENTS.entrySet()) {
+        for (Entry<String, String> entry : McNameMatcher.REPLACEMENTS.entrySet()) {
             regex = regex.replace(entry.getKey(), entry.getValue());
         }
 
         Pattern pattern = Pattern.compile(regex);
-        return new NameMatcher(pattern);
+        return new McNameMatcher(pattern);
     }
 }
