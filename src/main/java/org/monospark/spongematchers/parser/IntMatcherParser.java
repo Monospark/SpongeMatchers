@@ -1,12 +1,12 @@
-package org.monospark.spongematchers.base;
+package org.monospark.spongematchers.parser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.SpongeMatcherParser;
+import org.monospark.spongematchers.matcher.IntMatcher;
 import org.monospark.spongematchers.util.PatternBuilder;
 
-public final class IntMatcherParser extends SpongeMatcherParser<IntMatcher> {
+public final class IntMatcherParser extends SpongeMatcherParser<Integer> {
 
     @Override
     protected Pattern createAcceptanceRegex() {

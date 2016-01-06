@@ -1,4 +1,4 @@
-package org.monospark.spongematchers;
+package org.monospark.spongematchers.parser;
 
 
 public class SpongeMatcherFormatException extends Exception {

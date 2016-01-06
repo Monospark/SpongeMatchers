@@ -1,8 +1,6 @@
-package org.monospark.spongematchers.base;
+package org.monospark.spongematchers.matcher;
 
 import java.util.Arrays;
-
-import org.monospark.spongematchers.SpongeMatcher;
 
 public abstract class IntMatcher implements SpongeMatcher<Integer> {
 
