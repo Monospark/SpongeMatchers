@@ -3,6 +3,7 @@ package org.monospark.spongematchers.parser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.util.PatternBuilder;
@@ -35,6 +36,6 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
         SpongeMatcher<Integer> damage = SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("damage"));
         SpongeMatcher<Integer> amount = SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("amount"));
         
-        return SpongeMatchers.itemStack(type, damage, amount);
+        return SpongeMatchers.itemStack(type, damage, amount, BaseMatchers.wildcard());
     }
 }

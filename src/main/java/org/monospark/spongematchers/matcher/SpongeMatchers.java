@@ -2,6 +2,7 @@ package org.monospark.spongematchers.matcher;
 
 import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.data.DataQuery;
+import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.item.Enchantment;
 import org.spongepowered.api.item.ItemType;
@@ -23,11 +24,12 @@ public final class SpongeMatchers {
     }
     
     public static SpongeMatcher<ItemStack> itemStack(SpongeMatcher<ItemType> type, SpongeMatcher<Integer> damage,
-            SpongeMatcher<Integer> amount) {
+            SpongeMatcher<Integer> amount, SpongeMatcher<ItemEnchantment> enchantment) {
         return CompoundMatcher.<ItemStack>builder()
                 .addMatcher(type, s -> s.getItem())
                 .addMatcher(damage, s -> s.toContainer().getInt(DataQuery.of("UnsafeDamage")).get())
                 .addMatcher(amount, s -> s.getQuantity())
+                .addMatcher(BaseMatchers.listWrapper(enchantment, true), s -> s.get(Keys.ITEM_ENCHANTMENTS).get())
                 .build();
     }
     
