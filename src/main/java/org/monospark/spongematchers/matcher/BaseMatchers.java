@@ -2,6 +2,7 @@ package org.monospark.spongematchers.matcher;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,15 @@ public final class BaseMatchers {
             }
         };
         return matcher;
+    }
+    
+    public static <T> SpongeMatcher<Optional<T>> optionalWrapper(SpongeMatcher<T> matcher) {
+        return new SpongeMatcher<Optional<T>>() {
+            @Override
+            public boolean matches(Optional<T> o) {
+                return o.isPresent() ? matcher.matches(o.get()) : false;
+            }
+        };
     }
     
     @SafeVarargs

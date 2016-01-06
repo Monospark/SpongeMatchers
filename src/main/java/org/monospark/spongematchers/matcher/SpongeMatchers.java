@@ -29,7 +29,8 @@ public final class SpongeMatchers {
                 .addMatcher(type, s -> s.getItem())
                 .addMatcher(damage, s -> s.toContainer().getInt(DataQuery.of("UnsafeDamage")).get())
                 .addMatcher(amount, s -> s.getQuantity())
-                .addMatcher(BaseMatchers.listWrapper(enchantment, true), s -> s.get(Keys.ITEM_ENCHANTMENTS).get())
+                .addMatcher(BaseMatchers.optionalWrapper(BaseMatchers.listWrapper(enchantment, true)),
+                        s -> s.get(Keys.ITEM_ENCHANTMENTS))
                 .build();
     }
     
