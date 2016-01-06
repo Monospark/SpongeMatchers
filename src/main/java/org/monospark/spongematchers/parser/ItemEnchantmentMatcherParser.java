@@ -18,7 +18,7 @@ public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchan
                 .appendCapturingPart(SpongeMatcherParser.ENCHANTMENT.getAcceptanceRegex(), "enchantment")
                 .openAnonymousParantheses()
                     .appendNonCapturingPart("(")
-                    .appendCapturingPart(SpongeMatcherParser.INTEGER.getAcceptanceRegex(), "level")
+                    .appendCapturingPart(SpongeMatcherParser.INT.getAcceptanceRegex(), "level")
                     .appendNonCapturingPart(")")
                 .closeParantheses()
                 .optional()
@@ -30,7 +30,7 @@ public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchan
         SpongeMatcher<Enchantment> enchantment =
                 SpongeMatcherParser.ENCHANTMENT.parseMatcherUnsafe(matcher.group("type"));
         SpongeMatcher<Integer> level = matcher.group("level") != null ?
-                SpongeMatcherParser.INTEGER.parseMatcherUnsafe(matcher.group("level")) : BaseMatchers.wildcard();
+                SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("level")) : BaseMatchers.wildcard();
         
         return SpongeMatchers.itemEnchantment(enchantment, level);
     }

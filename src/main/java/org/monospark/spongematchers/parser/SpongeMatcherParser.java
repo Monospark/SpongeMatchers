@@ -17,7 +17,7 @@ import com.google.common.collect.Sets;
 
 public abstract class SpongeMatcherParser<T> {
 
-    public static final SpongeMatcherParser<Integer> INTEGER = new IntMatcherParser();
+    public static final SpongeMatcherParser<Integer> INT = new IntMatcherParser();
 
     public static final SpongeMatcherParser<ItemType> ITEM_TYPE = new TypeMatcherParser<ItemType>();
 

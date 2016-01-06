@@ -17,12 +17,12 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
                 .appendCapturingPart(SpongeMatcherParser.ITEM_TYPE.getAcceptanceRegex(), "type")
                 .openAnonymousParantheses()
                     .appendNonCapturingPart(":")
-                    .appendCapturingPart(SpongeMatcherParser.INTEGER.getAcceptanceRegex(), "damage")
+                    .appendCapturingPart(SpongeMatcherParser.INT.getAcceptanceRegex(), "damage")
                 .closeParantheses()
                 .optional()
                 .openAnonymousParantheses()
                     .appendNonCapturingPart("(")
-                    .appendCapturingPart(SpongeMatcherParser.INTEGER.getAcceptanceRegex(), "amount")
+                    .appendCapturingPart(SpongeMatcherParser.INT.getAcceptanceRegex(), "amount")
                     .appendNonCapturingPart(")")
                 .closeParantheses()
                 .optional()
@@ -32,8 +32,8 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
     @Override
     protected SpongeMatcher<ItemStack> parse(Matcher matcher) {
         SpongeMatcher<ItemType> type = SpongeMatcherParser.ITEM_TYPE.parseMatcherUnsafe(matcher.group("type"));
-        SpongeMatcher<Integer> damage = SpongeMatcherParser.INTEGER.parseMatcherUnsafe(matcher.group("damage"));
-        SpongeMatcher<Integer> amount = SpongeMatcherParser.INTEGER.parseMatcherUnsafe(matcher.group("amount"));
+        SpongeMatcher<Integer> damage = SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("damage"));
+        SpongeMatcher<Integer> amount = SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("amount"));
         
         return SpongeMatchers.itemStack(type, damage, amount);
     }
