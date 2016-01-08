@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.BaseMatchers;
+import org.monospark.spongematchers.matcher.ItemStackMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -36,6 +36,6 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
         SpongeMatcher<Integer> damage = SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("damage"));
         SpongeMatcher<Integer> amount = SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("amount"));
         
-        return SpongeMatchers.itemStack(type, damage, amount, BaseMatchers.wildcard());
+        return ItemStackMatcher.create(type, damage, amount, BaseMatchers.wildcard(), BaseMatchers.wildcard());
     }
 }

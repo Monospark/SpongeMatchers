@@ -45,7 +45,7 @@ public final class CompoundMatcher<T> implements SpongeMatcher<T> {
             matchers.put(matcher, function);
             return this;
         }
-        
+
         public CompoundMatcher<T> build() {
             return new CompoundMatcher<>(matchers);
         }
