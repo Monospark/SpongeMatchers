@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
@@ -92,27 +93,28 @@ public final class DataViewMatcher implements SpongeMatcher<DataView> {
             this.valueMatcher = valueMatcher;
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         boolean matchesEntry(List<String> currentPath, DataView v) {
             DataQuery query = DataQuery.of(currentPath);
-            Optional<Object> queried = v.get(query);
-            return queried.isPresent() && valueType.getTypeClass().isAssignableFrom(queried.get().getClass()) ?
-                    valueMatcher.matches((T) queried.get()) : false;
+            Optional<? extends T> queried = valueType.getData(v, query);
+            return queried.isPresent() ? valueMatcher.matches(queried.get()) : false;
         }
         
-        public static class Type<T> {
+        public static final class Type<T> {
             
-            public static final Type<Integer> INTEGER = new Type<Integer>(Integer.class);
-            
-            private Class<?> typeClass;
+            public static final Type<Integer> INTEGER = new Type<Integer>((v, q) -> v.getInt(q));
+            public static final Type<List<?>> LIST = new Type<List<?>>((v, q) -> v.getList(q));
+            public static final Type<Map<?,?>> MAP = new Type<Map<?,?>>((v, q) -> v.getMap(q));
+            public static final Type<List<Map<?,?>>> MAP_LIST = new Type<List<Map<?,?>>>((v, q) -> v.getMapList(q));
 
-            private Type(Class<?> typeClass) {
-                this.typeClass = typeClass;
+            private BiFunction<DataView, DataQuery, Optional<? extends T>> dataFunction;
+
+            private Type(BiFunction<DataView, DataQuery, Optional<? extends T>> dataFunction) {
+                this.dataFunction = dataFunction;
             }
 
-            private Class<?> getTypeClass() {
-                return typeClass;
+            private Optional<? extends T> getData(DataView v, DataQuery q) {
+                return dataFunction.apply(v, q);
             }
         }
     }
