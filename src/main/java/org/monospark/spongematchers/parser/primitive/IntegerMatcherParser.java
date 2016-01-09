@@ -58,27 +58,27 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
     
     public Optional<SpongeMatcher<Long>> parse(Matcher matcher) {
         if (matcher.group("range") != null) {
-            long start = Integer.valueOf(matcher.group("range start"));
-            long end = Integer.valueOf(matcher.group("range end"));
+            long start = Long.valueOf(matcher.group("range start"));
+            long end = Long.valueOf(matcher.group("range end"));
             return Optional.of(IntegerMatchers.range(start, end));
         } else if (matcher.group("amount") != null) {
             String[] split = matcher.group("amount").split(",");
             long[] values = new long[split.length];
             for (int i = 0; i < split.length; i++) {
-                values[i] = Integer.valueOf(split[i]);
+                values[i] = Long.valueOf(split[i]);
             }
             return Optional.of(IntegerMatchers.amount(values));
         } else if (matcher.group("value") != null) {
-            long value = Integer.parseInt(matcher.group("value"));
+            long value = Long.valueOf(matcher.group("value"));
             return Optional.of(IntegerMatchers.value(value));
         } else if (matcher.group("greater") != null) {
-            return Optional.of(IntegerMatchers.greaterThan(Integer.parseInt(matcher.group("greater value"))));
+            return Optional.of(IntegerMatchers.greaterThan(Long.valueOf(matcher.group("greater value"))));
         } else if (matcher.group("greater or equal") != null) {
-            return Optional.of(IntegerMatchers.greaterThanOrEqual(Integer.parseInt(matcher.group("greater or equal value"))));
+            return Optional.of(IntegerMatchers.greaterThanOrEqual(Long.valueOf(matcher.group("greater or equal value"))));
         } else if (matcher.group("less") != null) {
-            return Optional.of(IntegerMatchers.lessThan(Integer.parseInt(matcher.group("less value"))));
+            return Optional.of(IntegerMatchers.lessThan(Long.valueOf(matcher.group("less value"))));
         } else {
-            return Optional.of(IntegerMatchers.lessThanOrEqual(Integer.parseInt(matcher.group("less or equal value"))));
+            return Optional.of(IntegerMatchers.lessThanOrEqual(Long.valueOf(matcher.group("less or equal value"))));
         }
     }
 }
