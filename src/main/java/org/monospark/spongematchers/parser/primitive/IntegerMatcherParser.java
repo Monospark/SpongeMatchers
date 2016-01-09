@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser;
+package org.monospark.spongematchers.parser.primitive;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.primitive.IntegerMatchers;
+import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {

@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.data.DataViewMatcherParser;
+import org.monospark.spongematchers.parser.primitive.BooleanMatcherParser;
+import org.monospark.spongematchers.parser.primitive.IntegerMatcherParser;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.item.Enchantment;
@@ -19,6 +21,8 @@ import com.google.common.collect.Sets;
 
 public abstract class SpongeMatcherParser<T> {
 
+    public static final SpongeMatcherParser<Boolean> BOOLEAN = new BooleanMatcherParser();
+    
     public static final SpongeMatcherParser<Long> INTEGER = new IntegerMatcherParser();
 
     public static final SpongeMatcherParser<ItemType> ITEM_TYPE = new TypeMatcherParser<ItemType>();
