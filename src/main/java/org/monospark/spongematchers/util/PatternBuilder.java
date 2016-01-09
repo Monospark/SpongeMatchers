@@ -53,7 +53,9 @@ public final class PatternBuilder {
         openNamedParantheses(name);
         appendNonCapturingPart(toAppend);
         closeParantheses();
-        optional();
+        if (optional) {
+            optional();
+        }
         return this;
     }
     
@@ -66,7 +68,7 @@ public final class PatternBuilder {
     }
 
     public PatternBuilder appendNonCapturingPart(String toAppend) {
-        pattern += Pattern.quote(toAppend);
+        pattern += toAppend;
         return this;
     }
 
