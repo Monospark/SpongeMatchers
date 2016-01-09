@@ -64,7 +64,8 @@ public abstract class SpongeMatcherParser<T> {
         if (!matchers.isPresent()) {
             return Optional.empty();
         } else {
-            return Optional.of(BaseMatchers.amount(Sets.newHashSet(matchers.get())));
+            return Optional.of(matchers.get().size() > 1 ? BaseMatchers.amount(Sets.newHashSet(matchers.get())) :
+                matchers.get().get(0));
         }
     }
     
