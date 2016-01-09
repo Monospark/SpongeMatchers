@@ -30,7 +30,7 @@ public final class ParserHelper {
             }
         }
         
-        return start == split.length ? Optional.empty() : Optional.of(parts);
+        return start == 0 ? Optional.empty() : Optional.of(parts);
     }
     
     private static String concatStringParts(String[] split, int start, int end) {
