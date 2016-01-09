@@ -27,8 +27,8 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
                             .openAnonymousParantheses()
                                 .appendNonCapturingPart(",\\d+")
                             .closeParantheses()
+                            .oneOrMore()
                         .closeParantheses()
-                    .oneOrMore()
                     .appendNonCapturingPart("\\)")
                 .closeParantheses()
                 .or()
@@ -62,7 +62,7 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
             long end = Long.valueOf(matcher.group("rangeend"));
             return Optional.of(IntegerMatchers.range(start, end));
         } else if (matcher.group("amount") != null) {
-            String[] split = matcher.group("amount").split(",");
+            String[] split = matcher.group("amountvalues").split(",");
             long[] values = new long[split.length];
             for (int i = 0; i < split.length; i++) {
                 values[i] = Long.valueOf(split[i]);
