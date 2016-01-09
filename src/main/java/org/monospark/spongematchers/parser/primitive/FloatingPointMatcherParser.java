@@ -17,14 +17,14 @@ public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double
     protected Pattern createAcceptanceRegex() {
         return new PatternBuilder()
                 .openNamedParantheses("range")
-                    .appendCapturingPart(FLOATING_POINT_REGEX, "range start")
+                    .appendCapturingPart(FLOATING_POINT_REGEX, "rangestart")
                     .appendNonCapturingPart("-")
-                    .appendCapturingPart(FLOATING_POINT_REGEX, "range end")
+                    .appendCapturingPart(FLOATING_POINT_REGEX, "rangeend")
                 .closeParantheses()
                 .or()
                 .openNamedParantheses("amount")
                     .appendNonCapturingPart("(")
-                        .openNamedParantheses("amount values")
+                        .openNamedParantheses("amountvalues")
                             .appendNonCapturingPart(FLOATING_POINT_REGEX)
                             .openAnonymousParantheses()
                                 .appendNonCapturingPart(FLOATING_POINT_REGEX)
@@ -39,29 +39,29 @@ public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double
                 .closeParantheses()
                 .openNamedParantheses("greater")
                     .appendNonCapturingPart(">")
-                    .appendCapturingPart(FLOATING_POINT_REGEX, "greater value")
+                    .appendCapturingPart(FLOATING_POINT_REGEX, "greatervalue")
                 .closeParantheses()
                 .or()
-                .openNamedParantheses("greater or equal")
+                .openNamedParantheses("greaterorequal")
                     .appendNonCapturingPart(">=")
-                    .appendCapturingPart(FLOATING_POINT_REGEX, "greater or equal value")
+                    .appendCapturingPart(FLOATING_POINT_REGEX, "greaterorequalvalue")
                 .closeParantheses()
                 .openNamedParantheses("less")
                     .appendNonCapturingPart("<")
-                    .appendCapturingPart(FLOATING_POINT_REGEX, "less value")
+                    .appendCapturingPart(FLOATING_POINT_REGEX, "lessvalue")
                 .closeParantheses()
                 .or()
-                .openNamedParantheses("greater or equal")
+                .openNamedParantheses("lessorequal")
                     .appendNonCapturingPart("<=")
-                    .appendCapturingPart(FLOATING_POINT_REGEX, "less or equal value")
+                    .appendCapturingPart(FLOATING_POINT_REGEX, "lessorequalvalue")
                 .closeParantheses()
                 .build();
     }
     
     public Optional<SpongeMatcher<Double>> parse(Matcher matcher) {
         if (matcher.group("range") != null) {
-            double start = Double.valueOf(matcher.group("range start"));
-            double end = Double.valueOf(matcher.group("range end"));
+            double start = Double.valueOf(matcher.group("rangestart"));
+            double end = Double.valueOf(matcher.group("rangeend"));
             return Optional.of(FloatingPointMatchers.range(start, end));
         } else if (matcher.group("amount") != null) {
             String[] split = matcher.group("amount").split(",");
@@ -74,15 +74,15 @@ public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double
             double value = Double.valueOf(matcher.group("value"));
             return Optional.of(FloatingPointMatchers.value(value));
         } else if (matcher.group("greater") != null) {
-            return Optional.of(FloatingPointMatchers.greaterThan(Double.valueOf(matcher.group("greater value"))));
-        } else if (matcher.group("greater or equal") != null) {
+            return Optional.of(FloatingPointMatchers.greaterThan(Double.valueOf(matcher.group("greatervalue"))));
+        } else if (matcher.group("greaterorequal") != null) {
             return Optional.of(FloatingPointMatchers.greaterThanOrEqual(Double.valueOf(
-                    matcher.group("greater or equal value"))));
+                    matcher.group("greaterorequalvalue"))));
         } else if (matcher.group("less") != null) {
-            return Optional.of(FloatingPointMatchers.lessThan(Double.valueOf(matcher.group("less value"))));
+            return Optional.of(FloatingPointMatchers.lessThan(Double.valueOf(matcher.group("lessvalue"))));
         } else {
             return Optional.of(FloatingPointMatchers.lessThanOrEqual(Double.valueOf(
-                    matcher.group("less or equal value"))));
+                    matcher.group("lessorequalvalue"))));
         }
     }
 }
