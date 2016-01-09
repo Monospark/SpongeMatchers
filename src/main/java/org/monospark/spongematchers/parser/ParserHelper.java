@@ -1,5 +1,6 @@
 package org.monospark.spongematchers.parser;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -14,6 +15,11 @@ public final class ParserHelper {
             Function<String, Optional<? extends T>> function) {
         List<T> parts = Lists.newArrayList();
         String[] split = string.split(tokenizer);
+        if (split.length == 1) {
+            Optional<? extends T> applied = function.apply(string);
+            return applied.isPresent() ? Optional.of(Collections.singletonList(applied.get())) : Optional.empty();
+        }
+        
         int start = 0;
         for (int i = 0; i < split.length; i++) {
             String current = concatStringParts(split, start, i);
