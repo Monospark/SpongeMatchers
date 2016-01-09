@@ -1,5 +1,6 @@
 package org.monospark.spongematchers.parser;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +19,7 @@ public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchan
                 .appendCapturingPart(SpongeMatcherParser.ENCHANTMENT.getAcceptanceRegex(), "enchantment")
                 .openAnonymousParantheses()
                     .appendNonCapturingPart("(")
-                    .appendCapturingPart(SpongeMatcherParser.INT.getAcceptanceRegex(), "level")
+                    .appendCapturingPart(SpongeMatcherParser.INTEGER.getAcceptanceRegex(), "level")
                     .appendNonCapturingPart(")")
                 .closeParantheses()
                 .optional()
@@ -26,12 +27,13 @@ public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchan
     }
 
     @Override
-    protected SpongeMatcher<ItemEnchantment> parse(Matcher matcher) throws SpongeMatcherFormatException {
-        SpongeMatcher<Enchantment> enchantment =
-                SpongeMatcherParser.ENCHANTMENT.parseMatcherUnsafe(matcher.group("type"));
-        SpongeMatcher<Integer> level = matcher.group("level") != null ?
-                SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("level")) : BaseMatchers.wildcard();
+    protected Optional<SpongeMatcher<ItemEnchantment>> parse(Matcher matcher) {
+        Optional<SpongeMatcher<Enchantment>> enchantment =
+                SpongeMatcherParser.ENCHANTMENT.parseMatcher(matcher.group("type"));
+        Optional<SpongeMatcher<Long>> level = matcher.group("level") != null ?
+                SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("level")) : BaseMatchers.wildcard();
         
-        return SpongeMatchers.itemEnchantment(enchantment, level);
+        return enchantment.isPresent() && level.isPresent() ?
+                Optional.of(SpongeMatchers.itemEnchantment(enchantment.get(), level.get())) : Optional.empty();
     }
 }

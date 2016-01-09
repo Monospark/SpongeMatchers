@@ -1,5 +1,6 @@
 package org.monospark.spongematchers.parser;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,12 +19,12 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
                 .appendCapturingPart(SpongeMatcherParser.ITEM_TYPE.getAcceptanceRegex(), "type")
                 .openAnonymousParantheses()
                     .appendNonCapturingPart(":")
-                    .appendCapturingPart(SpongeMatcherParser.INT.getAcceptanceRegex(), "damage")
+                    .appendCapturingPart(SpongeMatcherParser.INTEGER.getAcceptanceRegex(), "damage")
                 .closeParantheses()
                 .optional()
                 .openAnonymousParantheses()
                     .appendNonCapturingPart("(")
-                    .appendCapturingPart(SpongeMatcherParser.INT.getAcceptanceRegex(), "amount")
+                    .appendCapturingPart(SpongeMatcherParser.INTEGER.getAcceptanceRegex(), "amount")
                     .appendNonCapturingPart(")")
                 .closeParantheses()
                 .optional()
@@ -31,11 +32,13 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
     }
 
     @Override
-    protected SpongeMatcher<ItemStack> parse(Matcher matcher) {
-        SpongeMatcher<ItemType> type = SpongeMatcherParser.ITEM_TYPE.parseMatcherUnsafe(matcher.group("type"));
-        SpongeMatcher<Integer> damage = SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("damage"));
-        SpongeMatcher<Integer> amount = SpongeMatcherParser.INT.parseMatcherUnsafe(matcher.group("amount"));
+    protected Optional<SpongeMatcher<ItemStack>> parse(Matcher matcher) {
+        Optional<SpongeMatcher<ItemType>> type = SpongeMatcherParser.ITEM_TYPE.parseMatcher(matcher.group("type"));
+        Optional<SpongeMatcher<Long>> damage = SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("damage"));
+        Optional<SpongeMatcher<Long>> amount = SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("amount"));
         
-        return ItemStackMatcher.create(type, damage, amount, BaseMatchers.wildcard(), BaseMatchers.wildcard());
+        return type.isPresent() && damage.isPresent() && amount.isPresent() ?
+                Optional.of(ItemStackMatcher.create(type.get(), damage.get(), amount.get(), BaseMatchers.wildcard(),
+                BaseMatchers.wildcard())) : Optional.empty();
     }
 }

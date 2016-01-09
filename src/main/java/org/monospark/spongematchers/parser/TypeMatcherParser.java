@@ -1,5 +1,6 @@
 package org.monospark.spongematchers.parser;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,12 +24,12 @@ public final class TypeMatcherParser<T extends CatalogType> extends SpongeMatche
     }
     
     @Override
-    public SpongeMatcher<T> parse(Matcher matcher) throws SpongeMatcherFormatException {
+    public Optional<SpongeMatcher<T>> parse(Matcher matcher) {
         boolean hasModName = matcher.group("mod") != null;
         if (hasModName) {
-            return SpongeMatchers.type(matcher.group("mod"), matcher.group("type"));
+            return Optional.of(SpongeMatchers.type(matcher.group("mod"), matcher.group("type")));
         } else {
-            return SpongeMatchers.type(matcher.group("type"));
+            return Optional.of(SpongeMatchers.type(matcher.group("type")));
         }
     }
 }

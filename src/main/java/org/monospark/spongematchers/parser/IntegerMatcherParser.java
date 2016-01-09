@@ -1,13 +1,14 @@
 package org.monospark.spongematchers.parser;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.matcher.IntMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.matcher.primitive.IntegerMatchers;
 import org.monospark.spongematchers.util.PatternBuilder;
 
-public final class IntMatcherParser extends SpongeMatcherParser<Integer> {
+public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
 
     @Override
     protected Pattern createAcceptanceRegex() {
@@ -19,11 +20,15 @@ public final class IntMatcherParser extends SpongeMatcherParser<Integer> {
                 .closeParantheses()
                 .or()
                 .openNamedParantheses("amount")
-                    .appendNonCapturingPart("\\d+")
-                    .openAnonymousParantheses()
-                        .appendNonCapturingPart(",\\d+")
-                    .closeParantheses()
+                    .appendNonCapturingPart("(")
+                        .openNamedParantheses("amount values")
+                            .appendNonCapturingPart("\\d+")
+                            .openAnonymousParantheses()
+                                .appendNonCapturingPart(",\\d+")
+                            .closeParantheses()
+                        .closeParantheses()
                     .oneOrMore()
+                    .appendNonCapturingPart(")")
                 .closeParantheses()
                 .or()
                 .openNamedParantheses("value")
@@ -50,29 +55,29 @@ public final class IntMatcherParser extends SpongeMatcherParser<Integer> {
                 .build();
     }
     
-    public SpongeMatcher<Integer> parse(Matcher matcher) {
+    public Optional<SpongeMatcher<Long>> parse(Matcher matcher) {
         if (matcher.group("range") != null) {
-            int start = Integer.valueOf(matcher.group("range start"));
-            int end = Integer.valueOf(matcher.group("range end"));
-            return IntMatchers.range(start, end);
+            long start = Integer.valueOf(matcher.group("range start"));
+            long end = Integer.valueOf(matcher.group("range end"));
+            return Optional.of(IntegerMatchers.range(start, end));
         } else if (matcher.group("amount") != null) {
             String[] split = matcher.group("amount").split(",");
-            int[] values = new int[split.length];
+            long[] values = new long[split.length];
             for (int i = 0; i < split.length; i++) {
                 values[i] = Integer.valueOf(split[i]);
             }
-            return IntMatchers.amount(values);
+            return Optional.of(IntegerMatchers.amount(values));
         } else if (matcher.group("value") != null) {
-            int value = Integer.parseInt(matcher.group("value"));
-            return IntMatchers.value(value);
+            long value = Integer.parseInt(matcher.group("value"));
+            return Optional.of(IntegerMatchers.value(value));
         } else if (matcher.group("greater") != null) {
-            return IntMatchers.greaterThan(Integer.parseInt(matcher.group("greater value")));
+            return Optional.of(IntegerMatchers.greaterThan(Integer.parseInt(matcher.group("greater value"))));
         } else if (matcher.group("greater or equal") != null) {
-            return IntMatchers.greaterThanOrEqual(Integer.parseInt(matcher.group("greater or equal value")));
+            return Optional.of(IntegerMatchers.greaterThanOrEqual(Integer.parseInt(matcher.group("greater or equal value"))));
         } else if (matcher.group("less") != null) {
-            return IntMatchers.lessThan(Integer.parseInt(matcher.group("less value")));
+            return Optional.of(IntegerMatchers.lessThan(Integer.parseInt(matcher.group("less value"))));
         } else {
-            return IntMatchers.lessThanOrEqual(Integer.parseInt(matcher.group("less or equal value")));
+            return Optional.of(IntegerMatchers.lessThanOrEqual(Integer.parseInt(matcher.group("less or equal value"))));
         }
     }
 }

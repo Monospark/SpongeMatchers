@@ -20,23 +20,27 @@ public class ItemStackOrHandMatcherParser extends SpongeMatcherParser<Optional<I
     }
 
     @Override
-    protected SpongeMatcher<Optional<ItemStack>> parse(Matcher matcher) {
+    protected Optional<SpongeMatcher<Optional<ItemStack>>> parse(Matcher matcher) {
         String stackPart = matcher.group("stack");
         if (stackPart != null) {
-            SpongeMatcher<ItemStack> stackMatcher = SpongeMatcherParser.ITEM_STACK.parseMatcherUnsafe(stackPart);
-            return new SpongeMatcher<Optional<ItemStack>>() {
+            Optional<SpongeMatcher<ItemStack>> stackMatcher = SpongeMatcherParser.ITEM_STACK.parseMatcher(stackPart);
+            if (!stackMatcher.isPresent()) {
+                return Optional.empty();
+            }
+            
+            return Optional.of(new SpongeMatcher<Optional<ItemStack>>() {
                 @Override
                 public boolean matches(Optional<ItemStack> o) {
-                    return o.isPresent() ? stackMatcher.matches(o.get()) : false;
+                    return o.isPresent() ? stackMatcher.get().matches(o.get()) : false;
                 } 
-            };
+            });
         } else {
-            return new SpongeMatcher<Optional<ItemStack>>() {
+            return Optional.of(new SpongeMatcher<Optional<ItemStack>>() {
                 @Override
                 public boolean matches(Optional<ItemStack> o) {
                     return !o.isPresent();
                 } 
-            };
+            });
         }
     }
 }

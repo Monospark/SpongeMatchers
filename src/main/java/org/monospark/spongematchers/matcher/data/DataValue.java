@@ -29,15 +29,8 @@ public final class DataValue<T> implements DataEntry {
     public static final class Type<T> {
         
         public static final Type<Boolean> BOOLEAN = new Type<Boolean>((v, q) -> v.getBoolean(q));
-        public static final Type<Short> SHORT = new Type<Short>((v, q) -> {
-            throw new UnsupportedOperationException();
-        });
-        public static final Type<Integer> INTEGER = new Type<Integer>((v, q) -> v.getInt(q));
-        public static final Type<Long> LONG = new Type<Long>((v, q) -> v.getLong(q));
-        public static final Type<Float> FLOAT = new Type<Float>((v, q) -> {
-            throw new UnsupportedOperationException();
-        });
-        public static final Type<Double> DOUBLE = new Type<Double>((v, q) -> v.getDouble(q));
+        public static final Type<Long> INTEGER = new Type<Long>((v, q) -> v.getLong(q));
+        public static final Type<Double> FLOATING_POINT = new Type<Double>((v, q) -> v.getDouble(q));
         public static final Type<String> STRING = new Type<String>((v, q) -> v.getString(q));
 
         private BiFunction<DataView, DataQuery, Optional<? extends T>> dataFunction;

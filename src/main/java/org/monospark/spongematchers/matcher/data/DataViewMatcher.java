@@ -9,7 +9,7 @@ public final class DataViewMatcher implements SpongeMatcher<DataView> {
 
     private DataEntry root;
 
-    private DataViewMatcher(DataEntry root) {
+    public DataViewMatcher(DataEntry root) {
         this.root = root;
     }
 

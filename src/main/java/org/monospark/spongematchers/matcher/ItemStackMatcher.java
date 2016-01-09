@@ -22,9 +22,9 @@ public final class ItemStackMatcher {
         
         private SpongeMatcher<ItemType> type;
         
-        private SpongeMatcher<Integer> damage;
+        private SpongeMatcher<Long> damage;
         
-        private SpongeMatcher<Integer> amount;
+        private SpongeMatcher<Long> amount;
         
         private SpongeMatcher<List<ItemEnchantment>> enchantments;
 
@@ -47,13 +47,13 @@ public final class ItemStackMatcher {
         }
     }
     
-    public static SpongeMatcher<ItemStack> create(SpongeMatcher<ItemType> type, SpongeMatcher<Integer> damage,
-            SpongeMatcher<Integer> amount, SpongeMatcher<List<ItemEnchantment>> enchantments,
+    public static SpongeMatcher<ItemStack> create(SpongeMatcher<ItemType> type, SpongeMatcher<Long> damage,
+            SpongeMatcher<Long> amount, SpongeMatcher<List<ItemEnchantment>> enchantments,
             SpongeMatcher<DataView> data) {
         return CompoundMatcher.<ItemStack>builder()
                 .addMatcher(type, s -> s.getItem())
-                .addMatcher(damage, s -> s.toContainer().getInt(DataQuery.of("UnsafeDamage")).get())
-                .addMatcher(amount, s -> s.getQuantity())
+                .addMatcher(damage, s -> s.toContainer().getInt(DataQuery.of("UnsafeDamage")).get().longValue())
+                .addMatcher(amount, s -> (long) s.getQuantity())
                 .addMatcher(enchantments, s -> s.get(Keys.ITEM_ENCHANTMENTS).orElse(Collections.emptyList()))
                 .addMatcher(data, s -> s.toContainer().getView(DataQuery.of("UnsafeData")).get())
                 .build();

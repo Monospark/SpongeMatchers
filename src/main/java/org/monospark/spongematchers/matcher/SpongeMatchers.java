@@ -20,10 +20,10 @@ public final class SpongeMatchers {
     }
  
     public static SpongeMatcher<ItemEnchantment> itemEnchantment(SpongeMatcher<Enchantment> enchantment,
-            SpongeMatcher<Integer> level) {
+            SpongeMatcher<Long> level) {
         return CompoundMatcher.<ItemEnchantment>builder()
                 .addMatcher(enchantment, e -> e.getEnchantment())
-                .addMatcher(level, e -> e.getLevel())
+                .addMatcher(level, e -> (long) e.getLevel())
                 .build();
     }
 }

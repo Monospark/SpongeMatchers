@@ -35,6 +35,11 @@ public final class PatternBuilder {
         return this;
     }
     
+    public PatternBuilder zeroOrMore() {
+        pattern += "*";
+        return this;
+    }
+    
     public PatternBuilder oneOrMore() {
         pattern += "+";
         return this;

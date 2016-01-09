@@ -1,13 +1,15 @@
 package org.monospark.spongematchers.parser;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.parser.data.DataViewMatcherParser;
+import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.item.Enchantment;
 import org.spongepowered.api.item.ItemType;
@@ -17,7 +19,7 @@ import com.google.common.collect.Sets;
 
 public abstract class SpongeMatcherParser<T> {
 
-    public static final SpongeMatcherParser<Integer> INT = new IntMatcherParser();
+    public static final SpongeMatcherParser<Long> INTEGER = new IntegerMatcherParser();
 
     public static final SpongeMatcherParser<ItemType> ITEM_TYPE = new TypeMatcherParser<ItemType>();
 
@@ -30,6 +32,8 @@ public abstract class SpongeMatcherParser<T> {
 
     public static final SpongeMatcherParser<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentMatcherParser();
     
+    public static final SpongeMatcherParser<DataView> DATA_VIEW = new DataViewMatcherParser();
+    
     private Pattern acceptanceRegex;
     
     protected SpongeMatcherParser() {
@@ -38,38 +42,26 @@ public abstract class SpongeMatcherParser<T> {
 
     protected abstract Pattern createAcceptanceRegex();
     
-    public final SpongeMatcher<T> parseMatcher(String string) throws SpongeMatcherFormatException {
+    public final Optional<SpongeMatcher<T>> parseMatcher(String string) {
         Objects.requireNonNull(string);
 
         return parseWithAmountCheck(string);
     }
     
-    public final SpongeMatcher<T> parseMatcherUnsafe(String string) {
-        Objects.requireNonNull(string);
-
-        try {
-            return parseWithAmountCheck(string);
-        } catch (SpongeMatcherFormatException e) {
-            throw new IllegalArgumentException("Invalid matcher string", e);
-        }
-    }
-    
-    private SpongeMatcher<T> parseWithAmountCheck(String string) throws SpongeMatcherFormatException {
-        String[] split = string.split(";");
-        if (split.length > 1) {
-            Set<SpongeMatcher<T>> matcherAmount = Sets.newHashSetWithExpectedSize(split.length);;
-            for (String part : split) {
-                Matcher matcher = acceptanceRegex.matcher(part);
-                matcherAmount.add(parse(matcher));
-            }
-            return BaseMatchers.amount(matcherAmount);
+    private Optional<SpongeMatcher<T>> parseWithAmountCheck(String string) {
+        Optional<List<SpongeMatcher<T>>> matchers = ParserHelper.<SpongeMatcher<T>>tokenize(string, ",", s -> {
+            Matcher matcher = acceptanceRegex.matcher(s);
+            return matcher.matches() ? parse(matcher) : Optional.empty();
+        });
+        
+        if (!matchers.isPresent()) {
+            return Optional.empty();
         } else {
-            Matcher matcher = acceptanceRegex.matcher(string);
-            return parse(matcher);
+            return Optional.of(BaseMatchers.amount(Sets.newHashSet(matchers.get())));
         }
     }
     
-    protected abstract SpongeMatcher<T> parse(Matcher matcher) throws SpongeMatcherFormatException;
+    protected abstract Optional<SpongeMatcher<T>> parse(Matcher matcher);
 
     public Pattern getAcceptanceRegex() {
         return acceptanceRegex;
