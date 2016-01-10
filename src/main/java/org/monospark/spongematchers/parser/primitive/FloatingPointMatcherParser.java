@@ -13,7 +13,28 @@ public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double
 
     @Override
     protected Pattern createAcceptanceRegex() {
-        String floatingPointPattern = "(?:-)?(?:\\d+)?.\\d+f";
+        Pattern floatingPointPattern = new PatternBuilder()
+                .appendNonCapturingPart("-")
+                .optional()
+                .openAnonymousParantheses()
+                    .openAnonymousParantheses()
+                        .openAnonymousParantheses()
+                            .appendNonCapturingPart("\\d+")
+                        .closeParantheses()
+                        .optional()
+                        .appendNonCapturingPart("\\.\\d+")
+                    .closeParantheses()
+                    .or()
+                    .openAnonymousParantheses()
+                        .appendNonCapturingPart("\\d+")
+                    .closeParantheses()
+                .closeParantheses()
+                .openAnonymousParantheses()
+                    .appendNonCapturingPart("f")
+                    .or()
+                    .appendNonCapturingPart("F")
+                 .closeParantheses()
+                .build();
         return new PatternBuilder()
                 .openNamedParantheses("range")
                     .appendCapturingPart(floatingPointPattern, "rangestart")
@@ -63,7 +84,7 @@ public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double
             double end = Double.valueOf(matcher.group("rangeend"));
             return Optional.of(FloatingPointMatchers.range(start, end));
         } else if (matcher.group("amount") != null) {
-            String[] split = matcher.group("amount").split(",");
+            String[] split = matcher.group("amountvalues").split(",");
             double[] values = new double[split.length];
             for (int i = 0; i < split.length; i++) {
                 values[i] = Double.valueOf(split[i]);
