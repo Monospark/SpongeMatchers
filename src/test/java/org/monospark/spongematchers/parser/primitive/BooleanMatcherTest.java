@@ -33,7 +33,7 @@ public class BooleanMatcherTest {
     
     @Test
     public void parseMatcher_TrueAndFalse_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher("true|false");
+        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher("true |false");
         
         assertTrue(matcher.isPresent());
         assertThat(matcher.get(), matches(true));
@@ -42,7 +42,7 @@ public class BooleanMatcherTest {
     
     @Test
     public void parseMatcher_FalseAndTrue_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher("false|true");
+        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher("false | true");
         
         assertTrue(matcher.isPresent());
         assertThat(matcher.get(), matches(true));

@@ -7,12 +7,14 @@ import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.match
 
 import java.util.Optional;
 
+import org.junit.Test;
 import org.monospark.spongematchers.matcher.data.DataEntry;
 import org.monospark.spongematchers.matcher.data.DataValue;
 import org.monospark.spongematchers.matcher.data.DataValue.Type;
 
 public class DataValueParserTest {
 
+    @Test
     public void parseDataEntry_IntegerMatcher_ReturnsIntegerDataEntry() {
         String input = "<-5";
         
@@ -27,6 +29,7 @@ public class DataValueParserTest {
         assertThat(value.getMatcher(), not(matches(-1L)));
     }
     
+    @Test
     public void parseDataEntry_StringMatcher_ReturnsStringDataEntry() {
         String input = "'test, string!'";
         

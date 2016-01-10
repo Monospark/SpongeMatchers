@@ -12,12 +12,10 @@ import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class DataListParser extends DataEntryParser<DataList> {
 
-    private static final String LIST_SEPRATOR_REGEX = "\\s+,\\s+";
-    
     private static final Pattern DATA_LIST_PATTERN = new PatternBuilder()
-            .appendNonCapturingPart("[\\s+")
-            .appendCapturingPart(".+", "content")
-            .appendNonCapturingPart("\\s+]")
+            .appendNonCapturingPart("\\[")
+            .appendCapturingPart(".+", "listcontent")
+            .appendNonCapturingPart("\\]")
             .build();
 
     @Override
@@ -27,8 +25,8 @@ public final class DataListParser extends DataEntryParser<DataList> {
             return Optional.empty();
         }
         
-        Optional<List<DataEntry>> entries = ParserHelper.<DataEntry>tokenize(matcher.group("content"),
-                LIST_SEPRATOR_REGEX, s -> DataEntryParser.parseDataEntry(s));
+        Optional<List<DataEntry>> entries = ParserHelper.<DataEntry>tokenize(matcher.group("listcontent"), ',',
+                s -> DataEntryParser.parseDataEntry(s));
         if (!entries.isPresent()) {
             return Optional.empty();
         } else {

@@ -15,7 +15,7 @@ public final class StringMatcherParser extends SpongeMatcherParser<String> {
     protected Pattern createAcceptanceRegex() {
         return new PatternBuilder()
                 .appendNonCapturingPart("'")
-                .appendCapturingPart(".+", "content")
+                .appendCapturingPart(".+", "regex")
                 .appendNonCapturingPart("'")
                 .build();
     }
@@ -23,7 +23,7 @@ public final class StringMatcherParser extends SpongeMatcherParser<String> {
     @Override
     protected Optional<SpongeMatcher<String>> parse(Matcher matcher) {
         try {
-            return Optional.of(BaseMatchers.regex(matcher.group("content")));
+            return Optional.of(BaseMatchers.regex(matcher.group("regex")));
         } catch (PatternSyntaxException e) {
             return Optional.empty();
         }

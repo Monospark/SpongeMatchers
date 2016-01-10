@@ -14,7 +14,7 @@ public final class DataMap implements DataEntry {
     private Map<String, DataEntry> entries;
 
     public DataMap(Map<String, DataEntry> entries) {
-        entries = ImmutableMap.copyOf(entries);
+        this.entries = ImmutableMap.copyOf(entries);
     }
 
     @Override

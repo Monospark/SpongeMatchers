@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.junit.Test;
 import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.data.DataEntry;
@@ -17,12 +18,14 @@ import org.monospark.spongematchers.matcher.data.DataValue;
 
 public class DataListParserTest {
 
+    @Test
     public void parseDataEntry_IntegerMatcherList_ReturnsCorrectDataList() {
         String input = "[<-5,2-5,7]";
         
         checkDataEntry(input);
     }
     
+    @Test
     public void parseDataEntry_IntegerMatcherListWithSpaces_ReturnsCorrectDataList() {
         String input = "[   <-5, 2-5  , 7 ]";
         

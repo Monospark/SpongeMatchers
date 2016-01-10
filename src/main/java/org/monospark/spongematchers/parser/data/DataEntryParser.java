@@ -23,8 +23,9 @@ public abstract class DataEntryParser<T extends DataEntry> {
     }
     
     static Optional<? extends DataEntry> parseDataEntry(String string) {
+        String trimmed = string.trim();
         for (DataEntryParser<?> parser : PARSERS) {
-                Optional<? extends DataEntry> entry = parser.parse(string);
+                Optional<? extends DataEntry> entry = parser.parse(trimmed);
                 if (entry.isPresent()) {
                     return entry;
             }

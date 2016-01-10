@@ -12,7 +12,6 @@ import org.monospark.spongematchers.parser.data.DataViewMatcherParser;
 import org.monospark.spongematchers.parser.primitive.BooleanMatcherParser;
 import org.monospark.spongematchers.parser.primitive.FloatingPointMatcherParser;
 import org.monospark.spongematchers.parser.primitive.IntegerMatcherParser;
-import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.item.Enchantment;
@@ -43,15 +42,7 @@ public abstract class SpongeMatcherParser<T> {
     public static final SpongeMatcherParser<DataView> DATA_VIEW = new DataViewMatcherParser();
     
     public static final SpongeMatcherParser<String> STRING = new StringMatcherParser();
-    
-    private static final String MATCHER_SEPERATOR_REGEX = "\\s*,\\s*";
-    
-    private static final Pattern MATCHER_PATTERN = new PatternBuilder()
-            .appendNonCapturingPart("\\s*")
-            .appendCapturingPart(".+", "matcher")
-            .appendNonCapturingPart("\\s*")
-            .build();
-    
+
     private Pattern acceptanceRegex;
     
     protected SpongeMatcherParser() {
@@ -59,23 +50,17 @@ public abstract class SpongeMatcherParser<T> {
     }
 
     protected abstract Pattern createAcceptanceRegex();
-    
+
     public final Optional<SpongeMatcher<T>> parseMatcher(String string) {
         Objects.requireNonNull(string, "Input string must be not null");
 
-        Matcher matcher = MATCHER_PATTERN.matcher(string);
-        if (!matcher.matches()) {
-            return Optional.empty();
-        }
-        
-        return parseWithAmountCheck(matcher.group("matcher"));
+        return parseWithAmountCheck(string.trim());
     }
     
     private Optional<SpongeMatcher<T>> parseWithAmountCheck(String string) {
-        Optional<List<SpongeMatcher<T>>> matchers = ParserHelper.<SpongeMatcher<T>>tokenize(string,
-                MATCHER_SEPERATOR_REGEX, s -> {
-            Matcher matcher = acceptanceRegex.matcher(s);
-            return matcher.matches() ? parse(matcher) : Optional.empty();
+        Optional<List<SpongeMatcher<T>>> matchers = ParserHelper.<SpongeMatcher<T>>tokenize(string, ',', s -> {
+            Matcher matcher = acceptanceRegex.matcher(s.trim());
+            return  matcher.matches() ? parse(matcher) : Optional.empty();
         });
         
         if (!matchers.isPresent()) {
@@ -87,8 +72,4 @@ public abstract class SpongeMatcherParser<T> {
     }
     
     protected abstract Optional<SpongeMatcher<T>> parse(Matcher matcher);
-
-    public Pattern getAcceptanceRegex() {
-        return acceptanceRegex;
-    }
 }

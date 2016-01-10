@@ -21,11 +21,11 @@ public final class BooleanMatcherParser extends SpongeMatcherParser<Boolean> {
                 .or()
                 .openNamedParantheses("both")
                     .openAnonymousParantheses()
-                        .appendNonCapturingPart("true\\|false")
+                        .appendNonCapturingPart("true\\s*\\|\\s*false")
                     .closeParantheses()
                     .or()
                     .openAnonymousParantheses()
-                        .appendNonCapturingPart("false\\|true")
+                        .appendNonCapturingPart("false\\s*\\|\\s*true")
                     .closeParantheses()
                 .closeParantheses()
                 .build();

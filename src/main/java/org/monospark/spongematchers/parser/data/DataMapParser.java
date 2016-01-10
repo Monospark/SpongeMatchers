@@ -15,19 +15,17 @@ import org.monospark.spongematchers.util.PatternBuilder;
 import com.google.common.collect.Maps;
 
 public class DataMapParser extends DataEntryParser<DataMap> {
-    
-    private static final String MAP_SEPRATOR_REGEX = "\\s+,\\s+";
-    
+
     private static final Pattern DATA_MAP_PATTERN = new PatternBuilder()
-            .appendNonCapturingPart("{")
-            .appendCapturingPart(".+", "content")
-            .appendNonCapturingPart("}")
+            .appendNonCapturingPart("\\{")
+            .appendCapturingPart(".+", "mapcontent")
+            .appendNonCapturingPart("\\}")
             .build();
     
     private static final Pattern MAP_ENTRY_PATTERN = new PatternBuilder()
             .appendCapturingPart("\\w+", "name")
-            .appendNonCapturingPart(":")
-            .appendCapturingPart(".+", "content")
+            .appendNonCapturingPart("\\s*:\\s*")
+            .appendCapturingPart(".+", "entry")
             .build();
 
     @Override
@@ -38,15 +36,18 @@ public class DataMapParser extends DataEntryParser<DataMap> {
         }
         
         Optional<List<Entry<String,DataEntry>>> entries =
-                ParserHelper.<Entry<String,DataEntry>>tokenize(matcher.group("content"), MAP_SEPRATOR_REGEX,
-                s -> {
-                    Matcher currentMatcher = MAP_ENTRY_PATTERN.matcher(s);
+                ParserHelper.<Entry<String,DataEntry>>tokenize(matcher.group("mapcontent"), ',', s -> {
+                    Matcher currentMatcher = MAP_ENTRY_PATTERN.matcher(s.trim());
                     if (!currentMatcher.matches()) {
-                        Optional.empty();
+                        return Optional.empty();
                     }
-                    
+
                     Optional<? extends DataEntry> dataEntry =
-                            DataEntryParser.parseDataEntry(currentMatcher.group("content"));
+                            DataEntryParser.parseDataEntry(currentMatcher.group("entry"));
+                    if (!dataEntry.isPresent()) {
+                        return Optional.empty();
+                    }
+
                     return Optional.of(Maps.immutableEntry(currentMatcher.group("name"), dataEntry.get()));
                 });
 

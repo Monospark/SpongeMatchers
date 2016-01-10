@@ -17,41 +17,41 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
         return new PatternBuilder()
                 .openNamedParantheses("range")
                     .appendCapturingPart(integerPattern, "rangestart")
-                    .appendNonCapturingPart("-")
+                    .appendNonCapturingPart("\\s*-\\s*")
                     .appendCapturingPart(integerPattern, "rangeend")
                 .closeParantheses()
                 .or()
                 .openNamedParantheses("amount")
-                    .appendNonCapturingPart("\\(")
+                    .appendNonCapturingPart("\\(\\s*")
                         .openNamedParantheses("amountvalues")
                             .appendNonCapturingPart(integerPattern)
                             .openAnonymousParantheses()
-                                .appendNonCapturingPart("," + integerPattern)
+                                .appendNonCapturingPart("\\s*,\\s*" + integerPattern)
                             .closeParantheses()
                             .oneOrMore()
                         .closeParantheses()
-                    .appendNonCapturingPart("\\)")
+                    .appendNonCapturingPart("\\s*\\)")
                 .closeParantheses()
                 .or()
                 .appendCapturingPart(integerPattern, "value")
                 .or()
                 .openNamedParantheses("greater")
-                    .appendNonCapturingPart(">")
+                    .appendNonCapturingPart(">\\s*")
                     .appendCapturingPart(integerPattern, "greatervalue")
                 .closeParantheses()
                 .or()
                 .openNamedParantheses("greaterorequal")
-                    .appendNonCapturingPart(">=")
+                    .appendNonCapturingPart(">=\\s*")
                     .appendCapturingPart(integerPattern, "greaterorequalvalue")
                 .closeParantheses()
                 .or()
                 .openNamedParantheses("less")
-                    .appendNonCapturingPart("<")
+                    .appendNonCapturingPart("<\\s*")
                     .appendCapturingPart(integerPattern, "lessvalue")
                 .closeParantheses()
                 .or()
                 .openNamedParantheses("lessorequal")
-                    .appendNonCapturingPart("<=")
+                    .appendNonCapturingPart("<=\\s*")
                     .appendCapturingPart(integerPattern, "lessorequalvalue")
                 .closeParantheses()
                 .build();
@@ -63,7 +63,7 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
             long end = Long.valueOf(matcher.group("rangeend"));
             return Optional.of(IntegerMatchers.range(start, end));
         } else if (matcher.group("amount") != null) {
-            String[] split = matcher.group("amountvalues").split(",");
+            String[] split = matcher.group("amountvalues").replaceAll("\\s*", "").split(",");
             long[] values = new long[split.length];
             for (int i = 0; i < split.length; i++) {
                 values[i] = Long.valueOf(split[i]);

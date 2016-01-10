@@ -15,7 +15,7 @@ public class FloatingPointMatcherParserTest {
 
     @Test
     public void parseMatcher_Range_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher("-1.2f-3.1f");
+        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher("-1.2f - 3.1f");
         
         assertTrue(matcher.isPresent());
         assertThat(matcher.get(), matches(-1.1D));
@@ -26,7 +26,7 @@ public class FloatingPointMatcherParserTest {
     
     @Test
     public void parseMatcher_Amount_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher("(-1f,3.1f,5.2f)");
+        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher("(-1f, 3.1f, 5.2f)");
         
         assertTrue(matcher.isPresent());
         assertThat(matcher.get(), matches(-1D));
@@ -56,7 +56,7 @@ public class FloatingPointMatcherParserTest {
     
     @Test
     public void parseMatcher_GreaterThanOrEqual_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(">=1f");
+        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(">= 1f");
         
         assertTrue(matcher.isPresent());
         assertThat(matcher.get(), matches(2D));
