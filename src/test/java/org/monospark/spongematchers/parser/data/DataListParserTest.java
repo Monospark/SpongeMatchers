@@ -17,10 +17,20 @@ import org.monospark.spongematchers.matcher.data.DataValue;
 
 public class DataListParserTest {
 
-    @SuppressWarnings("unchecked")
-    public void parseDataEntry_IntegerMatcherList_ReturnsDataList() {
+    public void parseDataEntry_IntegerMatcherList_ReturnsCorrectDataList() {
         String input = "[<-5,2-5,7]";
         
+        checkDataEntry(input);
+    }
+    
+    public void parseDataEntry_IntegerMatcherListWithSpaces_ReturnsCorrectDataList() {
+        String input = "[   <-5, 2-5  , 7 ]";
+        
+        checkDataEntry(input);
+    }
+    
+    @SuppressWarnings("unchecked")
+    private void checkDataEntry(String input) {
         Optional<? extends DataEntry> entry = DataEntryParser.parseDataEntry(input);
         
         assertTrue(entry.isPresent());
