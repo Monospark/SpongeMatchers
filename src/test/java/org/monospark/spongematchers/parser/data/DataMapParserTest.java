@@ -14,10 +14,20 @@ import org.monospark.spongematchers.matcher.data.DataValue;
 
 public class DataMapParserTest {
 
-    @SuppressWarnings("unchecked")
-    public void parseDataEntry_DataMap_ReturnsDataList() {
+    public void parseDataEntry_DataMap_ReturnsCorrectDataMap() {
         String input = "{entry1:<-5,entry2:'test, string',entry3:(3,4)]";
         
+        checkDataEntry(input);
+    }
+    
+    public void parseDataEntry_DataMapWithSpaces_ReturnsCorrectDataMap() {
+        String input = "{entry1:<-5,entry2:'test, string',entry3:(3,4)]";
+        
+        checkDataEntry(input);
+    }
+    
+    @SuppressWarnings("unchecked")
+    private void checkDataEntry(String input) {
         Optional<? extends DataEntry> entry = DataEntryParser.parseDataEntry(input);
         
         assertTrue(entry.isPresent());

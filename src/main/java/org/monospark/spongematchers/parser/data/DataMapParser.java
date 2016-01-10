@@ -16,6 +16,8 @@ import com.google.common.collect.Maps;
 
 public class DataMapParser extends DataEntryParser<DataMap> {
     
+    private static final String MAP_SEPRATOR_REGEX = "\\s+,\\s+";
+    
     private static final Pattern DATA_MAP_PATTERN = new PatternBuilder()
             .appendNonCapturingPart("{")
             .appendCapturingPart(".+", "content")
@@ -36,7 +38,7 @@ public class DataMapParser extends DataEntryParser<DataMap> {
         }
         
         Optional<List<Entry<String,DataEntry>>> entries =
-                ParserHelper.<Entry<String,DataEntry>>tokenize(matcher.group("content"), ",",
+                ParserHelper.<Entry<String,DataEntry>>tokenize(matcher.group("content"), MAP_SEPRATOR_REGEX,
                 s -> {
                     Matcher currentMatcher = MAP_ENTRY_PATTERN.matcher(s);
                     if (!currentMatcher.matches()) {
