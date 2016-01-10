@@ -16,6 +16,7 @@ public abstract class DataEntryParser<T extends DataEntry> {
     private static Set<DataEntryParser<?>> createDataEntryParsers() {
         Set<DataEntryParser<?>> parsers = Sets.newHashSet();
         parsers.add(new DataValueParser<Long>(Type.INTEGER, SpongeMatcherParser.INTEGER));
+        parsers.add(new DataValueParser<String>(Type.STRING, SpongeMatcherParser.STRING));
         parsers.add(new DataListParser());
         parsers.add(new DataMapParser());
         return parsers;

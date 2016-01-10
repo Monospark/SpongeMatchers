@@ -41,6 +41,8 @@ public abstract class SpongeMatcherParser<T> {
     
     public static final SpongeMatcherParser<DataView> DATA_VIEW = new DataViewMatcherParser();
     
+    public static final SpongeMatcherParser<String> STRING = new StringMatcherParser();
+    
     private Pattern acceptanceRegex;
     
     protected SpongeMatcherParser() {
@@ -50,7 +52,7 @@ public abstract class SpongeMatcherParser<T> {
     protected abstract Pattern createAcceptanceRegex();
     
     public final Optional<SpongeMatcher<T>> parseMatcher(String string) {
-        Objects.requireNonNull(string);
+        Objects.requireNonNull(string, "Input string must be not null");
 
         return parseWithAmountCheck(string);
     }
