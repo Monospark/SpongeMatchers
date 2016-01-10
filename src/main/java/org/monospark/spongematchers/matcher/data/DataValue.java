@@ -25,7 +25,15 @@ public final class DataValue<T> implements DataEntry {
         Optional<? extends T> queried = valueType.getData(v, query);
         return queried.isPresent() ? valueMatcher.matches(queried.get()) : false;
     }
-    
+
+    public Type<T> getType() {
+        return valueType;
+    }
+
+    public SpongeMatcher<T> getMatcher() {
+        return valueMatcher;
+    }
+
     public static final class Type<T> {
         
         public static final Type<Boolean> BOOLEAN = new Type<Boolean>((v, q) -> v.getBoolean(q));
