@@ -31,4 +31,8 @@ public final class DataList implements DataEntry {
         }
         return true;
     }
+
+    public List<DataEntry> getEntries() {
+        return entries;
+    }
 }
