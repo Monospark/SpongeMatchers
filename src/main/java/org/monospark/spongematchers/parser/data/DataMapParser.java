@@ -23,7 +23,7 @@ public class DataMapParser extends DataEntryParser<DataMap> {
             .build();
     
     private static final Pattern MAP_ENTRY_PATTERN = new PatternBuilder()
-            .appendCapturingPart("'\\w+'", "name")
+            .appendCapturingPart("\\w+", "name")
             .appendNonCapturingPart(":")
             .appendCapturingPart(".+", "content")
             .build();
