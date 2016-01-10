@@ -72,6 +72,10 @@ public final class PatternBuilder {
         return this;
     }
 
+    public PatternBuilder appendNonCapturingPart(Pattern pattern) {
+        return appendNonCapturingPart(pattern.toString());
+    }
+    
     public Pattern build() {
         return Pattern.compile(pattern);
     }
