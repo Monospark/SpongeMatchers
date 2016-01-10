@@ -22,6 +22,19 @@ public class SpongeMatcherParserTest {
     public void parseMatcher_MatcherAmount_ReturnsMatcherAmount() {
         String input = "(2,3),5-8,1";
         
+        checkIntegerMatcher(input);
+    }
+    
+    @Test
+    public void parseMatcher_MatcherAmountWithSpaces_ReturnsMatcherAmount() {
+        String input1 = " (2, 3) ,5-8  ,  1";
+        String input2 = "(2, 3) ,   5-8  , 1   ";
+        
+        checkIntegerMatcher(input1);
+        checkIntegerMatcher(input2);
+    }
+    
+    private void checkIntegerMatcher(String input) {
         Optional<SpongeMatcher<Long>> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
         
         assertTrue(matcher.isPresent());
