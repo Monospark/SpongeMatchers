@@ -32,4 +32,8 @@ public final class DataMap implements DataEntry {
         copy.add(next);
         return copy;
     }
+
+    public Map<String, DataEntry> getEntries() {
+        return entries;
+    }
 }
