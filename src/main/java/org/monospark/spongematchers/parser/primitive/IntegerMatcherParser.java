@@ -1,5 +1,6 @@
 package org.monospark.spongematchers.parser.primitive;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +62,9 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
         if (matcher.group("range") != null) {
             long start = Long.valueOf(matcher.group("rangestart"));
             long end = Long.valueOf(matcher.group("rangeend"));
+            if (start >= end) {
+                return Optional.empty();
+            }
             return Optional.of(IntegerMatchers.range(start, end));
         } else if (matcher.group("amount") != null) {
             String[] split = matcher.group("amountvalues").replaceAll("\\s*", "").split(",");
@@ -68,6 +72,12 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
             for (int i = 0; i < split.length; i++) {
                 values[i] = Long.valueOf(split[i]);
             }
+            
+            //Check for duplicates
+            if (Arrays.stream(values).distinct().toArray().length != values.length) {
+                return Optional.empty();
+            }
+            
             return Optional.of(IntegerMatchers.amount(values));
         } else if (matcher.group("value") != null) {
             long value = Long.valueOf(matcher.group("value"));
