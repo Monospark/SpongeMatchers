@@ -15,37 +15,41 @@ public class BooleanMatcherTest {
 
     @Test
     public void parseMatcher_True_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher("true");
+        String input = "true";
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(true));
-        assertThat(matcher.get(), not(matches(false)));
+        verifyMatcher(input, false, true);
     }
     
     @Test
     public void parseMatcher_False_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher("false");
+        String input = "false";
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(false));
-        assertThat(matcher.get(), not(matches(true)));
+        verifyMatcher(input, true, false);
     }
     
     @Test
     public void parseMatcher_TrueAndFalse_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher("true |false");
+        String input1 = "true|false";
+        String input2 = " true  | \t false ";
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(true));
-        assertThat(matcher.get(), matches(false));
+        verifyMatcher(input1, true, true);
+        verifyMatcher(input2, true, true);
     }
     
     @Test
     public void parseMatcher_FalseAndTrue_ReturnsCorrectMatcher() {
-        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher("false | true");
+        String input1 = "false|true";
+        String input2 = " false  | \t true ";
+        
+        verifyMatcher(input1, true, true);
+        verifyMatcher(input2, true, true);
+    }
+    
+    private void verifyMatcher(String input, boolean matchFalse, boolean matchTrue) {
+        Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher(input);
         
         assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(true));
-        assertThat(matcher.get(), matches(false));
+        assertThat(matcher.get(), matchFalse ? matches(false) : not(matches(false)));
+        assertThat(matcher.get(), matchTrue ? matches(true) : not(matches(true)));
     }
 }

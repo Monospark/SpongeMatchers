@@ -24,7 +24,7 @@ public class DataMapParserTest {
     
     @Test
     public void parseDataEntry_DataMapWithSpaces_ReturnsCorrectDataMap() {
-        String input = "{  entry1 :<-5,entry2:  'test, string',entry3:(3,4)  }";
+        String input = "  {  entry1 :<-5,entry2:  'test, string'  , entry3:(3,4)  }";
         
         checkDataEntry(input);
     }

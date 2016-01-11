@@ -27,7 +27,7 @@ public class DataListParserTest {
     
     @Test
     public void parseDataEntry_IntegerMatcherListWithSpaces_ReturnsCorrectDataList() {
-        String input = "[   <-5, 2-5  , 7 ]";
+        String input = " [   <-5, 2-5  , 7 ]";
         
         checkDataEntry(input);
     }
