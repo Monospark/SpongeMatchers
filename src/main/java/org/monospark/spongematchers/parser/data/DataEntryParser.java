@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.monospark.spongematchers.matcher.data.DataEntry;
 import org.monospark.spongematchers.matcher.data.DataValue.Type;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 
 import com.google.common.collect.Sets;
@@ -22,7 +23,7 @@ public abstract class DataEntryParser<T extends DataEntry> {
         return parsers;
     }
     
-    static Optional<? extends DataEntry> parseDataEntry(String string) {
+    static Optional<? extends DataEntry> parseDataEntry(String string) throws SpongeMatcherParseException {
         String trimmed = string.trim();
         for (DataEntryParser<?> parser : PARSERS) {
                 Optional<? extends DataEntry> entry = parser.parse(trimmed);
@@ -33,5 +34,5 @@ public abstract class DataEntryParser<T extends DataEntry> {
         return Optional.empty();
     }
 
-    abstract Optional<T> parse(String string);
+    abstract Optional<T> parse(String string) throws SpongeMatcherParseException;
 }

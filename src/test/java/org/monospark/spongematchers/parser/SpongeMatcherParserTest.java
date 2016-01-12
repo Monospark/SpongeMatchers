@@ -19,14 +19,14 @@ public class SpongeMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_MatcherAmount_ReturnsMatcherAmount() {
+    public void parseMatcher_MatcherAmount_ReturnsMatcherAmount() throws SpongeMatcherParseException {
         String input = "(2,3),5-8,1";
         
         checkIntegerMatcher(input);
     }
     
     @Test
-    public void parseMatcher_MatcherAmountWithSpaces_ReturnsMatcherAmount() {
+    public void parseMatcher_MatcherAmountWithSpaces_ReturnsMatcherAmount() throws SpongeMatcherParseException {
         String input1 = " (2, 3) ,5-8  ,  1";
         String input2 = "(2, 3) ,   5-8  , 1   ";
         
@@ -34,7 +34,7 @@ public class SpongeMatcherParserTest {
         checkIntegerMatcher(input2);
     }
     
-    private void checkIntegerMatcher(String input) {
+    private void checkIntegerMatcher(String input) throws SpongeMatcherParseException {
         Optional<SpongeMatcher<Long>> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
         
         assertTrue(matcher.isPresent());

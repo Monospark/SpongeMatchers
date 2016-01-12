@@ -4,8 +4,8 @@ import org.junit.Assert;
 
 public class ExceptionChecker {
 
-    public static void check(Class<? extends Exception> exceptionClass, Runnable... runnables) {
-        for (Runnable r : runnables) {
+    public static void check(Class<? extends Exception> exceptionClass, ExceptionRunnable... runnables) {
+        for (ExceptionRunnable r : runnables) {
             try {
                 r.run();
                 Assert.fail("No exception was thrown. expected: " + exceptionClass.getName());
@@ -20,5 +20,11 @@ public class ExceptionChecker {
                 }
             }
         }
+    }
+    
+    @FunctionalInterface
+    public static interface ExceptionRunnable {
+        
+        void run() throws Exception;
     }
 }

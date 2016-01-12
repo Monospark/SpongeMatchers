@@ -12,25 +12,26 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.data.DataEntry;
 import org.monospark.spongematchers.matcher.data.DataMap;
 import org.monospark.spongematchers.matcher.data.DataValue;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 
 public class DataMapParserTest {
 
     @Test
-    public void parseDataEntry_DataMap_ReturnsCorrectDataMap() {
+    public void parseDataEntry_DataMap_ReturnsCorrectDataMap() throws SpongeMatcherParseException {
         String input = "{entry1:<-5,entry2:'test, string',entry3:(3,4)}";
         
         checkDataEntry(input);
     }
     
     @Test
-    public void parseDataEntry_DataMapWithSpaces_ReturnsCorrectDataMap() {
+    public void parseDataEntry_DataMapWithSpaces_ReturnsCorrectDataMap() throws SpongeMatcherParseException {
         String input = "  {  entry1 :<-5,entry2:  'test, string'  , entry3:(3,4)  }";
         
         checkDataEntry(input);
     }
     
     @SuppressWarnings("unchecked")
-    private void checkDataEntry(String input) {
+    private void checkDataEntry(String input) throws SpongeMatcherParseException {
         Optional<? extends DataEntry> entry = DataEntryParser.parseDataEntry(input);
         
         assertTrue(entry.isPresent());

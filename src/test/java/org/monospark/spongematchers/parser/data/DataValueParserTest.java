@@ -11,11 +11,12 @@ import org.junit.Test;
 import org.monospark.spongematchers.matcher.data.DataEntry;
 import org.monospark.spongematchers.matcher.data.DataValue;
 import org.monospark.spongematchers.matcher.data.DataValue.Type;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 
 public class DataValueParserTest {
 
     @Test
-    public void parseDataEntry_IntegerMatcher_ReturnsIntegerDataEntry() {
+    public void parseDataEntry_IntegerMatcher_ReturnsIntegerDataEntry() throws SpongeMatcherParseException {
         String input = "<-5";
         
         Optional<? extends DataEntry> entry = DataEntryParser.parseDataEntry(input);
@@ -30,7 +31,7 @@ public class DataValueParserTest {
     }
     
     @Test
-    public void parseDataEntry_StringMatcher_ReturnsStringDataEntry() {
+    public void parseDataEntry_StringMatcher_ReturnsStringDataEntry() throws SpongeMatcherParseException {
         String input = "'test, string!'";
         
         Optional<? extends DataEntry> entry = DataEntryParser.parseDataEntry(input);

@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.data.DataEntry;
 import org.monospark.spongematchers.matcher.data.DataViewMatcher;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.data.DataView;
@@ -14,19 +15,19 @@ import org.spongepowered.api.data.DataView;
 public final class DataViewMatcherParser extends SpongeMatcherParser<DataView> {
 
     @Override
-    protected Pattern createAcceptanceRegex() {
+    protected Pattern createAcceptancePattern() {
         return new PatternBuilder()
                 .appendNonCapturingPart(".+")
                 .build();
     }
 
     @Override
-    protected Optional<SpongeMatcher<DataView>> parse(Matcher matcher) {
+    protected SpongeMatcher<DataView> parse(Matcher matcher) throws SpongeMatcherParseException {
         Optional<? extends DataEntry> entry = DataEntryParser.parseDataEntry(matcher.group());
         if (!entry.isPresent()) {
-            return Optional.empty();
+            throw new SpongeMatcherParseException("Invalid data view matcher: " + matcher.group());
         } else {
-            return Optional.of(new DataViewMatcher(entry.get()));
+            return new DataViewMatcher(entry.get());
         }
     }
 }

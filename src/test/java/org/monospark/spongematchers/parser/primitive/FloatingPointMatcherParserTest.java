@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.parser.primitive;
 
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
@@ -10,12 +9,14 @@ import java.util.Optional;
 
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
+import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 public class FloatingPointMatcherParserTest {
 
     @Test
-    public void parseMatcher_Range_ReturnsCorrectMatcher() {
+    public void parseMatcher_Range_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "-1f-3f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -29,7 +30,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_RangeWithSpaces_ReturnsCorrectMatcher() {
+    public void parseMatcher_RangeWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = " -5f --3f ";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -43,16 +44,15 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_InvalidRange_ReturnsEmptyOptional() {
+    public void parseMatcher_InvalidRange_ThrowsException() {
         String input = "2f-1f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
-        
-        assertFalse(matcher.isPresent());
+        ExceptionChecker.check(SpongeMatcherParseException.class,
+                () -> SpongeMatcherParser.FLOATING_POINT.parseMatcher(input));
     }
     
     @Test
-    public void parseMatcher_Amount_ReturnsCorrectMatcher() {
+    public void parseMatcher_Amount_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "(-1.1f,3.1f,5f)";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -66,16 +66,15 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_AmountWithDuplicaes_ReturnsEmptyOptional() {
+    public void parseMatcher_AmountWithDuplicaes_ThrowsException() {
         String input = "(1f,2f,3f,3f)";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
-        
-        assertFalse(matcher.isPresent());
+        ExceptionChecker.check(SpongeMatcherParseException.class,
+                () -> SpongeMatcherParser.FLOATING_POINT.parseMatcher(input));
     }
     
     @Test
-    public void parseMatcher_Value_ReturnsCorrectMatcher() {
+    public void parseMatcher_Value_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "-1.2f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -86,7 +85,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_GreaterThan_ReturnsCorrectMatcher() {
+    public void parseMatcher_GreaterThan_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">1.1f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -97,7 +96,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_GreaterThanWithSpaces_ReturnsCorrectMatcher() {
+    public void parseMatcher_GreaterThanWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">    .1f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -108,7 +107,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_GreaterThanOrEqual_ReturnsCorrectMatcher() {
+    public void parseMatcher_GreaterThanOrEqual_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">=1.2f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -120,7 +119,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_GreaterThanOrEqualWithSpaces_ReturnsCorrectMatcher() {
+    public void parseMatcher_GreaterThanOrEqualWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">=   -3.1f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -132,7 +131,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_LessThan_ReturnsCorrectMatcher() {
+    public void parseMatcher_LessThan_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<1f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -143,7 +142,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_LessThanWithSpaces_ReturnsCorrectMatcher() {
+    public void parseMatcher_LessThanWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<    2.1f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -154,7 +153,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_LessThanOrEqual_ReturnsCorrectMatcher() {
+    public void parseMatcher_LessThanOrEqual_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<=.992f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
@@ -166,7 +165,7 @@ public class FloatingPointMatcherParserTest {
     }
     
     @Test
-    public void parseMatcher_LessThanOrEqualWithSpaces_ReturnsCorrectMatcher() {
+    public void parseMatcher_LessThanOrEqualWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<=   -1.123f";
         
         Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);

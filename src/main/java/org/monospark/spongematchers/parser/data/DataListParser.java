@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.monospark.spongematchers.matcher.data.DataEntry;
 import org.monospark.spongematchers.matcher.data.DataList;
 import org.monospark.spongematchers.parser.ParserHelper;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class DataListParser extends DataEntryParser<DataList> {
@@ -19,7 +20,7 @@ public final class DataListParser extends DataEntryParser<DataList> {
             .build();
 
     @Override
-    Optional<DataList> parse(String string) {
+    Optional<DataList> parse(String string) throws SpongeMatcherParseException {
         Matcher matcher = DATA_LIST_PATTERN.matcher(string);
         if (!matcher.matches()) {
             return Optional.empty();

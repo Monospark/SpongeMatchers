@@ -9,26 +9,27 @@ import java.util.Optional;
 
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 
 public class BooleanMatcherTest {
 
     @Test
-    public void parseMatcher_True_ReturnsCorrectMatcher() {
+    public void parseMatcher_True_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "true";
         
         verifyMatcher(input, false, true);
     }
     
     @Test
-    public void parseMatcher_False_ReturnsCorrectMatcher() {
+    public void parseMatcher_False_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "false";
         
         verifyMatcher(input, true, false);
     }
     
     @Test
-    public void parseMatcher_TrueAndFalse_ReturnsCorrectMatcher() {
+    public void parseMatcher_TrueAndFalse_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input1 = "true|false";
         String input2 = " true  | \t false ";
         
@@ -37,7 +38,7 @@ public class BooleanMatcherTest {
     }
     
     @Test
-    public void parseMatcher_FalseAndTrue_ReturnsCorrectMatcher() {
+    public void parseMatcher_FalseAndTrue_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input1 = "false|true";
         String input2 = " false  | \t true ";
         
@@ -45,7 +46,7 @@ public class BooleanMatcherTest {
         verifyMatcher(input2, true, true);
     }
     
-    private void verifyMatcher(String input, boolean matchFalse, boolean matchTrue) {
+    private void verifyMatcher(String input, boolean matchFalse, boolean matchTrue) throws SpongeMatcherParseException {
         Optional<SpongeMatcher<Boolean>> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher(input);
         
         assertTrue(matcher.isPresent());

@@ -15,25 +15,26 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.data.DataEntry;
 import org.monospark.spongematchers.matcher.data.DataList;
 import org.monospark.spongematchers.matcher.data.DataValue;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 
 public class DataListParserTest {
 
     @Test
-    public void parseDataEntry_IntegerMatcherList_ReturnsCorrectDataList() {
+    public void parseDataEntry_IntegerMatcherList_ReturnsCorrectDataList() throws SpongeMatcherParseException {
         String input = "[<-5,2-5,7]";
         
         checkDataEntry(input);
     }
     
     @Test
-    public void parseDataEntry_IntegerMatcherListWithSpaces_ReturnsCorrectDataList() {
+    public void parseDataEntry_IntegerMatcherListWithSpaces_ReturnsCorrectDataList() throws SpongeMatcherParseException {
         String input = " [   <-5, 2-5  , 7 ]";
         
         checkDataEntry(input);
     }
     
     @SuppressWarnings("unchecked")
-    private void checkDataEntry(String input) {
+    private void checkDataEntry(String input) throws SpongeMatcherParseException {
         Optional<? extends DataEntry> entry = DataEntryParser.parseDataEntry(input);
         
         assertTrue(entry.isPresent());

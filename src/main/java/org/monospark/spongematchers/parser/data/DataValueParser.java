@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.data.DataValue;
 import org.monospark.spongematchers.matcher.data.DataValue.Type;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 
 public final class DataValueParser<T> extends DataEntryParser<DataValue<?>> {
@@ -18,7 +19,7 @@ public final class DataValueParser<T> extends DataEntryParser<DataValue<?>> {
         this.parser = parser;
     }
 
-    Optional<DataValue<?>> parse(String string) {
+    Optional<DataValue<?>> parse(String string) throws SpongeMatcherParseException {
         Optional<SpongeMatcher<T>> spongeMatcher = parser.parseMatcher(string);
         if (!spongeMatcher.isPresent()) {
             return Optional.empty();

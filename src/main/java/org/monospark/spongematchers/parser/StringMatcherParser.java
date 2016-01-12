@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.parser;
 
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -12,7 +11,7 @@ import org.monospark.spongematchers.util.PatternBuilder;
 public final class StringMatcherParser extends SpongeMatcherParser<String> {
 
     @Override
-    protected Pattern createAcceptanceRegex() {
+    protected Pattern createAcceptancePattern() {
         return new PatternBuilder()
                 .appendNonCapturingPart("'")
                 .appendCapturingPart(".+", "regex")
@@ -21,11 +20,11 @@ public final class StringMatcherParser extends SpongeMatcherParser<String> {
     }
 
     @Override
-    protected Optional<SpongeMatcher<String>> parse(Matcher matcher) {
+    protected SpongeMatcher<String> parse(Matcher matcher) throws SpongeMatcherParseException {
         try {
-            return Optional.of(BaseMatchers.regex(matcher.group("regex")));
+            return BaseMatchers.regex(matcher.group("regex"));
         } catch (PatternSyntaxException e) {
-            return Optional.empty();
+            throw new SpongeMatcherParseException(e);
         }
     }
 }

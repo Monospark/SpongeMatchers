@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.parser.primitive;
 
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +12,7 @@ import org.monospark.spongematchers.util.PatternBuilder;
 public final class BooleanMatcherParser extends SpongeMatcherParser<Boolean> {
 
     @Override
-    protected Pattern createAcceptanceRegex() {
+    protected Pattern createAcceptancePattern() {
         return new PatternBuilder()
                 .appendCapturingPart("true", "true")
                 .or()
@@ -32,13 +31,13 @@ public final class BooleanMatcherParser extends SpongeMatcherParser<Boolean> {
     }
 
     @Override
-    protected Optional<SpongeMatcher<Boolean>> parse(Matcher matcher) {
+    protected SpongeMatcher<Boolean> parse(Matcher matcher) {
         if (matcher.group("true") != null) {
-            return Optional.of(BooleanMatcher.trueOnly());
+            return BooleanMatcher.trueOnly();
         } else if (matcher.group("false") != null) {
-            return Optional.of(BooleanMatcher.falseOnly());
+            return BooleanMatcher.falseOnly();
         } else {
-            return Optional.of(BaseMatchers.wildcard());
+            return BaseMatchers.wildcard();
         }
     }
 }

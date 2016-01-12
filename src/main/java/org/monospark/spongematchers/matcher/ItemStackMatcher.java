@@ -7,7 +7,6 @@ import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.meta.ItemEnchantment;
-import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
 
 public final class ItemStackMatcher {
@@ -20,7 +19,7 @@ public final class ItemStackMatcher {
     
     public static final class Builder {
         
-        private SpongeMatcher<ItemType> type;
+        private SpongeMatcher<String> type;
         
         private SpongeMatcher<Long> damage;
         
@@ -37,7 +36,7 @@ public final class ItemStackMatcher {
             data = BaseMatchers.wildcard();
         }
         
-        public Builder type(SpongeMatcher<ItemType> type) {
+        public Builder type(SpongeMatcher<String> type) {
             this.type = type;
             return this;
         }
@@ -47,11 +46,11 @@ public final class ItemStackMatcher {
         }
     }
     
-    public static SpongeMatcher<ItemStack> create(SpongeMatcher<ItemType> type, SpongeMatcher<Long> damage,
+    public static SpongeMatcher<ItemStack> create(SpongeMatcher<String> type, SpongeMatcher<Long> damage,
             SpongeMatcher<Long> amount, SpongeMatcher<List<ItemEnchantment>> enchantments,
             SpongeMatcher<DataView> data) {
         return CompoundMatcher.<ItemStack>builder()
-                .addMatcher(type, s -> s.getItem())
+                .addMatcher(type, s -> s.getItem().getId())
                 .addMatcher(damage, s -> s.toContainer().getInt(DataQuery.of("UnsafeDamage")).get().longValue())
                 .addMatcher(amount, s -> (long) s.getQuantity())
                 .addMatcher(enchantments, s -> s.get(Keys.ITEM_ENCHANTMENTS).orElse(Collections.emptyList()))

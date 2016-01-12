@@ -9,17 +9,16 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.data.meta.ItemEnchantment;
-import org.spongepowered.api.item.Enchantment;
 
 public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchantment> {
 
     @Override
-    protected Pattern createAcceptanceRegex() {
+    protected Pattern createAcceptancePattern() {
         return new PatternBuilder()
-                .appendCapturingPart(SpongeMatcherParser.ENCHANTMENT.getAcceptanceRegex(), "enchantment")
+                .appendCapturingPart(".+", "enchantment")
                 .openAnonymousParantheses()
                     .appendNonCapturingPart("(")
-                    .appendCapturingPart(SpongeMatcherParser.INTEGER.getAcceptanceRegex(), "level")
+                    .appendCapturingPart(".+", "level")
                     .appendNonCapturingPart(")")
                 .closeParantheses()
                 .optional()
@@ -27,13 +26,16 @@ public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchan
     }
 
     @Override
-    protected Optional<SpongeMatcher<ItemEnchantment>> parse(Matcher matcher) {
-        Optional<SpongeMatcher<Enchantment>> enchantment =
-                SpongeMatcherParser.ENCHANTMENT.parseMatcher(matcher.group("type"));
+    protected SpongeMatcher<ItemEnchantment> parse(Matcher matcher) throws SpongeMatcherParseException {
+        Optional<SpongeMatcher<String>> enchantment =
+                SpongeMatcherParser.STRING.parseMatcher(matcher.group("enchantment"));
         Optional<SpongeMatcher<Long>> level = matcher.group("level") != null ?
                 SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("level")) : BaseMatchers.wildcard();
         
-        return enchantment.isPresent() && level.isPresent() ?
-                Optional.of(SpongeMatchers.itemEnchantment(enchantment.get(), level.get())) : Optional.empty();
+        if (enchantment.isPresent() && level.isPresent()) {
+            return SpongeMatchers.itemEnchantment(enchantment.get(), level.get());
+        } else {
+            throw new SpongeMatcherParseException("Invalid item enchantment matcher: " + matcher.group());
+        }
     }
 }

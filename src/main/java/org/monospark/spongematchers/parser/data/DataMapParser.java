@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import org.monospark.spongematchers.matcher.data.DataEntry;
 import org.monospark.spongematchers.matcher.data.DataMap;
 import org.monospark.spongematchers.parser.ParserHelper;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 import com.google.common.collect.Maps;
@@ -29,7 +30,7 @@ public class DataMapParser extends DataEntryParser<DataMap> {
             .build();
 
     @Override
-    Optional<DataMap> parse(String string) {
+    Optional<DataMap> parse(String string) throws SpongeMatcherParseException {
         Matcher matcher = DATA_MAP_PATTERN.matcher(string);
         if (!matcher.matches()) {
             return Optional.empty();
