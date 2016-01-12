@@ -49,29 +49,7 @@ public class IntegerMatcherParserTest {
         ExceptionChecker.check(SpongeMatcherParseException.class,
                 () -> SpongeMatcherParser.INTEGER.parseMatcher(input));
     }
-    
-    @Test
-    public void parseMatcher_Amount_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
-        String input = "(-1,3,5)";
-        
-        Optional<SpongeMatcher<Long>> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
-        
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(-1L));
-        assertThat(matcher.get(), matches(3L));
-        assertThat(matcher.get(), matches(5L));
-        assertThat(matcher.get(), not(matches(2L)));
-        assertThat(matcher.get(), not(matches(4L)));
-    }
-    
-    @Test
-    public void parseMatcher_AmountWithDuplicaes_ThrowsException() {
-        String input = "(1,2,3,3)";
-        
-        ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> SpongeMatcherParser.INTEGER.parseMatcher(input));
-    }
-    
+
     @Test
     public void parseMatcher_Value_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "1";

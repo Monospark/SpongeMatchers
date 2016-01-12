@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.parser.primitive;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,18 +42,6 @@ public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double
                     .appendCapturingPart(floatingPointPattern, "rangeend")
                 .closeParantheses()
                 .or()
-                .openNamedParantheses("amount")
-                    .appendNonCapturingPart("\\(\\s*")
-                        .openNamedParantheses("amountvalues")
-                            .appendNonCapturingPart(floatingPointPattern)
-                            .openAnonymousParantheses()
-                                .appendNonCapturingPart("\\s*,\\s*" + floatingPointPattern)
-                            .closeParantheses()
-                            .oneOrMore()
-                        .closeParantheses()
-                    .appendNonCapturingPart("\\s*\\)")
-                .closeParantheses()
-                .or()
                 .appendCapturingPart(floatingPointPattern, "value")
                 .or()
                 .openNamedParantheses("greater")
@@ -87,19 +74,6 @@ public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double
                 throw new SpongeMatcherParseException("The start value of a range must be smaller than the end value");
             }
             return FloatingPointMatchers.range(start, end);
-        } else if (matcher.group("amount") != null) {
-            String[] split = matcher.group("amountvalues").split(",");
-            double[] values = new double[split.length];
-            for (int i = 0; i < split.length; i++) {
-                values[i] = parseDouble(split[i]);
-            }
-            
-            //Check for duplicates
-            if (Arrays.stream(values).distinct().toArray().length != values.length) {
-                throw new SpongeMatcherParseException("The floating-point value amount contains duplicates");
-            }
-            
-            return FloatingPointMatchers.amount(values);
         } else if (matcher.group("value") != null) {
             double value = parseDouble(matcher.group("value"));
             return FloatingPointMatchers.value(value);

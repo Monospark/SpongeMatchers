@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.parser.primitive;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,18 +19,6 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
                     .appendCapturingPart(integerPattern, "rangestart")
                     .appendNonCapturingPart("\\s*-\\s*")
                     .appendCapturingPart(integerPattern, "rangeend")
-                .closeParantheses()
-                .or()
-                .openNamedParantheses("amount")
-                    .appendNonCapturingPart("\\(\\s*")
-                        .openNamedParantheses("amountvalues")
-                            .appendNonCapturingPart(integerPattern)
-                            .openAnonymousParantheses()
-                                .appendNonCapturingPart("\\s*,\\s*" + integerPattern)
-                            .closeParantheses()
-                            .oneOrMore()
-                        .closeParantheses()
-                    .appendNonCapturingPart("\\s*\\)")
                 .closeParantheses()
                 .or()
                 .appendCapturingPart(integerPattern, "value")
@@ -66,19 +53,6 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
                 throw new SpongeMatcherParseException("The start value of a range must be smaller than the end value");
             }
             return IntegerMatchers.range(start, end);
-        } else if (matcher.group("amount") != null) {
-            String[] split = matcher.group("amountvalues").replaceAll("\\s*", "").split(",");
-            long[] values = new long[split.length];
-            for (int i = 0; i < split.length; i++) {
-                values[i] = parseLong(split[i]);
-            }
-            
-            //Check for duplicates
-            if (Arrays.stream(values).distinct().toArray().length != values.length) {
-                throw new SpongeMatcherParseException("The integer amount contains duplicates");
-            }
-            
-            return IntegerMatchers.amount(values);
         } else if (matcher.group("value") != null) {
             long value = parseLong(matcher.group("value"));
             return IntegerMatchers.value(value);

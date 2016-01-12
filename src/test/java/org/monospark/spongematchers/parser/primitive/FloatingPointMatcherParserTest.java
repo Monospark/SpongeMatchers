@@ -50,29 +50,7 @@ public class FloatingPointMatcherParserTest {
         ExceptionChecker.check(SpongeMatcherParseException.class,
                 () -> SpongeMatcherParser.FLOATING_POINT.parseMatcher(input));
     }
-    
-    @Test
-    public void parseMatcher_Amount_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
-        String input = "(-1.1f,3.1f,5f)";
-        
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
-        
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(-1.1D));
-        assertThat(matcher.get(), matches(3.1D));
-        assertThat(matcher.get(), matches(5D));
-        assertThat(matcher.get(), not(matches(2D)));
-        assertThat(matcher.get(), not(matches(4D)));
-    }
-    
-    @Test
-    public void parseMatcher_AmountWithDuplicaes_ThrowsException() {
-        String input = "(1f,2f,3f,3f)";
-        
-        ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> SpongeMatcherParser.FLOATING_POINT.parseMatcher(input));
-    }
-    
+
     @Test
     public void parseMatcher_Value_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "-1.2f";

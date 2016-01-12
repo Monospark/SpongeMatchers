@@ -52,7 +52,7 @@ public abstract class SpongeMatcherParser<T> {
     }
     
     private Optional<SpongeMatcher<T>> parseWithAmountCheck(String string) throws SpongeMatcherParseException {
-        Optional<List<SpongeMatcher<T>>> matchers = ParserHelper.<SpongeMatcher<T>>tokenize(string, ',', s -> {
+        Optional<List<SpongeMatcher<T>>> matchers = ParserHelper.<SpongeMatcher<T>>tokenize(string, '|', s -> {
             Matcher matcher = acceptancePattern.matcher(s.trim());
             return matcher.matches() ? Optional.of(parse(matcher)) : Optional.empty();
         });
