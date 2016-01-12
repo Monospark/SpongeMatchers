@@ -3,6 +3,7 @@ package org.monospark.spongematchers.parser;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import com.google.common.collect.Lists;
 
@@ -13,7 +14,7 @@ public final class ParserHelper {
     public static <T> Optional<List<T>> tokenize(String string, char tokenizer,
             ParserFunction<T> function) throws SpongeMatcherParseException {
         List<T> parts = Lists.newArrayList();
-        String[] split = string.split(String.valueOf(tokenizer));
+        String[] split = string.split(Pattern.quote(String.valueOf(tokenizer)));
         if (split.length == 1) {
             Optional<? extends T> applied = function.parse(string);
             return applied.isPresent() ? Optional.of(Collections.singletonList(applied.get())) : Optional.empty();
@@ -29,7 +30,7 @@ public final class ParserHelper {
             }
         }
         
-        return start == 0 ? Optional.empty() : Optional.of(parts);
+        return start != split.length ? Optional.empty() : Optional.of(parts);
     }
     
     private static String concatStringParts(String[] split, int start, int end, char tokenizer) {
