@@ -15,7 +15,7 @@ import org.monospark.spongematchers.parser.base.StringMatcherParser;
 import org.monospark.spongematchers.parser.data.DataViewMatcherParser;
 import org.monospark.spongematchers.parser.sponge.ItemEnchantmentMatcherParser;
 import org.monospark.spongematchers.parser.sponge.ItemStackMatcherParser;
-import org.monospark.spongematchers.parser.sponge.ItemStackOrHandMatcherParser;
+import org.monospark.spongematchers.parser.sponge.ItemStackInHandMatcherParser;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -32,8 +32,8 @@ public abstract class SpongeMatcherParser<T> {
 
     public static final SpongeMatcherParser<ItemStack> ITEM_STACK = new ItemStackMatcherParser();
     
-    public static final SpongeMatcherParser<Optional<ItemStack>> ITEM_STACK_OR_HAND =
-            new ItemStackOrHandMatcherParser();
+    public static final SpongeMatcherParser<Optional<ItemStack>> ITEM_STACK_IN_HAND =
+            new ItemStackInHandMatcherParser();
     
     public static final SpongeMatcherParser<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentMatcherParser();
     

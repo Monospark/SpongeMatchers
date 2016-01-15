@@ -5,14 +5,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.matcher.sponge.ItemStackInHandMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.item.inventory.ItemStack;
 
-public class ItemStackOrHandMatcherParser extends SpongeMatcherParser<Optional<ItemStack>> {
+public final class ItemStackInHandMatcherParser extends SpongeMatcherParser<Optional<ItemStack>> {
 
-    public ItemStackOrHandMatcherParser() {
+    public ItemStackInHandMatcherParser() {
         super("item stack or hand");
     }
 
@@ -30,19 +31,9 @@ public class ItemStackOrHandMatcherParser extends SpongeMatcherParser<Optional<I
         String stackPart = matcher.group("stack");
         if (stackPart != null) {
             SpongeMatcher<ItemStack> stackMatcher = SpongeMatcherParser.ITEM_STACK.parseMatcher(stackPart);
-            return new SpongeMatcher<Optional<ItemStack>>() {
-                @Override
-                public boolean matches(Optional<ItemStack> o) {
-                    return o.isPresent() ? stackMatcher.matches(o.get()) : false;
-                } 
-            };
+            return ItemStackInHandMatcher.itemStack(stackMatcher);
         } else {
-            return new SpongeMatcher<Optional<ItemStack>>() {
-                @Override
-                public boolean matches(Optional<ItemStack> o) {
-                    return !o.isPresent();
-                } 
-            };
+            return ItemStackInHandMatcher.hand();
         }
     }
 }
