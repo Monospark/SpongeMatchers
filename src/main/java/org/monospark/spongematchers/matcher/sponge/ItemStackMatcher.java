@@ -1,8 +1,11 @@
-package org.monospark.spongematchers.matcher;
+package org.monospark.spongematchers.matcher.sponge;
 
 import java.util.Collections;
 import java.util.List;
 
+import org.monospark.spongematchers.matcher.BaseMatchers;
+import org.monospark.spongematchers.matcher.CompoundMatcher;
+import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.key.Keys;

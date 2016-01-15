@@ -5,8 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.BaseMatchers;
-import org.monospark.spongematchers.matcher.ItemStackMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.matcher.sponge.ItemStackMatcher;
 import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.item.inventory.ItemStack;
 
