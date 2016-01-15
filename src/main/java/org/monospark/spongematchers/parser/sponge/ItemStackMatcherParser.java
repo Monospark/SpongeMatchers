@@ -1,17 +1,22 @@
-package org.monospark.spongematchers.parser;
+package org.monospark.spongematchers.parser.sponge;
 
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.ItemStackMatcher;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
+import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.item.inventory.ItemStack;
 
 public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack> {
     
+    public ItemStackMatcherParser() {
+        super("item stack");
+    }
+
     @Override
     protected Pattern createAcceptancePattern() {
         return new PatternBuilder()
@@ -37,15 +42,9 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
 
     @Override
     protected SpongeMatcher<ItemStack> parse(Matcher matcher) throws SpongeMatcherParseException {
-        Optional<SpongeMatcher<String>> type = SpongeMatcherParser.STRING.parseMatcher(matcher.group("type"));
-        Optional<SpongeMatcher<Long>> damage = SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("damage"));
-        Optional<SpongeMatcher<Long>> amount = SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("amount"));
-        
-        if (type.isPresent() && damage.isPresent() && amount.isPresent()) {
-                return ItemStackMatcher.create(type.get(), damage.get(), amount.get(), BaseMatchers.wildcard(),
-                        BaseMatchers.wildcard());
-        } else {
-            throw new SpongeMatcherParseException("Invalid item stack matcher: " + matcher.group());
-        }
+        SpongeMatcher<String> type = SpongeMatcherParser.STRING.parseMatcher(matcher.group("type"));
+        SpongeMatcher<Long> damage = SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("damage"));
+        SpongeMatcher<Long> amount = SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("amount"));
+        return ItemStackMatcher.create(type, damage, amount, BaseMatchers.wildcard(), BaseMatchers.wildcard());
     }
 }

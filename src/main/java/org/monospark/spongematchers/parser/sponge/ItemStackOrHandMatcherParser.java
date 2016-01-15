@@ -1,14 +1,20 @@
-package org.monospark.spongematchers.parser;
+package org.monospark.spongematchers.parser.sponge;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
+import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.item.inventory.ItemStack;
 
 public class ItemStackOrHandMatcherParser extends SpongeMatcherParser<Optional<ItemStack>> {
+
+    public ItemStackOrHandMatcherParser() {
+        super("item stack or hand");
+    }
 
     @Override
     protected Pattern createAcceptancePattern() {
@@ -23,15 +29,11 @@ public class ItemStackOrHandMatcherParser extends SpongeMatcherParser<Optional<I
     protected SpongeMatcher<Optional<ItemStack>> parse(Matcher matcher) throws SpongeMatcherParseException {
         String stackPart = matcher.group("stack");
         if (stackPart != null) {
-            Optional<SpongeMatcher<ItemStack>> stackMatcher = SpongeMatcherParser.ITEM_STACK.parseMatcher(stackPart);
-            if (!stackMatcher.isPresent()) {
-                throw new SpongeMatcherParseException("Invalid item stack matcher: " + matcher.group());
-            }
-            
+            SpongeMatcher<ItemStack> stackMatcher = SpongeMatcherParser.ITEM_STACK.parseMatcher(stackPart);
             return new SpongeMatcher<Optional<ItemStack>>() {
                 @Override
                 public boolean matches(Optional<ItemStack> o) {
-                    return o.isPresent() ? stackMatcher.get().matches(o.get()) : false;
+                    return o.isPresent() ? stackMatcher.matches(o.get()) : false;
                 } 
             };
         } else {

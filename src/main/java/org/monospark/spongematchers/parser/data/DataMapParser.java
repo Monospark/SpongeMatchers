@@ -50,7 +50,7 @@ public class DataMapParser extends DataEntryParser<DataMap> {
                     }
 
                     return Optional.of(Maps.immutableEntry(currentMatcher.group("name"), dataEntry.get()));
-                });
+        });
 
         if (!entries.isPresent()) {
             return Optional.empty();

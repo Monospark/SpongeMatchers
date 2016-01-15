@@ -2,10 +2,7 @@ package org.monospark.spongematchers.parser.primitive;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
-
-import java.util.Optional;
 
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
@@ -19,28 +16,26 @@ public class FloatingPointMatcherParserTest {
     public void parseMatcher_Range_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "-1f-3f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(-1D));
-        assertThat(matcher.get(), matches(1D));
-        assertThat(matcher.get(), matches(3D));
-        assertThat(matcher.get(), not(matches(-2D)));
-        assertThat(matcher.get(), not(matches(4D)));
+        assertThat(matcher, matches(-1D));
+        assertThat(matcher, matches(1D));
+        assertThat(matcher, matches(3D));
+        assertThat(matcher, not(matches(-2D)));
+        assertThat(matcher, not(matches(4D)));
     }
     
     @Test
     public void parseMatcher_RangeWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = " -5f --3f ";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
 
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(-5D));
-        assertThat(matcher.get(), matches(-4D));
-        assertThat(matcher.get(), matches(-3D));
-        assertThat(matcher.get(), not(matches(-2D)));
-        assertThat(matcher.get(), not(matches(4D)));
+        assertThat(matcher, matches(-5D));
+        assertThat(matcher, matches(-4D));
+        assertThat(matcher, matches(-3D));
+        assertThat(matcher, not(matches(-2D)));
+        assertThat(matcher, not(matches(4D)));
     }
     
     @Test
@@ -55,102 +50,93 @@ public class FloatingPointMatcherParserTest {
     public void parseMatcher_Value_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "-1.2f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(-1.2D));
-        assertThat(matcher.get(), not(matches(2D)));
+        assertThat(matcher, matches(-1.2D));
+        assertThat(matcher, not(matches(2D)));
     }
     
     @Test
     public void parseMatcher_GreaterThan_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">1.1f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(2D));
-        assertThat(matcher.get(), not(matches(1D)));
+        assertThat(matcher, matches(2D));
+        assertThat(matcher, not(matches(1D)));
     }
     
     @Test
     public void parseMatcher_GreaterThanWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">    .1f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(0.2D));
-        assertThat(matcher.get(), not(matches(0D)));
+        assertThat(matcher, matches(0.2D));
+        assertThat(matcher, not(matches(0D)));
     }
     
     @Test
     public void parseMatcher_GreaterThanOrEqual_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">=1.2f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(2D));
-        assertThat(matcher.get(), matches(1.2D));
-        assertThat(matcher.get(), not(matches(0D)));
+        assertThat(matcher, matches(2D));
+        assertThat(matcher, matches(1.2D));
+        assertThat(matcher, not(matches(0D)));
     }
     
     @Test
     public void parseMatcher_GreaterThanOrEqualWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">=   -3.1f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(-2.5D));
-        assertThat(matcher.get(), matches(-3.1D));
-        assertThat(matcher.get(), not(matches(-4D)));
+        assertThat(matcher, matches(-2.5D));
+        assertThat(matcher, matches(-3.1D));
+        assertThat(matcher, not(matches(-4D)));
     }
     
     @Test
     public void parseMatcher_LessThan_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<1f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(0D));
-        assertThat(matcher.get(), not(matches(2D)));
+        assertThat(matcher, matches(0D));
+        assertThat(matcher, not(matches(2D)));
     }
     
     @Test
     public void parseMatcher_LessThanWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<    2.1f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(2D));
-        assertThat(matcher.get(), not(matches(2.2D)));
+        assertThat(matcher, matches(2D));
+        assertThat(matcher, not(matches(2.2D)));
     }
     
     @Test
     public void parseMatcher_LessThanOrEqual_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<=.992f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(0D));
-        assertThat(matcher.get(), matches(0.992D));
-        assertThat(matcher.get(), not(matches(2D)));
+        assertThat(matcher, matches(0D));
+        assertThat(matcher, matches(0.992D));
+        assertThat(matcher, not(matches(2D)));
     }
     
     @Test
     public void parseMatcher_LessThanOrEqualWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<=   -1.123f";
         
-        Optional<SpongeMatcher<Double>> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
+        SpongeMatcher<Double> matcher = SpongeMatcherParser.FLOATING_POINT.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(-2D));
-        assertThat(matcher.get(), matches(-1.123D));
-        assertThat(matcher.get(), not(matches(-1D)));
+        assertThat(matcher, matches(-2D));
+        assertThat(matcher, matches(-1.123D));
+        assertThat(matcher, not(matches(-1D)));
     }
 }

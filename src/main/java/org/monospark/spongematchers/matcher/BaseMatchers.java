@@ -2,7 +2,6 @@ package org.monospark.spongematchers.matcher;
 
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import com.google.common.collect.Sets;
 
@@ -55,17 +54,6 @@ public final class BaseMatchers {
                     }
                 }
                 return true;
-            }
-        };
-    }
-    
-    public static SpongeMatcher<String> regex(String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        return new SpongeMatcher<String>() {
-
-            @Override
-            public boolean matches(String o) {
-                return pattern.matcher(o).matches();
             }
         };
     }

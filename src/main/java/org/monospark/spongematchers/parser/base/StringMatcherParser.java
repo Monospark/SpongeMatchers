@@ -1,14 +1,20 @@
-package org.monospark.spongematchers.parser;
+package org.monospark.spongematchers.parser.base;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.matcher.base.StringMatcher;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
+import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class StringMatcherParser extends SpongeMatcherParser<String> {
+
+    public StringMatcherParser() {
+        super("string");
+    }
 
     @Override
     protected Pattern createAcceptancePattern() {
@@ -22,7 +28,7 @@ public final class StringMatcherParser extends SpongeMatcherParser<String> {
     @Override
     protected SpongeMatcher<String> parse(Matcher matcher) throws SpongeMatcherParseException {
         try {
-            return BaseMatchers.regex(matcher.group("regex"));
+            return StringMatcher.create(matcher.group("regex"));
         } catch (PatternSyntaxException e) {
             throw new SpongeMatcherParseException(e);
         }

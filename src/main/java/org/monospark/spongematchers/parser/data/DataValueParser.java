@@ -20,11 +20,8 @@ public final class DataValueParser<T> extends DataEntryParser<DataValue<?>> {
     }
 
     Optional<DataValue<?>> parse(String string) throws SpongeMatcherParseException {
-        Optional<SpongeMatcher<T>> spongeMatcher = parser.parseMatcher(string);
-        if (!spongeMatcher.isPresent()) {
-            return Optional.empty();
-        }
-        
-        return Optional.of(new DataValue<T>(type, parser.parseMatcher(string).get()));
+        Optional<SpongeMatcher<T>> matcher = parser.parseMatcherOptional(string);
+        return matcher.isPresent() ? Optional.of(new DataValue<T>(type, parser.parseMatcher(string)))
+                : Optional.empty();
     }
 }

@@ -1,15 +1,19 @@
-package org.monospark.spongematchers.parser.primitive;
+package org.monospark.spongematchers.parser.base;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.primitive.FloatingPointMatchers;
+import org.monospark.spongematchers.matcher.base.FloatingPointMatchers;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double> {
+
+    public FloatingPointMatcherParser() {
+        super("floating point number");
+    }
 
     @Override
     protected Pattern createAcceptancePattern() {

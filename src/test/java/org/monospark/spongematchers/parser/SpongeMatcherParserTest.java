@@ -2,10 +2,7 @@ package org.monospark.spongematchers.parser;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
-
-import java.util.Optional;
 
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
@@ -35,13 +32,12 @@ public class SpongeMatcherParserTest {
     }
     
     private void checkIntegerMatcher(String input) throws SpongeMatcherParseException {
-        Optional<SpongeMatcher<Long>> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
         
-        assertTrue(matcher.isPresent());
-        assertThat(matcher.get(), matches(3L));
-        assertThat(matcher.get(), matches(5L));
-        assertThat(matcher.get(), matches(6L));
-        assertThat(matcher.get(), matches(8L));
-        assertThat(matcher.get(), not(matches(-2L)));
+        assertThat(matcher, matches(3L));
+        assertThat(matcher, matches(5L));
+        assertThat(matcher, matches(6L));
+        assertThat(matcher, matches(8L));
+        assertThat(matcher, not(matches(-2L)));
     }
 }

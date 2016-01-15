@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.matcher.primitive;
+package org.monospark.spongematchers.matcher.base;
 
 import java.util.Arrays;
 

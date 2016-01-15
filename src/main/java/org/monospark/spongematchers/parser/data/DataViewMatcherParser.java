@@ -14,6 +14,10 @@ import org.spongepowered.api.data.DataView;
 
 public final class DataViewMatcherParser extends SpongeMatcherParser<DataView> {
 
+    public DataViewMatcherParser() {
+        super("data view");
+    }
+
     @Override
     protected Pattern createAcceptancePattern() {
         return new PatternBuilder()

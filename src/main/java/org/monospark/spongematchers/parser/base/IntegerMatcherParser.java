@@ -1,15 +1,19 @@
-package org.monospark.spongematchers.parser.primitive;
+package org.monospark.spongematchers.parser.base;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.primitive.IntegerMatchers;
+import org.monospark.spongematchers.matcher.base.IntegerMatchers;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
+
+    public IntegerMatcherParser() {
+        super("integer");
+    }
 
     @Override
     protected Pattern createAcceptancePattern() {

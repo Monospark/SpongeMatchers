@@ -1,16 +1,21 @@
-package org.monospark.spongematchers.parser;
+package org.monospark.spongematchers.parser.sponge;
 
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.SpongeMatchers;
+import org.monospark.spongematchers.matcher.sponge.ItemEnchantmentMatcher;
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
+import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 
 public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchantment> {
+
+    public ItemEnchantmentMatcherParser() {
+        super("item enchantment");
+    }
 
     @Override
     protected Pattern createAcceptancePattern() {
@@ -27,15 +32,9 @@ public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchan
 
     @Override
     protected SpongeMatcher<ItemEnchantment> parse(Matcher matcher) throws SpongeMatcherParseException {
-        Optional<SpongeMatcher<String>> enchantment =
-                SpongeMatcherParser.STRING.parseMatcher(matcher.group("enchantment"));
-        Optional<SpongeMatcher<Long>> level = matcher.group("level") != null ?
+        SpongeMatcher<String> enchantment = SpongeMatcherParser.STRING.parseMatcher(matcher.group("enchantment"));
+        SpongeMatcher<Long> level = matcher.group("level") != null ?
                 SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("level")) : BaseMatchers.wildcard();
-        
-        if (enchantment.isPresent() && level.isPresent()) {
-            return SpongeMatchers.itemEnchantment(enchantment.get(), level.get());
-        } else {
-            throw new SpongeMatcherParseException("Invalid item enchantment matcher: " + matcher.group());
-        }
+        return ItemEnchantmentMatcher.create(enchantment, level);
     }
 }
