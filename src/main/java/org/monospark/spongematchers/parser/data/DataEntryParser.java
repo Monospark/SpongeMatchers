@@ -17,7 +17,9 @@ public abstract class DataEntryParser<T extends DataEntry> {
     private static Set<DataEntryParser<?>> createDataEntryParsers() {
         Set<DataEntryParser<?>> parsers = Sets.newHashSet();
         parsers.add(new DataNullParser());
+        parsers.add(new DataValueParser<Boolean>(Type.BOOLEAN, SpongeMatcherParser.BOOLEAN));
         parsers.add(new DataValueParser<Long>(Type.INTEGER, SpongeMatcherParser.INTEGER));
+        parsers.add(new DataValueParser<Double>(Type.FLOATING_POINT, SpongeMatcherParser.FLOATING_POINT));
         parsers.add(new DataValueParser<String>(Type.STRING, SpongeMatcherParser.STRING));
         parsers.add(new DataListParser());
         parsers.add(new DataMapParser());
@@ -27,9 +29,9 @@ public abstract class DataEntryParser<T extends DataEntry> {
     static Optional<? extends DataEntry> parseDataEntry(String string) throws SpongeMatcherParseException {
         String trimmed = string.trim();
         for (DataEntryParser<?> parser : PARSERS) {
-                Optional<? extends DataEntry> entry = parser.parse(trimmed);
-                if (entry.isPresent()) {
-                    return entry;
+            Optional<? extends DataEntry> entry = parser.parse(trimmed);
+            if (entry.isPresent()) {
+                return entry;
             }
         }
         return Optional.empty();
