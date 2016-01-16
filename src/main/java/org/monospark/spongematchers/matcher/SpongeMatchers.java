@@ -1,6 +1,7 @@
 package org.monospark.spongematchers.matcher;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -54,6 +55,19 @@ public final class SpongeMatchers {
                     }
                 }
                 return true;
+            }
+        };
+    }
+    
+    public static <T> SpongeMatcher<Optional<T>> optionalWrapper(SpongeMatcher<T> matcher, boolean matchOnEmpty) {
+        return new SpongeMatcher<Optional<T>>() {
+            @Override
+            public boolean matches(Optional<T> o) {
+                if (!o.isPresent()) {
+                    return matchOnEmpty;
+                } else {
+                    return matcher.matches(o.get());
+                }
             }
         };
     }
