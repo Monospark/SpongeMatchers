@@ -4,10 +4,8 @@ import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 
-public final class OptionalMatcher {
+public final class OptionalMatcher<T> implements SpongeMatcher<Optional<T>> {
 
-    private OptionalMatcher() {}
-    
     public static <T> SpongeMatcher<Optional<T>> falseOnEmpty(SpongeMatcher<T> matcher) {
         return create(matcher, false); 
     }
@@ -17,15 +15,20 @@ public final class OptionalMatcher {
     }
     
     public static <T> SpongeMatcher<Optional<T>> create(SpongeMatcher<T> matcher, boolean matchOnEmpty) {
-        return new SpongeMatcher<Optional<T>>() {
-            @Override
-            public boolean matches(Optional<T> o) {
-                if (!o.isPresent()) {
-                    return matchOnEmpty;
-                } else {
-                    return matcher.matches(o.get());
-                }
-            }
-        };
+        return new OptionalMatcher<T>(matcher, matchOnEmpty);
+    }
+    
+    private boolean matchOnEmpty;
+    
+    private SpongeMatcher<T> matcher;
+
+    private OptionalMatcher(SpongeMatcher<T> matcher, boolean matchOnEmpty) {
+        this.matcher = matcher;
+        this.matchOnEmpty = matchOnEmpty;
+    }
+
+    @Override
+    public boolean matches(Optional<T> o) {
+        return !o.isPresent() ? matchOnEmpty : matcher.matches(o.get());
     }
 }
