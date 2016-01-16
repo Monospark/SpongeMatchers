@@ -23,30 +23,50 @@ public final class ItemStackMatcher {
     
     public static final class Builder {
         
-        private SpongeMatcher<String> type;
+        private SpongeMatcher<String> typeMatcher;
         
-        private SpongeMatcher<Long> damage;
+        private SpongeMatcher<Long> amountMatcher;
         
         private SpongeMatcher<Long> amount;
         
-        private SpongeMatcher<List<ItemEnchantment>> enchantments;
+        private SpongeMatcher<List<ItemEnchantment>> enchantmentsMatcher;
 
-        private SpongeMatcher<Optional<DataView>> data;
+        private SpongeMatcher<Optional<DataView>> dataMatcher;
         
         private Builder() {
-            damage = SpongeMatchers.wildcard();
+            amountMatcher = SpongeMatchers.wildcard();
             amount = SpongeMatchers.wildcard();
-            enchantments = SpongeMatchers.wildcard();
-            data = SpongeMatchers.wildcard();
+            enchantmentsMatcher = SpongeMatchers.wildcard();
+            dataMatcher = SpongeMatchers.wildcard();
         }
         
-        public Builder type(SpongeMatcher<String> type) {
-            this.type = type;
+        public Builder type(SpongeMatcher<String> typeMatcher) {
+            this.typeMatcher = typeMatcher;
+            return this;
+        }
+        
+        public Builder damage(SpongeMatcher<Long> damageMatcher) {
+            this.amountMatcher = damageMatcher;
+            return this;
+        }
+        
+        public Builder amount(SpongeMatcher<Long> amountMatcher) {
+            this.amountMatcher = amountMatcher;
+            return this;
+        }
+        
+        public Builder enchantments(SpongeMatcher<List<ItemEnchantment>> enchantmentsMatcher) {
+            this.enchantmentsMatcher = enchantmentsMatcher;
+            return this;
+        }
+        
+        public Builder data(SpongeMatcher<Optional<DataView>> dataMatcher) {
+            this.dataMatcher = dataMatcher;
             return this;
         }
         
         public SpongeMatcher<ItemStack> build() {
-            return create(type, damage, amount, enchantments, data);
+            return create(typeMatcher, amountMatcher, amount, enchantmentsMatcher, dataMatcher);
         }
     }
     
