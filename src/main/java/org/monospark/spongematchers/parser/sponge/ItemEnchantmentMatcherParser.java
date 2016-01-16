@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.sponge.ItemEnchantmentMatcher;
+import org.monospark.spongematchers.matcher.sponge.item.ItemEnchantmentMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
