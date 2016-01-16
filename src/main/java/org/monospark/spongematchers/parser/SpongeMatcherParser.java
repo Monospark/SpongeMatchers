@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.matcher.BaseMatchers;
+import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.base.BooleanMatcherParser;
 import org.monospark.spongematchers.parser.base.FloatingPointMatcherParser;
@@ -77,7 +77,7 @@ public abstract class SpongeMatcherParser<T> {
         if (!matchers.isPresent()) {
             return Optional.empty();
         } else {
-            return Optional.of(matchers.get().size() > 1 ? BaseMatchers.amount(Sets.newHashSet(matchers.get())) :
+            return Optional.of(matchers.get().size() > 1 ? SpongeMatchers.amount(Sets.newHashSet(matchers.get())) :
                     matchers.get().get(0));
         }
     }

@@ -1,6 +1,6 @@
 package org.monospark.spongematchers.matcher.sponge.block;
 
-import org.monospark.spongematchers.matcher.BaseMatchers;
+import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.matcher.CompoundMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.spongepowered.api.block.BlockType;
@@ -11,7 +11,7 @@ public final class BlockTypeMatcher {
     private BlockTypeMatcher() {}
     
     public static SpongeMatcher<BlockType> id(SpongeMatcher<String> typeId) {
-        return create(typeId, BaseMatchers.wildcard());
+        return create(typeId, SpongeMatchers.wildcard());
     }
     
     public static SpongeMatcher<BlockType> create(SpongeMatcher<String> typeId,

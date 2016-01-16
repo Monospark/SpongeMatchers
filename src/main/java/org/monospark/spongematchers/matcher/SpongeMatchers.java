@@ -5,9 +5,9 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-public final class BaseMatchers {
+public final class SpongeMatchers {
 
-    private BaseMatchers() {}
+    private SpongeMatchers() {}
     
     public static <T, M extends SpongeMatcher<T>> M wildcard() {
         @SuppressWarnings("unchecked")

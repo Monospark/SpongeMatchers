@@ -3,7 +3,7 @@ package org.monospark.spongematchers.parser.sponge.item;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.matcher.BaseMatchers;
+import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.item.ItemStackMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
@@ -45,6 +45,6 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
         SpongeMatcher<String> type = SpongeMatcherParser.STRING.parseMatcher(matcher.group("type"));
         SpongeMatcher<Long> damage = SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("damage"));
         SpongeMatcher<Long> amount = SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("amount"));
-        return ItemStackMatcher.create(type, damage, amount, BaseMatchers.wildcard(), BaseMatchers.wildcard());
+        return ItemStackMatcher.create(type, damage, amount, SpongeMatchers.wildcard(), SpongeMatchers.wildcard());
     }
 }

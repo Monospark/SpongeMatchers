@@ -3,7 +3,7 @@ package org.monospark.spongematchers.parser.sponge.item;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.matcher.BaseMatchers;
+import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.item.ItemEnchantmentMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
@@ -34,7 +34,7 @@ public class ItemEnchantmentMatcherParser extends SpongeMatcherParser<ItemEnchan
     protected SpongeMatcher<ItemEnchantment> parse(Matcher matcher) throws SpongeMatcherParseException {
         SpongeMatcher<String> enchantment = SpongeMatcherParser.STRING.parseMatcher(matcher.group("enchantment"));
         SpongeMatcher<Long> level = matcher.group("level") != null ?
-                SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("level")) : BaseMatchers.wildcard();
+                SpongeMatcherParser.INTEGER.parseMatcher(matcher.group("level")) : SpongeMatchers.wildcard();
         return ItemEnchantmentMatcher.create(enchantment, level);
     }
 }

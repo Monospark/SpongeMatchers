@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge.item;
 import java.util.Collections;
 import java.util.List;
 
-import org.monospark.spongematchers.matcher.BaseMatchers;
+import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.matcher.CompoundMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.spongepowered.api.data.DataQuery;
@@ -33,10 +33,10 @@ public final class ItemStackMatcher {
         private SpongeMatcher<DataView> data;
         
         private Builder() {
-            damage = BaseMatchers.wildcard();
-            amount = BaseMatchers.wildcard();
-            enchantments = BaseMatchers.wildcard();
-            data = BaseMatchers.wildcard();
+            damage = SpongeMatchers.wildcard();
+            amount = SpongeMatchers.wildcard();
+            enchantments = SpongeMatchers.wildcard();
+            data = SpongeMatchers.wildcard();
         }
         
         public Builder type(SpongeMatcher<String> type) {

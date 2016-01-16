@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
-import org.monospark.spongematchers.matcher.BaseMatchers;
+import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.data.DataEntry;
 import org.monospark.spongematchers.matcher.sponge.data.DataList;
@@ -45,7 +45,7 @@ public class DataListParserTest {
         Set<SpongeMatcher<Long>> matchers = list.getEntries().stream()
                 .<SpongeMatcher<Long>>map(e -> ((DataValue<Long>) e).getMatcher())
                 .collect(Collectors.toSet());
-        SpongeMatcher<Long> amount = BaseMatchers.amount(matchers);
+        SpongeMatcher<Long> amount = SpongeMatchers.amount(matchers);
         assertThat(amount, matches(-6L));
         assertThat(amount, matches(3L));
         assertThat(amount, matches(7L));
