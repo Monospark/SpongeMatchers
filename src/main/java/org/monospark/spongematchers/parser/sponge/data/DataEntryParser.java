@@ -1,10 +1,10 @@
-package org.monospark.spongematchers.parser.data;
+package org.monospark.spongematchers.parser.sponge.data;
 
 import java.util.Optional;
 import java.util.Set;
 
-import org.monospark.spongematchers.matcher.data.DataEntry;
-import org.monospark.spongematchers.matcher.data.DataValue.Type;
+import org.monospark.spongematchers.matcher.sponge.data.DataEntry;
+import org.monospark.spongematchers.matcher.sponge.data.DataValue.Type;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 

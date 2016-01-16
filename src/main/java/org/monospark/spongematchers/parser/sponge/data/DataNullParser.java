@@ -1,8 +1,8 @@
-package org.monospark.spongematchers.parser.data;
+package org.monospark.spongematchers.parser.sponge.data;
 
 import java.util.Optional;
 
-import org.monospark.spongematchers.matcher.data.DataNull;
+import org.monospark.spongematchers.matcher.sponge.data.DataNull;
 
 public final class DataNullParser extends DataEntryParser<DataNull> {
 

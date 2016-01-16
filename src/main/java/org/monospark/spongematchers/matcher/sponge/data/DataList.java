@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.matcher.data;
+package org.monospark.spongematchers.matcher.sponge.data;
 
 import java.util.List;
 import java.util.Optional;

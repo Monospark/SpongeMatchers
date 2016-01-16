@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.primitive;
+package org.monospark.spongematchers.parser.base;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;

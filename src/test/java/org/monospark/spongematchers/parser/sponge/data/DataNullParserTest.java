@@ -1,13 +1,14 @@
-package org.monospark.spongematchers.parser.data;
+package org.monospark.spongematchers.parser.sponge.data;
 
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
 
 import org.junit.Test;
-import org.monospark.spongematchers.matcher.data.DataEntry;
-import org.monospark.spongematchers.matcher.data.DataNull;
+import org.monospark.spongematchers.matcher.sponge.data.DataEntry;
+import org.monospark.spongematchers.matcher.sponge.data.DataNull;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
+import org.monospark.spongematchers.parser.sponge.data.DataEntryParser;
 
 public class DataNullParserTest {
 

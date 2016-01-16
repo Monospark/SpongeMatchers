@@ -1,12 +1,12 @@
-package org.monospark.spongematchers.parser.data;
+package org.monospark.spongematchers.parser.sponge.data;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.monospark.spongematchers.matcher.data.DataEntry;
-import org.monospark.spongematchers.matcher.data.DataList;
+import org.monospark.spongematchers.matcher.sponge.data.DataEntry;
+import org.monospark.spongematchers.matcher.sponge.data.DataList;
 import org.monospark.spongematchers.parser.ParserHelper;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.util.PatternBuilder;

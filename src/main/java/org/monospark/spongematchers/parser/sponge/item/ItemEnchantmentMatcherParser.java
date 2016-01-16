@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.sponge;
+package org.monospark.spongematchers.parser.sponge.item;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.data;
+package org.monospark.spongematchers.parser.sponge.data;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
@@ -8,10 +8,11 @@ import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.match
 import java.util.Optional;
 
 import org.junit.Test;
-import org.monospark.spongematchers.matcher.data.DataEntry;
-import org.monospark.spongematchers.matcher.data.DataValue;
-import org.monospark.spongematchers.matcher.data.DataValue.Type;
+import org.monospark.spongematchers.matcher.sponge.data.DataEntry;
+import org.monospark.spongematchers.matcher.sponge.data.DataValue;
+import org.monospark.spongematchers.matcher.sponge.data.DataValue.Type;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
+import org.monospark.spongematchers.parser.sponge.data.DataEntryParser;
 
 public class DataValueParserTest {
 

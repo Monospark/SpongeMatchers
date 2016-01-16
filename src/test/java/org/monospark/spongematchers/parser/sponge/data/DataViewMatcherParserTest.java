@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.data;
+package org.monospark.spongematchers.parser.sponge.data;
 
 import org.junit.Test;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
