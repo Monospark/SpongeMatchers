@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.matcher;
 
-import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -36,24 +35,6 @@ public final class SpongeMatchers {
                     }
                 }
                 return false;
-            }
-        };
-    }
-    
-    public static <T> SpongeMatcher<List<T>> listWrapper(SpongeMatcher<T> matcher, boolean allMatch) {
-        return new SpongeMatcher<List<T>>() {
-            @Override
-            public boolean matches(List<T> o) {
-                for (T element : o) {
-                    boolean matches = matcher.matches(element);
-                    if (matches && !allMatch) {
-                        return true;
-                    }
-                    else if (!matches && allMatch) {
-                        return false;
-                    }
-                }
-                return true;
             }
         };
     }
