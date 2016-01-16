@@ -36,6 +36,7 @@ public final class ItemStackMatcherParser extends SpongeMatcherParser<ItemStack>
                     .appendCapturingPart(".+", "enchantments")
                     .appendNonCapturingPart(">")
                 .closeParantheses()
+                .appendCapturingPart("\\{.+\\}", "data")
                 .optional()
                 .build();
     }

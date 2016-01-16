@@ -2,10 +2,11 @@ package org.monospark.spongematchers.matcher.sponge.item;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.matcher.CompoundMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.key.Keys;
@@ -30,7 +31,7 @@ public final class ItemStackMatcher {
         
         private SpongeMatcher<List<ItemEnchantment>> enchantments;
 
-        private SpongeMatcher<DataView> data;
+        private SpongeMatcher<Optional<DataView>> data;
         
         private Builder() {
             damage = SpongeMatchers.wildcard();
@@ -51,13 +52,13 @@ public final class ItemStackMatcher {
     
     public static SpongeMatcher<ItemStack> create(SpongeMatcher<String> type, SpongeMatcher<Long> damage,
             SpongeMatcher<Long> amount, SpongeMatcher<List<ItemEnchantment>> enchantments,
-            SpongeMatcher<DataView> data) {
+            SpongeMatcher<Optional<DataView>> data) {
         return CompoundMatcher.<ItemStack>builder()
                 .addMatcher(type, s -> s.getItem().getId())
                 .addMatcher(damage, s -> s.toContainer().getInt(DataQuery.of("UnsafeDamage")).get().longValue())
                 .addMatcher(amount, s -> (long) s.getQuantity())
                 .addMatcher(enchantments, s -> s.get(Keys.ITEM_ENCHANTMENTS).orElse(Collections.emptyList()))
-                .addMatcher(data, s -> s.toContainer().getView(DataQuery.of("UnsafeData")).get())
+                .addMatcher(data, s -> s.toContainer().getView(DataQuery.of("UnsafeData")))
                 .build();
     }
 }
