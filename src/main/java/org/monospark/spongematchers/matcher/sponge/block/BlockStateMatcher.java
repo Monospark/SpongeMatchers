@@ -1,8 +1,8 @@
 package org.monospark.spongematchers.matcher.sponge.block;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.BaseMatchers;
@@ -11,6 +11,8 @@ import org.monospark.spongematchers.matcher.sponge.block.BlockTraitMatcher.Type;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.trait.BlockTrait;
+import org.spongepowered.api.data.DataQuery;
+import org.spongepowered.api.data.DataView;
 
 import com.google.common.collect.Maps;
 
@@ -19,15 +21,24 @@ public final class BlockStateMatcher implements SpongeMatcher<BlockState> {
     private SpongeMatcher<BlockType> typeMatcher;
     
     private Map<String, BlockTraitMatcher<?>> traitMatchers;
+    
+    private SpongeMatcher<Optional<DataView>> dataMatcher;
 
-    private BlockStateMatcher(SpongeMatcher<BlockType> typeMatcher, Map<String, BlockTraitMatcher<?>> traitMatchers) {
+    private BlockStateMatcher(SpongeMatcher<BlockType> typeMatcher, Map<String, BlockTraitMatcher<?>> traitMatchers,
+            SpongeMatcher<Optional<DataView>> dataMatcher) {
         this.typeMatcher = typeMatcher;
         this.traitMatchers = traitMatchers;
+        this.dataMatcher = dataMatcher;
     }
 
     @Override
     public boolean matches(BlockState o) {
         if (!typeMatcher.matches(o.getType())) {
+            return false;
+        }
+        
+        Optional<DataView> data = o.toContainer().getView(DataQuery.of("UnsafeData"));
+        if (!dataMatcher.matches(data)) {
             return false;
         }
 
@@ -59,10 +70,13 @@ public final class BlockStateMatcher implements SpongeMatcher<BlockState> {
         private SpongeMatcher<BlockType> typeMatcher;
         
         private Map<String, BlockTraitMatcher<?>> traitMatchers;
+        
+        private SpongeMatcher<Optional<DataView>> dataMatcher;
 
         public Builder() {
             typeMatcher = BaseMatchers.wildcard();
             traitMatchers = Maps.newHashMap();
+            dataMatcher = BaseMatchers.wildcard();
         }
         
         public Builder type(SpongeMatcher<BlockType> typeMatcher) {
@@ -85,8 +99,13 @@ public final class BlockStateMatcher implements SpongeMatcher<BlockState> {
             return this;
         }
         
+        public Builder data(SpongeMatcher<Optional<DataView>> dataMatcher) {
+            this.dataMatcher = Objects.requireNonNull(dataMatcher);
+            return this;
+        }
+        
         public SpongeMatcher<BlockState> build() {
-            return new BlockStateMatcher(typeMatcher, traitMatchers);
+            return new BlockStateMatcher(typeMatcher, traitMatchers, dataMatcher);
         }
     }
 }
