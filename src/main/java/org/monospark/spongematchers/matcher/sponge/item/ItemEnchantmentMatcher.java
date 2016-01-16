@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.matcher.sponge;
+package org.monospark.spongematchers.matcher.sponge.item;
 
 import org.monospark.spongematchers.matcher.BaseMatchers;
 import org.monospark.spongematchers.matcher.CompoundMatcher;
