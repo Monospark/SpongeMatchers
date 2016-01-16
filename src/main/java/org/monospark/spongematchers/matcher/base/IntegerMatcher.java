@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 
-public final class IntegerMatchers {
+public final class IntegerMatcher {
 
-    private IntegerMatchers() {}
+    private IntegerMatcher() {}
     
     public static SpongeMatcher<Long> value(long value) {
         return new SpongeMatcher<Long>() {

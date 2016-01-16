@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.base.IntegerMatchers;
+import org.monospark.spongematchers.matcher.base.IntegerMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
@@ -56,18 +56,18 @@ public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
             if (start >= end) {
                 throw new SpongeMatcherParseException("The start value of a range must be smaller than the end value");
             }
-            return IntegerMatchers.range(start, end);
+            return IntegerMatcher.range(start, end);
         } else if (matcher.group("value") != null) {
             long value = parseLong(matcher.group("value"));
-            return IntegerMatchers.value(value);
+            return IntegerMatcher.value(value);
         } else if (matcher.group("greater") != null) {
-            return IntegerMatchers.greaterThan(parseLong(matcher.group("greatervalue")));
+            return IntegerMatcher.greaterThan(parseLong(matcher.group("greatervalue")));
         } else if (matcher.group("greaterorequal") != null) {
-            return IntegerMatchers.greaterThanOrEqual(parseLong(matcher.group("greaterorequalvalue")));
+            return IntegerMatcher.greaterThanOrEqual(parseLong(matcher.group("greaterorequalvalue")));
         } else if (matcher.group("less") != null) {
-            return IntegerMatchers.lessThan(parseLong(matcher.group("lessvalue")));
+            return IntegerMatcher.lessThan(parseLong(matcher.group("lessvalue")));
         } else {
-            return IntegerMatchers.lessThanOrEqual(parseLong(matcher.group("lessorequalvalue")));
+            return IntegerMatcher.lessThanOrEqual(parseLong(matcher.group("lessorequalvalue")));
         }
     }
     

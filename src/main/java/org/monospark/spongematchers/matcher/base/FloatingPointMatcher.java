@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 
-public final class FloatingPointMatchers {
+public final class FloatingPointMatcher {
 
-    private FloatingPointMatchers() {}
+    private FloatingPointMatcher() {}
     
     public static SpongeMatcher<Double> value(double value) {
         return new SpongeMatcher<Double>() {

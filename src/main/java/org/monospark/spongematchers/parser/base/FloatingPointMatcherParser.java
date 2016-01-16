@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.base.FloatingPointMatchers;
+import org.monospark.spongematchers.matcher.base.FloatingPointMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
@@ -77,18 +77,18 @@ public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double
             if (start >= end) {
                 throw new SpongeMatcherParseException("The start value of a range must be smaller than the end value");
             }
-            return FloatingPointMatchers.range(start, end);
+            return FloatingPointMatcher.range(start, end);
         } else if (matcher.group("value") != null) {
             double value = parseDouble(matcher.group("value"));
-            return FloatingPointMatchers.value(value);
+            return FloatingPointMatcher.value(value);
         } else if (matcher.group("greater") != null) {
-            return FloatingPointMatchers.greaterThan(parseDouble(matcher.group("greatervalue")));
+            return FloatingPointMatcher.greaterThan(parseDouble(matcher.group("greatervalue")));
         } else if (matcher.group("greaterorequal") != null) {
-            return FloatingPointMatchers.greaterThanOrEqual(parseDouble(matcher.group("greaterorequalvalue")));
+            return FloatingPointMatcher.greaterThanOrEqual(parseDouble(matcher.group("greaterorequalvalue")));
         } else if (matcher.group("less") != null) {
-            return FloatingPointMatchers.lessThan(parseDouble(matcher.group("lessvalue")));
+            return FloatingPointMatcher.lessThan(parseDouble(matcher.group("lessvalue")));
         } else {
-            return FloatingPointMatchers.lessThanOrEqual(parseDouble(matcher.group("lessorequalvalue")));
+            return FloatingPointMatcher.lessThanOrEqual(parseDouble(matcher.group("lessorequalvalue")));
         }
     }
     
