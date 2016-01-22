@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 import com.google.common.collect.Maps;
@@ -38,19 +39,16 @@ public final class MapElementParser extends StringElementParser {
     }
 
     @Override
-    void parse(Matcher matcher, StringElementContext context) {
-        createMap(matcher, context);
-    }
-    
-    private void createMap(Matcher matcher, StringElementContext context) {
+    void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException {
         Map<String,StringElement> entries = Maps.newHashMap();
         Matcher entryMatcher = ENTRY_PATTERN.matcher(matcher.group());
         while (entryMatcher.find()) {
-            String name = matcher.group("entryname");
-            StringElement element = context.getElementAt(entryMatcher.start(), entryMatcher.end());
+            String name = entryMatcher.group("entryname");
+            StringElement element = context.getElementAt(entryMatcher.start("entrycontent"),
+                    entryMatcher.end("entrycontent"));
             context.removeElement(element);
             entries.put(name, element);
         }
-        context.addElement(new MapElement(matcher.start(), matcher.end(), entries));;
+        context.addElement(new MapElement(matcher.start(), matcher.end(), entries));
     }
 }
