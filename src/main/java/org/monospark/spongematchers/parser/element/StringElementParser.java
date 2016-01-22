@@ -41,7 +41,7 @@ public abstract class StringElementParser {
     }
     
     public static StringElement parseStringElement(String string) throws SpongeMatcherParseException {
-        StringElementContext context = new StringElementContext(string);
+        StringElementContext context = new StringElementContext(string.trim());
         BASE_ELEMENT_PARSERS.forEach(p -> p.parseElements(context));
         String lastContextString;
         do {
