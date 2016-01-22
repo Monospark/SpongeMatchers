@@ -22,10 +22,6 @@ public final class StringElementContext {
     }
     
     public StringElement getFinalElement() throws SpongeMatcherParseException {
-        System.out.println(elements);
-        System.out.println(elements.iterator().next().getStart());
-        System.out.println(elements.iterator().next().getEnd());
-        
         if (elements.size() != 1) {
             throw new SpongeMatcherParseException("Invalid input string: " + original);
         }
