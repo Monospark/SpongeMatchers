@@ -13,17 +13,14 @@ public final class ListElementParser extends StringElementParser {
     @Override
     Pattern createPattern() {
         return new PatternBuilder()
-                .openNamedParantheses("list")
-                    .appendNonCapturingPart("[")
-                    .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
-                    .openAnonymousParantheses()
+                .appendNonCapturingPart("\\[")
+                .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
+                .openAnonymousParantheses()
                     .appendNonCapturingPart("\\s*,\\s*")
-                        .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
-                    .closeParantheses()
-                    .zeroOrMore()
-                    .appendNonCapturingPart("]")
+                    .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
                 .closeParantheses()
-                .or()
+                .zeroOrMore()
+                .appendNonCapturingPart("\\]")
                 .build();
     }
 
