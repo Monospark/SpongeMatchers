@@ -12,22 +12,26 @@ public final class MapElementParser extends StringElementParser {
 
     private static final Pattern ENTRY_PATTERN = new PatternBuilder()
             .appendCapturingPart("[^\\{\\},:]+", "entryname")
-            .appendNonCapturingPart(":")
-            .appendNonCapturingPart("\\s*")
+            .appendNonCapturingPart("\\s*:\\s*")
             .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "entrycontent")
             .build();
     
     @Override
     Pattern createPattern() {
+        Pattern entryPattern = new PatternBuilder()
+                .appendNonCapturingPart("[^\\{\\},:]+")
+                .appendNonCapturingPart("\\s*:\\s*")
+                .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
+                .build();
         return new PatternBuilder()
-                .appendNonCapturingPart("{")
-                .appendNonCapturingPart(ENTRY_PATTERN)
+                .appendNonCapturingPart("\\{")
+                .appendNonCapturingPart(entryPattern)
                 .openAnonymousParantheses()
-                .appendNonCapturingPart("\\s*,\\s*")
-                    .appendNonCapturingPart(ENTRY_PATTERN)
+                    .appendNonCapturingPart("\\s*,\\s*")
+                    .appendNonCapturingPart(entryPattern)
                 .closeParantheses()
                 .zeroOrMore()
-                .appendNonCapturingPart("}")
+                .appendNonCapturingPart("\\}")
                 .build();
     }
 
