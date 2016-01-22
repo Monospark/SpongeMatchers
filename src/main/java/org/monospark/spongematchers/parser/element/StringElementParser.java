@@ -42,11 +42,15 @@ public abstract class StringElementParser {
     
     public static StringElement parseStringElement(String string) throws SpongeMatcherParseException {
         StringElementContext context = new StringElementContext(string.trim());
-        BASE_ELEMENT_PARSERS.forEach(p -> p.parseElements(context));
+        for (StringElementParser parser : BASE_ELEMENT_PARSERS) {
+            parser.parseElements(context);
+        }
         String lastContextString;
         do {
             lastContextString = context.getString();
-            OTHER_ELEMENT_PARSERS.forEach(p -> p.parseElements(context));
+            for (StringElementParser parser : OTHER_ELEMENT_PARSERS) {
+                parser.parseElements(context);
+            }
         } while (!lastContextString.equals(context.getString()));
         
         return context.getFinalElement();
@@ -58,7 +62,7 @@ public abstract class StringElementParser {
     
     abstract Pattern createPattern();
     
-    final void parseElements(StringElementContext context) {
+    final void parseElements(StringElementContext context) throws SpongeMatcherParseException {
         if (pattern == null) {
             pattern = createPattern();
         }
@@ -69,5 +73,5 @@ public abstract class StringElementParser {
         }
     }
     
-    abstract void parse(Matcher matcher, StringElementContext context);
+    abstract void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException;
 }

@@ -22,6 +22,10 @@ public final class StringElementContext {
     }
     
     public StringElement getFinalElement() throws SpongeMatcherParseException {
+        System.out.println(elements);
+        System.out.println(elements.iterator().next().getStart());
+        System.out.println(elements.iterator().next().getEnd());
+        
         if (elements.size() != 1) {
             throw new SpongeMatcherParseException("Invalid input string: " + original);
         }
@@ -45,13 +49,13 @@ public final class StringElementContext {
         elements.remove(e);
     }
     
-    public StringElement getElementAt(int start, int end) {
+    public StringElement getElementAt(int start, int end) throws SpongeMatcherParseException {
         for (StringElement e : elements) {
             if (e.getStart() == start && e.getEnd() == end) {
                 return e;
             }
         }
-        return null;
+        throw new SpongeMatcherParseException("No element found at: " + start + " - " + end);
     }
  
     public String getString() {

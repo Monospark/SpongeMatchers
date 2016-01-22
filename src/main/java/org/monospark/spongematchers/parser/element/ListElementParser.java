@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 import com.google.common.collect.Lists;
@@ -27,11 +28,7 @@ public final class ListElementParser extends StringElementParser {
     }
 
     @Override
-    void parse(Matcher matcher, StringElementContext context) {
-        createList(matcher, context);
-    }
-    
-    private void createList(Matcher matcher, StringElementContext context) {
+    void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException {
         List<StringElement> elements = Lists.newArrayList();
         Matcher elementMatcher = StringElementParser.REPLACE_PATTERN.matcher(matcher.group());
         while (elementMatcher.find()) {
@@ -39,6 +36,6 @@ public final class ListElementParser extends StringElementParser {
             context.removeElement(element);
             elements.add(element);
         }
-        context.addElement(new ListElement(matcher.start(), matcher.end(), elements));;
+        context.addElement(new ListElement(matcher.start(), matcher.end(), elements));
     }
 }

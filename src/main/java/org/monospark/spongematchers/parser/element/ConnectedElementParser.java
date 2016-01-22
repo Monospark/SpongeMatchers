@@ -3,6 +3,7 @@ package org.monospark.spongematchers.parser.element;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.util.PatternBuilder;
 
@@ -24,7 +25,7 @@ public final class ConnectedElementParser extends StringElementParser {
     }
 
     @Override
-    void parse(Matcher matcher, StringElementContext context) {
+    void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException {
         StringElement element1 = context.getElementAt(matcher.start("firstelement"), matcher.end("firstelement"));
         StringElement element2 = context.getElementAt(matcher.start("secondelement"), matcher.end("secondelement"));
         Operator op = matcher.group("or") != null ? Operator.OR : Operator.AND;

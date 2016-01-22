@@ -3,6 +3,7 @@ package org.monospark.spongematchers.parser.element;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class PatternElementParser extends StringElementParser {
@@ -19,7 +20,7 @@ public final class PatternElementParser extends StringElementParser {
     }
 
     @Override
-    void parse(Matcher matcher, StringElementContext context) {
+    void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException {
         int start = matcher.start("element");
         int end = matcher.end("element");
         StringElement element = context.getElementAt(start, end);
