@@ -2,7 +2,7 @@ package org.monospark.spongematchers.parser.sponge.data;
 
 import org.junit.Test;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.SpongeMatcherParser;
+import org.monospark.spongematchers.parser.base.BaseMatcherParser;
 import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 public class DataViewMatcherParserTest {
@@ -11,7 +11,7 @@ public class DataViewMatcherParserTest {
     public void parse_DataValue_ReturnsCorrectDataValue() throws SpongeMatcherParseException {
         String input = "<-5";
         
-        SpongeMatcherParser.DATA_VIEW.parseMatcher(input);
+        BaseMatcherParser.DATA_VIEW.parseMatcher(input);
     }
     
     @Test
@@ -19,6 +19,6 @@ public class DataViewMatcherParserTest {
         String input = "<-5!";
         
         ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> SpongeMatcherParser.DATA_VIEW.parseMatcher(input));
+                () -> BaseMatcherParser.DATA_VIEW.parseMatcher(input));
     }
 }

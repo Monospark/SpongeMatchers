@@ -1,8 +1,7 @@
 package org.monospark.spongematchers.matcher.sponge.item;
 
-import org.monospark.spongematchers.matcher.SpongeMatchers;
-import org.monospark.spongematchers.matcher.CompoundMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.matcher.complex.CompoundMatcher;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 
 public final class ItemEnchantmentMatcher {
@@ -10,7 +9,7 @@ public final class ItemEnchantmentMatcher {
     private ItemEnchantmentMatcher() {}
     
     public static SpongeMatcher<ItemEnchantment> create(SpongeMatcher<String> enchantment) {
-        return create(enchantment, SpongeMatchers.wildcard());
+        return create(enchantment, SpongeMatcher.wildcard());
     }
     
     public static SpongeMatcher<ItemEnchantment> create(SpongeMatcher<String> enchantment,

@@ -7,7 +7,6 @@ import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.match
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.SpongeMatcherParser;
 
 public class BooleanMatcherTest {
 
@@ -15,7 +14,7 @@ public class BooleanMatcherTest {
     public void parseMatcher_True_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "true";
         
-        SpongeMatcher<Boolean> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher(input);
+        SpongeMatcher<Boolean> matcher = BaseMatcherParser.BOOLEAN.parseMatcher(input);
         
         assertThat(matcher, matches(true));
         assertThat(matcher, not(matches(false)));
@@ -25,7 +24,7 @@ public class BooleanMatcherTest {
     public void parseMatcher_False_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "false";
         
-        SpongeMatcher<Boolean> matcher = SpongeMatcherParser.BOOLEAN.parseMatcher(input);
+        SpongeMatcher<Boolean> matcher = BaseMatcherParser.BOOLEAN.parseMatcher(input);
         
         assertThat(matcher, matches(false));
         assertThat(matcher, not(matches(true)));

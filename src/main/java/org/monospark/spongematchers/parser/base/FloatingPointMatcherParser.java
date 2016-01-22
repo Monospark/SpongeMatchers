@@ -6,12 +6,11 @@ import java.util.regex.Pattern;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.base.FloatingPointMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
-public final class FloatingPointMatcherParser extends SpongeMatcherParser<Double> {
+public final class FloatingPointMatcherParser extends BaseMatcherParser<Double> {
 
-    public FloatingPointMatcherParser() {
+    FloatingPointMatcherParser() {
         super("floating point number");
     }
 

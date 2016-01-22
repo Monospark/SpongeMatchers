@@ -1,9 +1,11 @@
-package org.monospark.spongematchers.matcher;
+package org.monospark.spongematchers.matcher.complex;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
+
+import org.monospark.spongematchers.matcher.SpongeMatcher;
 
 public final class CompoundMatcher<T> implements SpongeMatcher<T> {
 

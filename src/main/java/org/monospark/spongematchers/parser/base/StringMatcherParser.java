@@ -7,12 +7,11 @@ import java.util.regex.PatternSyntaxException;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.base.StringMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
-public final class StringMatcherParser extends SpongeMatcherParser<String> {
+public final class StringMatcherParser extends BaseMatcherParser<String> {
 
-    public StringMatcherParser() {
+    StringMatcherParser() {
         super("string");
     }
 

@@ -6,13 +6,14 @@ import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.match
 
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.parser.base.BaseMatcherParser;
 import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 public class SpongeMatcherParserTest {
 
     @Test
     public void parseMatcher_NullArgument_ThrowsNullPointerException() {
-        ExceptionChecker.check(NullPointerException.class, () -> SpongeMatcherParser.INTEGER.parseMatcher(null));
+        ExceptionChecker.check(NullPointerException.class, () -> BaseMatcherParser.INTEGER.parseMatcher(null));
     }
     
     @Test
@@ -32,7 +33,7 @@ public class SpongeMatcherParserTest {
     }
     
     private void checkIntegerMatcher(String input) throws SpongeMatcherParseException {
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(3L));
         assertThat(matcher, matches(5L));

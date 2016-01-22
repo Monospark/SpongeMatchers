@@ -7,7 +7,6 @@ import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.match
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 public class IntegerMatcherParserTest {
@@ -16,7 +15,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_Range_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "-1-3";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(-1L));
         assertThat(matcher, matches(1L));
@@ -29,7 +28,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_RangeWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = " -5 --3 ";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
 
         assertThat(matcher, matches(-5L));
         assertThat(matcher, matches(-4L));
@@ -43,14 +42,14 @@ public class IntegerMatcherParserTest {
         String input = "2-1";
         
         ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> SpongeMatcherParser.INTEGER.parseMatcher(input));
+                () -> BaseMatcherParser.INTEGER.parseMatcher(input));
     }
 
     @Test
     public void parseMatcher_Value_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "1";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(1L));
         assertThat(matcher, not(matches(2L)));
@@ -60,7 +59,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_GreaterThan_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">1";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(2L));
         assertThat(matcher, not(matches(1L)));
@@ -70,7 +69,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_GreaterThanWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">    -1";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(0L));
         assertThat(matcher, not(matches(-2L)));
@@ -80,7 +79,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_GreaterThanOrEqual_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">=1";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(2L));
         assertThat(matcher, matches(1L));
@@ -91,7 +90,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_GreaterThanOrEqualWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = ">=   -1";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(0L));
         assertThat(matcher, matches(-1L));
@@ -102,7 +101,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_LessThan_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<1";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(0L));
         assertThat(matcher, not(matches(2L)));
@@ -112,7 +111,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_LessThanWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<    -3";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(-4L));
         assertThat(matcher, not(matches(-2L)));
@@ -122,7 +121,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_LessThanOrEqual_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<=1";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(0L));
         assertThat(matcher, matches(1L));
@@ -133,7 +132,7 @@ public class IntegerMatcherParserTest {
     public void parseMatcher_LessThanOrEqualWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         String input = "<=   -2";
         
-        SpongeMatcher<Long> matcher = SpongeMatcherParser.INTEGER.parseMatcher(input);
+        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(-2L));
         assertThat(matcher, matches(-3L));

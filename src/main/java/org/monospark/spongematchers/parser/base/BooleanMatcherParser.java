@@ -5,12 +5,11 @@ import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.base.BooleanMatcher;
-import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
-public final class BooleanMatcherParser extends SpongeMatcherParser<Boolean> {
+public final class BooleanMatcherParser extends BaseMatcherParser<Boolean> {
 
-    public BooleanMatcherParser() {
+    BooleanMatcherParser() {
         super("boolean");
     }
 

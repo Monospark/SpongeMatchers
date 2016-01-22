@@ -2,8 +2,8 @@ package org.monospark.spongematchers.matcher.sponge;
 
 import java.util.function.Function;
 
-import org.monospark.spongematchers.matcher.CompoundMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.matcher.complex.CompoundMatcher;
 import org.spongepowered.api.world.Location;
 
 import com.flowpowered.math.vector.Vector2i;

@@ -4,9 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.monospark.spongematchers.matcher.CompoundMatcher;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.SpongeMatchers;
+import org.monospark.spongematchers.matcher.complex.CompoundMatcher;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.key.Keys;
@@ -34,10 +33,10 @@ public final class ItemStackMatcher {
         private SpongeMatcher<Optional<DataView>> dataMatcher;
         
         private Builder() {
-            amountMatcher = SpongeMatchers.wildcard();
-            amount = SpongeMatchers.wildcard();
-            enchantmentsMatcher = SpongeMatchers.wildcard();
-            dataMatcher = SpongeMatchers.wildcard();
+            amountMatcher = SpongeMatcher.wildcard();
+            amount = SpongeMatcher.wildcard();
+            enchantmentsMatcher = SpongeMatcher.wildcard();
+            dataMatcher = SpongeMatcher.wildcard();
         }
         
         public Builder type(SpongeMatcher<String> typeMatcher) {

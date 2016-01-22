@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.monospark.spongematchers.matcher.SpongeMatchers;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.block.BlockTraitMatcher.Type;
 import org.spongepowered.api.block.BlockState;
@@ -74,9 +73,9 @@ public final class BlockStateMatcher implements SpongeMatcher<BlockState> {
         private SpongeMatcher<Optional<DataView>> dataMatcher;
 
         public Builder() {
-            typeMatcher = SpongeMatchers.wildcard();
+            typeMatcher = SpongeMatcher.wildcard();
             traitMatchers = Maps.newHashMap();
-            dataMatcher = SpongeMatchers.wildcard();
+            dataMatcher = SpongeMatcher.wildcard();
         }
         
         public Builder type(SpongeMatcher<BlockType> typeMatcher) {

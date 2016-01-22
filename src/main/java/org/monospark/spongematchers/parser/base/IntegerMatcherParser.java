@@ -6,12 +6,11 @@ import java.util.regex.Pattern;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.base.IntegerMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.SpongeMatcherParser;
 import org.monospark.spongematchers.util.PatternBuilder;
 
-public final class IntegerMatcherParser extends SpongeMatcherParser<Long> {
+public final class IntegerMatcherParser extends BaseMatcherParser<Long> {
 
-    public IntegerMatcherParser() {
+    IntegerMatcherParser() {
         super("integer");
     }
 
