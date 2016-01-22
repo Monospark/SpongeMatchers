@@ -8,6 +8,8 @@ import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class ConnectedElementParser extends StringElementParser {
 
+    ConnectedElementParser() {}
+    
     @Override
     Pattern createPattern() {
         return new PatternBuilder()

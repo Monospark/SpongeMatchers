@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 public final class EmptyElementParser extends StringElementParser {
 
+    EmptyElementParser() {}
+    
     @Override
     Pattern createPattern() {
         return Pattern.compile("E|empty");

@@ -16,6 +16,8 @@ public final class MapElementParser extends StringElementParser {
             .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "entrycontent")
             .build();
     
+    MapElementParser() {}
+    
     @Override
     Pattern createPattern() {
         Pattern entryPattern = new PatternBuilder()

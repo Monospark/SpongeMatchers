@@ -15,7 +15,7 @@ public final class StringElementContext {
     
     private Set<StringElement> elements;
 
-    public StringElementContext(String string) {
+    StringElementContext(String string) {
         original = string;
         this.string = string;
         this.elements = Sets.newHashSet();
