@@ -12,7 +12,7 @@ import com.google.common.collect.Maps;
 public final class MapElementParser extends StringElementParser {
 
     private static final Pattern ENTRY_PATTERN = new PatternBuilder()
-            .appendCapturingPart("[^ \\{\\},:]+", "entryname")
+            .appendCapturingPart("[a-zA-Z]+", "entryname")
             .appendNonCapturingPart("\\s*:\\s*")
             .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "entrycontent")
             .build();
@@ -22,7 +22,7 @@ public final class MapElementParser extends StringElementParser {
     @Override
     Pattern createPattern() {
         Pattern entryPattern = new PatternBuilder()
-                .appendNonCapturingPart("[^\\{\\},:]+")
+                .appendNonCapturingPart("[a-zA-Z]+")
                 .appendNonCapturingPart("\\s*:\\s*")
                 .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
                 .build();
