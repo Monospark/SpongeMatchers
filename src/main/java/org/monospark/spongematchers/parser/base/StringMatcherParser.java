@@ -19,7 +19,7 @@ public final class StringMatcherParser extends BaseMatcherParser<String> {
     protected Pattern createAcceptancePattern() {
         return new PatternBuilder()
                 .appendNonCapturingPart("'")
-                .appendCapturingPart(".+", "regex")
+                .appendCapturingPart(".+?", "regex")
                 .appendNonCapturingPart("'")
                 .build();
     }

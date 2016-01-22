@@ -19,11 +19,11 @@ public abstract class StringElementParser {
     private static final Set<StringElementParser> OTHER_ELEMENT_PARSERS = createOtherElementParsers();
     
     private static Set<StringElementParser> createBaseElementParsers() {
-        Set<StringElementParser> baseParsers = Sets.newHashSet();
+        Set<StringElementParser> baseParsers = Sets.newLinkedHashSet();
+        baseParsers.add(new BaseElementParser<>(BaseMatcherParser.STRING));
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.BOOLEAN));
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.INTEGER));
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.FLOATING_POINT));
-        baseParsers.add(new BaseElementParser<>(BaseMatcherParser.STRING));
         baseParsers.add(new EmptyElementParser());
         return baseParsers;
     }
@@ -54,13 +54,15 @@ public abstract class StringElementParser {
 
     private Pattern pattern;
     
-    StringElementParser() {
-        pattern = createPattern();
-    }
+    StringElementParser() {}
     
     abstract Pattern createPattern();
     
     final void parseElements(StringElementContext context) {
+        if (pattern == null) {
+            pattern = createPattern();
+        }
+        
         Matcher matcher = pattern.matcher(context.getString());
         while (matcher.find()) {
             parse(matcher, context);

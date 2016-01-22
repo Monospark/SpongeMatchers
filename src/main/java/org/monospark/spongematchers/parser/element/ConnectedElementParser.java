@@ -12,9 +12,11 @@ public final class ConnectedElementParser extends StringElementParser {
     Pattern createPattern() {
         return new PatternBuilder()
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "firstelement")
-                .appendCapturingPart("\\s*\\|\\s*", "or")
-                .or()
-                .appendCapturingPart("\\s*&\\s*", "and")
+                .openAnonymousParantheses()
+                    .appendCapturingPart("\\s*\\|\\s*", "or")
+                    .or()
+                    .appendCapturingPart("\\s*&\\s*", "and")
+                .closeParantheses() 
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "secondelement")
                 .build();
     }
