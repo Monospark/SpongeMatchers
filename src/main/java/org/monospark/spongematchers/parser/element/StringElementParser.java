@@ -22,8 +22,8 @@ public abstract class StringElementParser {
         Set<StringElementParser> baseParsers = Sets.newLinkedHashSet();
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.STRING));
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.BOOLEAN));
-        baseParsers.add(new BaseElementParser<>(BaseMatcherParser.INTEGER));
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.FLOATING_POINT));
+        baseParsers.add(new BaseElementParser<>(BaseMatcherParser.INTEGER));
         baseParsers.add(new EmptyElementParser());
         return baseParsers;
     }
