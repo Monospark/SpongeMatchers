@@ -15,14 +15,14 @@ public final class ListElementParser extends StringElementParser {
     @Override
     Pattern createPattern() {
         return new PatternBuilder()
-                .appendNonCapturingPart("\\[")
+                .appendNonCapturingPart("\\[\\s*")
                 .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
                 .openAnonymousParantheses()
                     .appendNonCapturingPart("\\s*,\\s*")
                     .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
                 .closeParantheses()
                 .zeroOrMore()
-                .appendNonCapturingPart("\\]")
+                .appendNonCapturingPart("\\s*\\]")
                 .build();
     }
 
