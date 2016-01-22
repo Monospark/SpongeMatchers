@@ -9,7 +9,7 @@ public final class EmptyElementParser extends StringElementParser {
     
     @Override
     Pattern createPattern() {
-        return Pattern.compile("E|empty");
+        return Pattern.compile("(?:E|e)mpty");
     }
 
     @Override
