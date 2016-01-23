@@ -31,7 +31,8 @@ public final class MapType<V> extends MatcherType<Map<String, Object>>{
         for (MapTypeEntry entry : entries) {
             Optional<StringElement> value = mapElement.getElement(entry.getKey());
             if (value.isPresent()) {
-                builder.addOptionalMatcher(entry.getKey(), MatcherType.optional(entry.getType()).parseMatcher(element));
+                builder.addOptionalMatcher(entry.getKey(),
+                        MatcherType.optional(entry.getType()).parseMatcher(value.get()));
             }
         }
         return builder.build();
