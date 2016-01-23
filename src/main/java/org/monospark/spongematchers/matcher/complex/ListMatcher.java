@@ -30,7 +30,7 @@ public final class ListMatcher {
                         return false;
                     }
                 }
-                return true;
+                return allMatch;
             }
         };
     }

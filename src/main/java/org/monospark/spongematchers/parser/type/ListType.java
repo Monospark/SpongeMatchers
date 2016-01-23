@@ -32,10 +32,10 @@ public final class ListType<T> extends MatcherType<List<T>> {
         } else if(element instanceof PatternElement) {
             PatternElement pattern = (PatternElement) element;
             if (pattern.getType().equals(Type.LIST_MATCH_ANY)) {
-                SpongeMatcher<T> matcher = type.parseMatcher(pattern);
+                SpongeMatcher<T> matcher = type.parseMatcher(pattern.getElement());
                 return ListMatcher.matchAny(matcher);
             } else if(pattern.getType().equals(Type.LIST_MATCH_ALL)) {
-                SpongeMatcher<T> matcher = type.parseMatcher(pattern);
+                SpongeMatcher<T> matcher = type.parseMatcher(pattern.getElement());
                 return ListMatcher.matchAll(matcher);
             }
         }
