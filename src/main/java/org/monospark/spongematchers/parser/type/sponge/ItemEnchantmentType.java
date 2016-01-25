@@ -21,8 +21,8 @@ public final class ItemEnchantmentType extends MatcherType<ItemEnchantment> {
     }
 
     @Override
-    public boolean canParse(StringElement element, boolean deep) {
-        return MAP_TYPE.canParse(element, deep);
+    protected boolean canParse(StringElement element, boolean deep) {
+        return MAP_TYPE.canParseMatcher(element, deep);
     }
     
     @Override

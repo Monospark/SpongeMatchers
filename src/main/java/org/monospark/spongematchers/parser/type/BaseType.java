@@ -16,14 +16,14 @@ public final class BaseType<T> extends MatcherType<T> {
     }
 
     @Override
-    public boolean canParse(StringElement element, boolean deep) {
+    protected boolean canParse(StringElement element, boolean deep) {
         if (element instanceof BaseElement) {
             BaseElement<?> base = (BaseElement<?>) element;
             if (!base.getParser().equals(parser)) {
                 return false;
             }
             
-            return deep ? parser.getAcceptancePattern().matcher(element.getString()).matches() : true;
+            return true;
         } else {
             return false;
         }

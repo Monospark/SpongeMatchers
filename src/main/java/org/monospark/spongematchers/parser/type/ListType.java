@@ -23,7 +23,7 @@ public final class ListType<T> extends MatcherType<List<T>> {
 
 
     @Override
-    public boolean canParse(StringElement element, boolean deep) {
+    protected boolean canParse(StringElement element, boolean deep) {
         if (element instanceof ListElement) {
             if (!deep) {
                 return true;

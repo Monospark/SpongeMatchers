@@ -22,7 +22,7 @@ public final class MapType<V> extends MatcherType<Map<String, Object>>{
     }
 
     @Override
-    public boolean canParse(StringElement element, boolean deep) {
+    protected boolean canParse(StringElement element, boolean deep) {
         if (!(element instanceof MapElement)) {
             return false;
         }

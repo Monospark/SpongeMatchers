@@ -16,15 +16,22 @@ import com.google.common.collect.ImmutableSet;
 
 public final class DataViewType extends MatcherType<DataView> {
 
-    private static final Set<MatcherType<?>> TYPES = ImmutableSet.of(MatcherType.DATA_VIEW, MatcherType.BOOLEAN,
-            MatcherType.INTEGER, MatcherType.FLOATING_POINT, MatcherType.STRING);
+    private Set<MatcherType<?>> types;
     
     public DataViewType() {
         super("data view", DataView.class);
     }
+    
+    private Set<MatcherType<?>> getAvailableTypes() {
+        if (types == null) {
+            types = ImmutableSet.of(MatcherType.BOOLEAN, MatcherType.INTEGER,
+                    MatcherType.FLOATING_POINT, MatcherType.STRING);
+        }
+        return types;
+    }
 
     @Override
-    public boolean canParse(StringElement element, boolean deep) {
+    protected boolean canParse(StringElement element, boolean deep) {
         if (!(element instanceof MapElement)) {
             return false;
         }
@@ -35,11 +42,11 @@ public final class DataViewType extends MatcherType<DataView> {
         
         MapElement mapElement = (MapElement) element;
         out: for (Entry<String, StringElement> entry : mapElement.getElements().entrySet()) {
-            for (MatcherType<?> type : TYPES) {
-                if (MatcherType.optional(type).canParse(entry.getValue(), true)) {
+            for (MatcherType<?> type : getAvailableTypes()) {
+                if (MatcherType.optional(type).canParseMatcher(entry.getValue(), true)) {
                     continue out;
                 }
-                if (MatcherType.optional(MatcherType.list(type)).canParse(element, true)) {
+                if (MatcherType.optional(MatcherType.list(type)).canParseMatcher(element, true)) {
                     continue out;
                 }
             }
@@ -60,12 +67,12 @@ public final class DataViewType extends MatcherType<DataView> {
     }
     
     private DataMatcher parseDataMatcher(StringElement element) throws SpongeMatcherParseException {
-        for (MatcherType<?> type : TYPES) {
-            if (MatcherType.optional(type).canParse(element, true)) {
+        for (MatcherType<?> type : getAvailableTypes()) {
+            if (MatcherType.optional(type).canParseMatcher(element, true)) {
                 return new DataMatcher(MatcherType.optional(type).parseMatcher(element), type.getObjectClass());
             }
             
-            if (MatcherType.optional(MatcherType.list(type)).canParse(element, true)) {
+            if (MatcherType.optional(MatcherType.list(type)).canParseMatcher(element, true)) {
                 return new DataMatcher(MatcherType.optional(MatcherType.list(type)).parseMatcher(element),
                         type.getObjectClass());
             }

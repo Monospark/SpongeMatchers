@@ -18,7 +18,7 @@ public final class OptionalType<T> extends MatcherType<Optional<T>> {
     }
 
     @Override
-    public boolean canParse(StringElement element, boolean deep) {
+    protected boolean canParse(StringElement element, boolean deep) {
         if (deep && !(element instanceof EmptyElement)) {
             return type.canParse(element, true);
         } else {

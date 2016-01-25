@@ -54,10 +54,6 @@ public abstract class MatcherType<T> {
     }
     
     public final SpongeMatcher<T> parseMatcher(StringElement element) throws SpongeMatcherParseException {
-        if (!canParse(element, false)) {
-            throw new SpongeMatcherParseException("Invalid " + name + " matcher: " + element.getString());
-        }
-        
         if (element instanceof ConnectedElement) {
             ConnectedElement con = (ConnectedElement) element;
             SpongeMatcher<T> matcher1 = parseMatcher(con.getFirstElement());
@@ -71,11 +67,30 @@ public abstract class MatcherType<T> {
             } else if(p.getType() == Type.PARANTHESES) {
                 return parseMatcher(p.getElement());
             }
-        } 
+        }
+        
+        if (!canParse(element, false)) {
+            throw new SpongeMatcherParseException("Invalid " + name + " matcher: " + element.getString());
+        }
+        
         return parse(element);
     }
     
-    public abstract boolean canParse(StringElement element, boolean deep);
+    public final boolean canParseMatcher(StringElement element, boolean deep) {
+        if (element instanceof ConnectedElement) {
+            ConnectedElement con = (ConnectedElement) element;
+            return canParseMatcher(con.getFirstElement(), deep) && canParseMatcher(con.getSecondElement(), deep);
+        } else if (element instanceof PatternElement) {
+            PatternElement p = (PatternElement) element;
+            if (p.getType() == Type.NOT || p.getType() == Type.PARANTHESES) {
+                return canParseMatcher(p.getElement(), deep);
+            }
+        }
+        
+        return canParse(element, deep);
+    }
+    
+    protected abstract boolean canParse(StringElement element, boolean deep);
     
     protected abstract SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException;
 
