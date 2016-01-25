@@ -38,11 +38,6 @@ public final class ListType<T> extends MatcherType<List<T>> {
             return true;
         } else if(element instanceof PatternElement) {
             PatternElement pattern = (PatternElement) element;
-            boolean listPattern = pattern.getType() == Type.LIST_MATCH_ANY || pattern.getType() == Type.LIST_MATCH_ALL;
-            if (!listPattern) {
-                return false;
-            }
-            
             return deep ? type.canParse(pattern.getElement(), true) : true;
         } else {
             return false;
