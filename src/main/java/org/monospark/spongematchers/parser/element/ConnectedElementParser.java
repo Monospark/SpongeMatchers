@@ -32,6 +32,6 @@ public final class ConnectedElementParser extends StringElementParser {
         
         context.removeElement(element1);
         context.removeElement(element2);
-        context.addElement(new ConnectedElement(matcher.start(), matcher.end(), element1, element2, op));
+        context.addElement(new ConnectedElement(matcher, element1, element2, op));
     }
 }

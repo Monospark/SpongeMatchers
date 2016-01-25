@@ -14,6 +14,6 @@ public final class EmptyElementParser extends StringElementParser {
 
     @Override
     void parse(Matcher matcher, StringElementContext context) {
-        context.addElement(new EmptyElement(matcher.start(), matcher.end()));
+        context.addElement(new EmptyElement(matcher));
     }
 }

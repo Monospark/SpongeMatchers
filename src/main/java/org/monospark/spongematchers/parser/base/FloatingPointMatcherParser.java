@@ -11,7 +11,7 @@ import org.monospark.spongematchers.util.PatternBuilder;
 public final class FloatingPointMatcherParser extends BaseMatcherParser<Double> {
 
     FloatingPointMatcherParser() {
-        super("floating point number");
+        super("floating point number", Double.class);
     }
 
     @Override

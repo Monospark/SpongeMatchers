@@ -11,7 +11,7 @@ import org.monospark.spongematchers.util.PatternBuilder;
 public final class IntegerMatcherParser extends BaseMatcherParser<Long> {
 
     IntegerMatcherParser() {
-        super("integer");
+        super("integer", Long.class);
     }
 
     @Override

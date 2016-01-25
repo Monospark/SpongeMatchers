@@ -18,11 +18,14 @@ public abstract class BaseMatcherParser<T> {
     public static final BaseMatcherParser<String> STRING = new StringMatcherParser();
     
     private String name;
+    
+    private Class<T> baseClass;
 
     private Pattern acceptancePattern;
 
-    BaseMatcherParser(String name) {
+    BaseMatcherParser(String name, Class<T> baseClass) {
         this.name = name;
+        this.baseClass = baseClass;
         acceptancePattern = createAcceptancePattern();
     }
 
@@ -44,6 +47,10 @@ public abstract class BaseMatcherParser<T> {
 
     public String getName() {
         return name;
+    }
+
+    public Class<T> getBaseClass() {
+        return baseClass;
     }
 
     public Pattern getAcceptancePattern() {

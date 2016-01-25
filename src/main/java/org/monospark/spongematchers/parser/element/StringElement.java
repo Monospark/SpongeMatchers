@@ -1,15 +1,19 @@
 package org.monospark.spongematchers.parser.element;
 
+import java.util.regex.Matcher;
 
 public abstract class StringElement {
     
     private int start;
     
     private int end;
+    
+    private String string;
 
-    StringElement(int start, int end) {
-        this.start = start;
-        this.end = end;
+    StringElement(Matcher matcher) {
+        start = matcher.start();
+        end = matcher.end();
+        string = matcher.group();
     } 
 
     public int getStart() {
@@ -18,5 +22,9 @@ public abstract class StringElement {
 
     public int getEnd() {
         return end;
+    }
+
+    public String getString() {
+        return string;
     }
 }

@@ -1,5 +1,7 @@
 package org.monospark.spongematchers.parser.element;
 
+import java.util.regex.Matcher;
+
 public final class ConnectedElement extends StringElement {
 
     private StringElement firstElement;
@@ -8,8 +10,8 @@ public final class ConnectedElement extends StringElement {
     
     private Operator operator;
     
-    ConnectedElement(int start, int end, StringElement firstElement, StringElement secondElement, Operator operator) {
-        super(start, end);
+    ConnectedElement(Matcher matcher, StringElement firstElement, StringElement secondElement, Operator operator) {
+        super(matcher);
         this.firstElement = firstElement;
         this.secondElement = secondElement;
         this.operator = operator;

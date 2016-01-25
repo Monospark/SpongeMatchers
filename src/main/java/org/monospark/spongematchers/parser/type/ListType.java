@@ -17,11 +17,40 @@ public final class ListType<T> extends MatcherType<List<T>> {
     private MatcherType<T> type;
 
     ListType(MatcherType<T> type) {
+        super(type.getName() + " list", List.class);
         this.type = type;
     }
 
+
     @Override
-    SpongeMatcher<List<T>> parse(StringElement element) throws SpongeMatcherParseException {
+    public boolean canParse(StringElement element, boolean deep) {
+        if (element instanceof ListElement) {
+            if (!deep) {
+                return true;
+            }
+            
+            ListElement list = (ListElement) element;
+            for (StringElement e : list.getElements()) {
+                if (!type.canParse(e, true)) {
+                    return false;
+                }
+            }
+            return true;
+        } else if(element instanceof PatternElement) {
+            PatternElement pattern = (PatternElement) element;
+            boolean listPattern = pattern.getType() == Type.LIST_MATCH_ANY || pattern.getType() == Type.LIST_MATCH_ALL;
+            if (!listPattern) {
+                return false;
+            }
+            
+            return deep ? type.canParse(pattern.getElement(), true) : true;
+        } else {
+            return false;
+        }
+    }
+    
+    @Override
+    protected SpongeMatcher<List<T>> parse(StringElement element) throws SpongeMatcherParseException {
         if (element instanceof ListElement) {
             ListElement list = (ListElement) element;
             List<SpongeMatcher<T>> matchers = Lists.newArrayList();
@@ -39,7 +68,6 @@ public final class ListType<T> extends MatcherType<List<T>> {
                 return ListMatcher.matchAll(matcher);
             }
         }
-        
-        throw new SpongeMatcherParseException("The element must be a list matcher");
+        throw new AssertionError();
     }
 }

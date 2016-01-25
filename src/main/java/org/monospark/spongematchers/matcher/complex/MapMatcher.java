@@ -21,6 +21,13 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
     public boolean matches(Map<String, Object> o) {
         for (MatcherEntry entry : entries) {
             Optional<?> object = Optional.ofNullable(o.get(entry.getKey()));
+            if (object.isPresent()) {
+                Class<?> objectClass = object.get().getClass();
+                if (!entry.getValueClass().isAssignableFrom(objectClass)) {
+                    return false;
+                }
+            }
+            
             SpongeMatcher<Optional<?>> matcher = entry.getMatcher();
             boolean matches = matcher.matches(object);
             if (!matches) {
@@ -42,13 +49,13 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
             entries = Sets.newHashSet();
         }
         
-        public <T> Builder addMatcher(String key, SpongeMatcher<T> matcher) {
-            entries.add(new MatcherEntry(key, MatcherHelper.genericWrapper(OptionalMatcher.wrapper(matcher))));
+        public <T> Builder addMatcher(String key, Class<?> valueClass, SpongeMatcher<T> matcher) {
+            entries.add(new MatcherEntry(key, valueClass, MatcherHelper.genericWrapper(OptionalMatcher.wrapper(matcher))));
             return this;
         }
         
-        public <T> Builder addOptionalMatcher(String key, SpongeMatcher<Optional<T>> matcher) {
-            entries.add(new MatcherEntry(key, MatcherHelper.genericWrapper(matcher)));
+        public <T> Builder addOptionalMatcher(String key, Class<?> valueClass, SpongeMatcher<Optional<T>> matcher) {
+            entries.add(new MatcherEntry(key, valueClass, MatcherHelper.genericWrapper(matcher)));
             return this;
         }
         
@@ -61,18 +68,25 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
         
         private String key;
         
+        private Class<?> valueClass;
+        
         private SpongeMatcher<Optional<?>> matcher;
 
-        private MatcherEntry(String key, SpongeMatcher<Optional<?>> matcher) {
+        private MatcherEntry(String key, Class<?> valueClass, SpongeMatcher<Optional<?>> matcher) {
             this.key = key;
+            this.valueClass = valueClass;
             this.matcher = matcher;
         }
 
-        public String getKey() {
+        private String getKey() {
             return key;
         }
 
-        public SpongeMatcher<Optional<?>> getMatcher() {
+        private Class<?> getValueClass() {
+            return valueClass;
+        }
+
+        private SpongeMatcher<Optional<?>> getMatcher() {
             return matcher;
         }
     }

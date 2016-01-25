@@ -11,22 +11,28 @@ public final class BaseType<T> extends MatcherType<T> {
     private BaseMatcherParser<T> parser;
 
     BaseType(BaseMatcherParser<T> parser) {
-        super();
+        super(parser.getName(), parser.getBaseClass());
         this.parser = parser;
     }
 
+    @Override
+    public boolean canParse(StringElement element, boolean deep) {
+        if (element instanceof BaseElement) {
+            BaseElement<?> base = (BaseElement<?>) element;
+            if (!base.getParser().equals(parser)) {
+                return false;
+            }
+            
+            return deep ? parser.getAcceptancePattern().matcher(element.getString()).matches() : true;
+        } else {
+            return false;
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     @Override
-    public SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException {
-        if (!(element instanceof BaseElement)) {
-            throw new SpongeMatcherParseException("The element must be a " + parser.getName() + " matcher");
-        }
-        
+    protected SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException {
         BaseElement<?> e = (BaseElement<?>) element;
-        if (!e.getParser().equals(parser)) {
-            throw new SpongeMatcherParseException("Expected matcher: " + parser.getName() + ", but got: " +
-                    e.getParser().getName());
-        }
         return (SpongeMatcher<T>) e.getParser().parseMatcher(e.getString());
     }
 

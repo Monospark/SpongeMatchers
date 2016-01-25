@@ -13,16 +13,25 @@ public final class OptionalType<T> extends MatcherType<Optional<T>> {
     private MatcherType<T> type;
 
     OptionalType(MatcherType<T> type) {
+        super("optional " + type.getName(), Optional.class);
         this.type = type;
     }
 
     @Override
-    public SpongeMatcher<Optional<T>> parse(StringElement element) throws SpongeMatcherParseException {
+    public boolean canParse(StringElement element, boolean deep) {
+        if (deep && !(element instanceof EmptyElement)) {
+            return type.canParse(element, true);
+        } else {
+            return true;
+        }
+    }
+    
+    @Override
+    protected SpongeMatcher<Optional<T>> parse(StringElement element) throws SpongeMatcherParseException {
         if (element instanceof EmptyElement) {
             return OptionalMatcher.matchEmpty();
         } else {
             return OptionalMatcher.wrapper(type.parseMatcher(element));
         }
     }
-
 }

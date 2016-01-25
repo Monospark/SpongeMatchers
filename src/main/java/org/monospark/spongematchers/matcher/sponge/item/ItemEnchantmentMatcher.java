@@ -1,22 +1,33 @@
 package org.monospark.spongematchers.matcher.sponge.item;
 
+import java.util.Map;
+
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.CompoundMatcher;
+import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.sponge.SpongeObjectMatcher;
+import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 
-public final class ItemEnchantmentMatcher {
+public final class ItemEnchantmentMatcher extends SpongeObjectMatcher<ItemEnchantment> {
 
-    private ItemEnchantmentMatcher() {}
-    
-    public static SpongeMatcher<ItemEnchantment> create(SpongeMatcher<String> enchantment) {
-        return create(enchantment, SpongeMatcher.wildcard());
+    public static SpongeMatcher<ItemEnchantment> create(SpongeMatcher<String> id, SpongeMatcher<Long> level) {
+        return new ItemEnchantmentMatcher(MapMatcher.builder()
+                .addMatcher("id", String.class, id)
+                .addMatcher("level", Long.class, level)
+                .build());
     }
     
-    public static SpongeMatcher<ItemEnchantment> create(SpongeMatcher<String> enchantment,
-            SpongeMatcher<Long> level) {
-        return CompoundMatcher.<ItemEnchantment>builder()
-                .addMatcher(enchantment, e -> e.getEnchantment().getId())
-                .addMatcher(level, e -> (long) e.getLevel())
-                .build();
+    public static ItemEnchantmentMatcher create(SpongeMatcher<Map<String, Object>> matcher) {
+        return new ItemEnchantmentMatcher(matcher);
+    }
+    
+    private ItemEnchantmentMatcher(SpongeMatcher<Map<String, Object>> matcher) {
+        super(matcher);
+    }
+
+    @Override
+    protected void fillMap(ItemEnchantment o, Map<String, Object> map) {
+        map.put("id", o.getEnchantment().getId());
+        map.put("level", o.toContainer().getLong(DataQuery.of("UnsafeDamage")).get());
     }
 }

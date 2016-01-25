@@ -1,21 +1,17 @@
 package org.monospark.spongematchers.matcher.sponge.item;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.CompoundMatcher;
+import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.sponge.SpongeObjectMatcher;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
-import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.item.inventory.ItemStack;
 
-public final class ItemStackMatcher {
+public final class ItemStackMatcher extends SpongeObjectMatcher<ItemStack> {
 
-    private ItemStackMatcher() {}
-    
     public static Builder builder() {
         return new Builder();
     }
@@ -27,15 +23,12 @@ public final class ItemStackMatcher {
         private SpongeMatcher<Long> amountMatcher;
         
         private SpongeMatcher<Long> amount;
-        
-        private SpongeMatcher<List<ItemEnchantment>> enchantmentsMatcher;
 
         private SpongeMatcher<Optional<DataView>> dataMatcher;
         
         private Builder() {
             amountMatcher = SpongeMatcher.wildcard();
             amount = SpongeMatcher.wildcard();
-            enchantmentsMatcher = SpongeMatcher.wildcard();
             dataMatcher = SpongeMatcher.wildcard();
         }
         
@@ -53,31 +46,40 @@ public final class ItemStackMatcher {
             this.amountMatcher = amountMatcher;
             return this;
         }
-        
-        public Builder enchantments(SpongeMatcher<List<ItemEnchantment>> enchantmentsMatcher) {
-            this.enchantmentsMatcher = enchantmentsMatcher;
-            return this;
-        }
-        
+
         public Builder data(SpongeMatcher<Optional<DataView>> dataMatcher) {
             this.dataMatcher = dataMatcher;
             return this;
         }
         
         public SpongeMatcher<ItemStack> build() {
-            return create(typeMatcher, amountMatcher, amount, enchantmentsMatcher, dataMatcher);
+            return create(typeMatcher, amountMatcher, amount, dataMatcher);
         }
     }
     
     public static SpongeMatcher<ItemStack> create(SpongeMatcher<String> type, SpongeMatcher<Long> damage,
-            SpongeMatcher<Long> amount, SpongeMatcher<List<ItemEnchantment>> enchantments,
-            SpongeMatcher<Optional<DataView>> data) {
-        return CompoundMatcher.<ItemStack>builder()
-                .addMatcher(type, s -> s.getItem().getId())
-                .addMatcher(damage, s -> s.toContainer().getInt(DataQuery.of("UnsafeDamage")).get().longValue())
-                .addMatcher(amount, s -> (long) s.getQuantity())
-                .addMatcher(enchantments, s -> s.get(Keys.ITEM_ENCHANTMENTS).orElse(Collections.emptyList()))
-                .addMatcher(data, s -> s.toContainer().getView(DataQuery.of("UnsafeData")))
-                .build();
+            SpongeMatcher<Long> amount, SpongeMatcher<Optional<DataView>> data) {
+        return new ItemStackMatcher(MapMatcher.builder()
+                .addMatcher("type", String.class, type)
+                .addMatcher("durability", Long.class, damage)
+                .addMatcher("quantity", Long.class, amount)
+                .addMatcher("data", DataView.class, data)
+                .build());
+    }
+
+    public static ItemStackMatcher create(SpongeMatcher<Map<String, Object>> matcher) {
+        return new ItemStackMatcher(matcher);
+    }
+    
+    private ItemStackMatcher(SpongeMatcher<Map<String, Object>> matcher) {
+        super(matcher);
+    }
+
+    @Override
+    protected void fillMap(ItemStack o, Map<String, Object> map) {
+        map.put("type", o.getItem().getId());
+        map.put("durability", o.toContainer().getLong(DataQuery.of("UnsafeDamage")).get());
+        map.put("quantity", (long) o.getQuantity());
+        map.put("data", o.toContainer().getView(DataQuery.of("UnsafeData")));
     }
 }

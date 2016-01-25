@@ -12,7 +12,7 @@ import org.monospark.spongematchers.util.PatternBuilder;
 public final class StringMatcherParser extends BaseMatcherParser<String> {
 
     StringMatcherParser() {
-        super("string");
+        super("string", String.class);
     }
 
     @Override

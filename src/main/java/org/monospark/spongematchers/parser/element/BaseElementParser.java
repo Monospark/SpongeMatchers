@@ -20,6 +20,6 @@ public final class BaseElementParser<T> extends StringElementParser {
 
     @Override
     void parse(Matcher matcher, StringElementContext context) {
-        context.addElement(new BaseElement<>(matcher.start(), matcher.end(), matcher.group(), parser));
+        context.addElement(new BaseElement<>(matcher, parser));
     }
 }

@@ -17,22 +17,55 @@ public final class MapType<V> extends MatcherType<Map<String, Object>>{
     private Set<MapTypeEntry> entries;
     
     private MapType(Set<MapTypeEntry> entries) {
+        super("map", Map.class);
         this.entries = entries;
     }
 
     @Override
-    SpongeMatcher<Map<String, Object>> parse(StringElement element) throws SpongeMatcherParseException {
+    public boolean canParse(StringElement element, boolean deep) {
         if (!(element instanceof MapElement)) {
-            throw new SpongeMatcherParseException("The element must be a map matcher");
+            return false;
         }
         
+        MapElement map = (MapElement) element;
+        out: for (String key : map.getElements().keySet()) {
+            for (MapTypeEntry entry : entries) {
+                if (key.equals(entry.getKey())) {
+                    continue out;
+                }
+            }
+            
+            //The map element contains an unknown entry
+            return false;
+        }
+        
+        if (!deep) {
+            return true;
+        }
+        
+        for (MapTypeEntry entry : entries) {
+            Optional<StringElement> value = map.getElement(entry.getKey());
+            if (value.isPresent()) {
+                boolean canParse = entry.getType().canParse(value.get(), true);
+                if (!canParse) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    @Override
+    protected SpongeMatcher<Map<String, Object>> parse(StringElement element) throws SpongeMatcherParseException {
         MapMatcher.Builder builder = MapMatcher.builder();
         MapElement mapElement = (MapElement) element;
         for (MapTypeEntry entry : entries) {
             Optional<StringElement> value = mapElement.getElement(entry.getKey());
             if (value.isPresent()) {
-                builder.addOptionalMatcher(entry.getKey(),
+                builder.addOptionalMatcher(entry.getKey(), entry.getType().getObjectClass(),
                         MatcherType.optional(entry.getType()).parseMatcher(value.get()));
+            } else {
+                builder.addOptionalMatcher(entry.getKey(), entry.getType().getObjectClass(), SpongeMatcher.wildcard());
             }
         }
         return builder.build();

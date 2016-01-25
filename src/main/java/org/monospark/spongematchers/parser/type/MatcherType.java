@@ -13,6 +13,10 @@ import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElementParser.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.type.MapType.Builder;
+import org.monospark.spongematchers.parser.type.sponge.DataViewType;
+import org.monospark.spongematchers.parser.type.sponge.ItemEnchantmentType;
+import org.spongepowered.api.data.DataView;
+import org.spongepowered.api.data.meta.ItemEnchantment;
 
 public abstract class MatcherType<T> {
 
@@ -23,7 +27,11 @@ public abstract class MatcherType<T> {
     public static final MatcherType<Double> FLOATING_POINT = new BaseType<>(BaseMatcherParser.FLOATING_POINT);
     
     public static final MatcherType<String> STRING = new BaseType<>(BaseMatcherParser.STRING);
+
+    public static final MatcherType<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentType();
     
+    public static final MatcherType<DataView> DATA_VIEW = new DataViewType();
+
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
     }
@@ -36,7 +44,20 @@ public abstract class MatcherType<T> {
         return new OptionalType<T>(type);
     }
     
+    private String name;
+    
+    private Class<?> objectClass;
+    
+    protected MatcherType(String name, Class<?> objectClass) {
+        this.name = name;
+        this.objectClass = objectClass;
+    }
+    
     public final SpongeMatcher<T> parseMatcher(StringElement element) throws SpongeMatcherParseException {
+        if (!canParse(element, false)) {
+            throw new SpongeMatcherParseException("Invalid " + name + " matcher: " + element.getString());
+        }
+        
         if (element instanceof ConnectedElement) {
             ConnectedElement con = (ConnectedElement) element;
             SpongeMatcher<T> matcher1 = parseMatcher(con.getFirstElement());
@@ -54,5 +75,15 @@ public abstract class MatcherType<T> {
         return parse(element);
     }
     
-    abstract SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException;
+    public abstract boolean canParse(StringElement element, boolean deep);
+    
+    protected abstract SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException;
+
+    public String getName() {
+        return name;
+    }
+
+    public Class<?> getObjectClass() {
+        return objectClass;
+    }
 }

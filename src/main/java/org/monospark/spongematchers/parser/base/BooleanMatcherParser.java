@@ -10,7 +10,7 @@ import org.monospark.spongematchers.util.PatternBuilder;
 public final class BooleanMatcherParser extends BaseMatcherParser<Boolean> {
 
     BooleanMatcherParser() {
-        super("boolean");
+        super("boolean", Boolean.class);
     }
 
     @Override
