@@ -1,33 +1,32 @@
-package org.monospark.spongematchers.matcher.sponge.location;
+package org.monospark.spongematchers.matcher.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
-import org.monospark.spongematchers.matcher.sponge.SpongeObjectMatcher;
 import org.spongepowered.api.world.Location;
 
-public final class PositionLocationMatcher extends SpongeObjectMatcher<Location<?>> {
+public final class BlockLocationMatcher extends SpongeObjectMatcher<Location<?>> {
 
     public static SpongeMatcher<Location<?>> create(SpongeMatcher<Long> x, SpongeMatcher<Long> y) {
         SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
                 .addMatcher("x", Long.class, x)
                 .addMatcher("y", Long.class, y)
                 .build();
-        return new PositionLocationMatcher(matcher);
+        return new BlockLocationMatcher(matcher);
     }
     
     public static SpongeMatcher<Location<?>> create(SpongeMatcher<Map<String, Object>> matcher) {
-        return new PositionLocationMatcher(matcher);
+        return new BlockLocationMatcher(matcher);
     }
     
-    private PositionLocationMatcher(SpongeMatcher<Map<String, Object>> matcher) {
+    private BlockLocationMatcher(SpongeMatcher<Map<String, Object>> matcher) {
         super(matcher);
     }
 
     @Override
     public boolean matches(Location<?> o) {
-        if (o.hasBiome() || o.hasBlock()) {
+        if (!o.hasBlock()) {
             return false;
         }
         
@@ -36,7 +35,7 @@ public final class PositionLocationMatcher extends SpongeObjectMatcher<Location<
 
     @Override
     protected void fillMap(Location<?> o, Map<String, Object> map) {
-        map.put("x", o.getPosition().getX());
-        map.put("y", o.getPosition().getY());
+        map.put("x", o.getBlockPosition().getX());
+        map.put("y", o.getBlockPosition().getY());
     }
 }

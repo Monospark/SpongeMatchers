@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.matcher.sponge.block;
+package org.monospark.spongematchers.matcher.sponge;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
-import org.monospark.spongematchers.matcher.sponge.SpongeObjectMatcher;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.trait.BlockTrait;

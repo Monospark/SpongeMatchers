@@ -1,10 +1,9 @@
-package org.monospark.spongematchers.matcher.sponge.block;
+package org.monospark.spongematchers.matcher.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
-import org.monospark.spongematchers.matcher.sponge.SpongeObjectMatcher;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.property.PropertyHolder;
 

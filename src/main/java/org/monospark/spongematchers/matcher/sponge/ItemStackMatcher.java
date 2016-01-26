@@ -1,11 +1,10 @@
-package org.monospark.spongematchers.matcher.sponge.item;
+package org.monospark.spongematchers.matcher.sponge;
 
 import java.util.Map;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
-import org.monospark.spongematchers.matcher.sponge.SpongeObjectMatcher;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.item.inventory.ItemStack;
