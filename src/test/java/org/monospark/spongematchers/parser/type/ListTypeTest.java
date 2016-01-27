@@ -1,5 +1,6 @@
 package org.monospark.spongematchers.parser.type;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
@@ -11,17 +12,54 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
-import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 import com.google.common.collect.Lists;
 
-public class ListTypeMatcher {
+public class ListTypeTest {
 
     @Test
-    public void parseMatcher_NonListElement_ThrowsException() throws SpongeMatcherParseException {
+    public void canParse_NonListElement_ReturnsFalse() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("1");
+        
+        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, false);
+        
+        assertThat(canParse, is(false));
+    }
+    
+    @Test
+    public void canParse_DifferentPatternElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("empty");
-        ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element));
+        
+        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, false);
+        
+        assertThat(canParse, is(false));
+    }
+    
+    @Test
+    public void canParse_DeepAndDifferentElementType_ReturnsFalse() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("[1,2]");
+        
+        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, true);
+        
+        assertThat(canParse, is(false));
+    }
+    
+    @Test
+    public void canParse_ListMatchAnyAndDeepAndDifferentElementType_ReturnsFalse() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("any:1");
+        
+        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, true);
+        
+        assertThat(canParse, is(false));
+    }
+
+    @Test
+    public void canParse_DeepAndValidListElement_ReturnsTrue() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("[true,false]");
+        
+        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, true);
+        
+        assertThat(canParse, is(true));
     }
     
     @Test
