@@ -44,8 +44,8 @@ public final class MapElementParser extends StringElementParser {
         Matcher entryMatcher = ENTRY_PATTERN.matcher(matcher.group());
         while (entryMatcher.find()) {
             String name = entryMatcher.group("entryname");
-            StringElement element = context.getElementAt(entryMatcher.start("entrycontent"),
-                    entryMatcher.end("entrycontent"));
+            StringElement element = context.getElementAt(matcher.start() + entryMatcher.start("entrycontent"),
+                    matcher.start() + entryMatcher.end("entrycontent"));
             context.removeElement(element);
             entries.put(name, element);
         }

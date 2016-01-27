@@ -32,7 +32,8 @@ public final class ListElementParser extends StringElementParser {
         List<StringElement> elements = Lists.newArrayList();
         Matcher elementMatcher = StringElementParser.REPLACE_PATTERN.matcher(matcher.group());
         while (elementMatcher.find()) {
-            StringElement element = context.getElementAt(elementMatcher.start(), elementMatcher.end());
+            StringElement element = context.getElementAt(matcher.start() + elementMatcher.start(),
+                    matcher.start() + elementMatcher.end());
             context.removeElement(element);
             elements.add(element);
         }
