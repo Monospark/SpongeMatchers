@@ -14,10 +14,38 @@ import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
 import org.monospark.spongematchers.type.MatcherType;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 public class ListTypeTest {
 
+    @Test
+    public void canMatch_NonList_ReturnsFalse() throws SpongeMatcherParseException {
+        Object o = 5;
+        
+        boolean canMatch = MatcherType.list(MatcherType.BOOLEAN).canMatch(o);
+        
+        assertThat(canMatch, is(false));
+    }
+    
+    @Test
+    public void canMatch_ListWithElementsOfDifferentType_ReturnsFalse() throws SpongeMatcherParseException {
+        Object o = ImmutableList.of(1, 2, 3);
+        
+        boolean canMatch = MatcherType.list(MatcherType.BOOLEAN).canMatch(o);
+        
+        assertThat(canMatch, is(false));
+    }
+    
+    @Test
+    public void canMatch_ListWithElementsOfSameType_ReturnsTrue() throws SpongeMatcherParseException {
+        Object o = ImmutableList.of(true, false, false);
+        
+        boolean canMatch = MatcherType.list(MatcherType.BOOLEAN).canMatch(o);
+        
+        assertThat(canMatch, is(true));
+    }
+    
     @Test
     public void canParse_NonListElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("1");

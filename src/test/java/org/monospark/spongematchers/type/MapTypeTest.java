@@ -12,12 +12,38 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
-import org.monospark.spongematchers.type.MatcherType;
 
 import com.google.common.collect.ImmutableMap;
 
 public class MapTypeTest {
 
+    @Test
+    public void canMatch_NonMap_ReturnsFalse() throws SpongeMatcherParseException {
+        Object o = 5;
+        
+        boolean canMatch = MatcherType.map().addEntry("test", MatcherType.BOOLEAN).build().canMatch(o);
+        
+        assertThat(canMatch, is(false));
+    }
+    
+    @Test
+    public void canMatch_MapWithValueOfDifferentType_ReturnsFalse() throws SpongeMatcherParseException {
+        Object o = ImmutableMap.of("test", 1);
+        
+        boolean canMatch = MatcherType.map().addEntry("test", MatcherType.BOOLEAN).build().canMatch(o);
+        
+        assertThat(canMatch, is(false));
+    }
+    
+    @Test
+    public void canMatch_MapWithValueOfSameType_ReturnsTrue() throws SpongeMatcherParseException {
+        Object o = ImmutableMap.of("test", true);
+        
+        boolean canMatch = MatcherType.map().addEntry("test", MatcherType.BOOLEAN).build().canMatch(o);
+        
+        assertThat(canMatch, is(true));
+    }
+    
     @Test
     public void canParse_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("empty");

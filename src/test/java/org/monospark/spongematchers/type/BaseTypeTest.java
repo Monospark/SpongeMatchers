@@ -15,6 +15,24 @@ import org.monospark.spongematchers.type.MatcherType;
 public class BaseTypeTest {
 
     @Test
+    public void canMatch_DifferentClasses_ReturnsFalse() throws SpongeMatcherParseException {
+        Object o = 5;
+        
+        boolean canMatch = MatcherType.BOOLEAN.canMatch(o);
+        
+        assertThat(canMatch, is(false));
+    }
+    
+    @Test
+    public void canMatch_SameClasses_ReturnsTrue() throws SpongeMatcherParseException {
+        Object o = true;
+        
+        boolean canMatch = MatcherType.BOOLEAN.canMatch(o);
+        
+        assertThat(canMatch, is(true));
+    }
+    
+    @Test
     public void canParse_NonBaseElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("empty");
         
