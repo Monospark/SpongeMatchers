@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.type;
+package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElementParser;
+import org.monospark.spongematchers.type.MatcherType;
 
 public class MatcherTypeTest {
 

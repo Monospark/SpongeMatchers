@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.type;
+package org.monospark.spongematchers.type;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +12,9 @@ import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElementParser.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.monospark.spongematchers.parser.type.MapType.Builder;
-import org.monospark.spongematchers.parser.type.sponge.DataViewType;
-import org.monospark.spongematchers.parser.type.sponge.ItemEnchantmentType;
+import org.monospark.spongematchers.type.MapType.Builder;
+import org.monospark.spongematchers.type.sponge.DataViewType;
+import org.monospark.spongematchers.type.sponge.ItemEnchantmentType;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 
@@ -45,13 +45,12 @@ public abstract class MatcherType<T> {
     }
     
     private String name;
-    
-    private Class<?> objectClass;
-    
-    protected MatcherType(String name, Class<?> objectClass) {
+
+    protected MatcherType(String name) {
         this.name = name;
-        this.objectClass = objectClass;
     }
+    
+    public abstract boolean canMatch(Object o);
     
     public final SpongeMatcher<T> parseMatcher(StringElement element) throws SpongeMatcherParseException {
         if (element instanceof ConnectedElement) {
@@ -96,9 +95,5 @@ public abstract class MatcherType<T> {
 
     public String getName() {
         return name;
-    }
-
-    public Class<?> getObjectClass() {
-        return objectClass;
     }
 }

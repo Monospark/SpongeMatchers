@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 
@@ -11,8 +12,8 @@ public final class ItemEnchantmentMatcher extends SpongeObjectMatcher<ItemEnchan
 
     public static SpongeMatcher<ItemEnchantment> create(SpongeMatcher<String> id, SpongeMatcher<Long> level) {
         return new ItemEnchantmentMatcher(MapMatcher.builder()
-                .addMatcher("id", String.class, id)
-                .addMatcher("level", Long.class, level)
+                .addMatcher("id", MatcherType.STRING, id)
+                .addMatcher("level", MatcherType.INTEGER, level)
                 .build());
     }
     

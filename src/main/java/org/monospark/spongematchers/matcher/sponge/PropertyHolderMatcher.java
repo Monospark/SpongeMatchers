@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.property.PropertyHolder;
 
 public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHolder> {
@@ -34,17 +35,17 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
         }
         
         public Builder addBooleanProperty(String name, SpongeMatcher<Boolean> matcher) {
-            builder.addMatcher(name, Boolean.class, matcher);
+            builder.addMatcher(name, MatcherType.BOOLEAN, matcher);
             return this;
         }
         
         public Builder addIntegerProperty(String name, SpongeMatcher<Long> matcher) {
-            builder.addMatcher(name, Long.class, matcher);
+            builder.addMatcher(name, MatcherType.INTEGER, matcher);
             return this;
         }
         
         public Builder addFloatingPointProperty(String name, SpongeMatcher<Double> matcher) {
-            builder.addMatcher(name, Double.class, matcher);
+            builder.addMatcher(name, MatcherType.FLOATING_POINT, matcher);
             return this;
         }
         

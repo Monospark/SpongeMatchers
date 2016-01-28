@@ -1,6 +1,8 @@
-package org.monospark.spongematchers.parser.type.sponge;
+package org.monospark.spongematchers.type.sponge;
 
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
@@ -9,7 +11,7 @@ import org.monospark.spongematchers.matcher.sponge.DataViewMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.MapElement;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.monospark.spongematchers.parser.type.MatcherType;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.DataView;
 
 import com.google.common.collect.ImmutableSet;
@@ -19,7 +21,13 @@ public final class DataViewType extends MatcherType<DataView> {
     private Set<MatcherType<?>> types;
     
     public DataViewType() {
-        super("data view", DataView.class);
+        super("data view");
+    }
+
+    @Override
+    public boolean canMatch(Object o) {
+        // TODO Auto-generated method stub
+        return false;
     }
     
     private Set<MatcherType<?>> getAvailableTypes() {
@@ -60,44 +68,59 @@ public final class DataViewType extends MatcherType<DataView> {
         MapElement mapElement = (MapElement) element;
         MapMatcher.Builder builder = MapMatcher.builder();
         for (Entry<String, StringElement> entry : mapElement.getElements().entrySet()) {
-            DataMatcher parsedMatcher = parseDataMatcher(entry.getValue());
-            builder.addMatcher(entry.getKey(), parsedMatcher.getObjectClass(), parsedMatcher.getMatcher());
+            DataMatcher<?> parsedMatcher = parseDataMatcher(entry.getValue());
+            addDataMatcher(entry.getKey(), parsedMatcher, builder);
         }
         return DataViewMatcher.create(builder.build());
     }
     
-    private DataMatcher parseDataMatcher(StringElement element) throws SpongeMatcherParseException {
+    private <T> void addDataMatcher(String name, DataMatcher<T> matcher, MapMatcher.Builder builder)
+            throws SpongeMatcherParseException {
+        builder.addOptionalMatcher(name, matcher.getType(), matcher.getMatcher());
+    }
+    
+    private DataMatcher<?> parseDataMatcher(StringElement element) throws SpongeMatcherParseException {
         for (MatcherType<?> type : getAvailableTypes()) {
-            if (MatcherType.optional(type).canParseMatcher(element, true)) {
-                return new DataMatcher(MatcherType.optional(type).parseMatcher(element), type.getObjectClass());
-            }
-            
-            if (MatcherType.optional(MatcherType.list(type)).canParseMatcher(element, true)) {
-                return new DataMatcher(MatcherType.optional(MatcherType.list(type)).parseMatcher(element),
-                        type.getObjectClass());
+            DataMatcher<?> matcher = parseDataMatcherForType(type, element);
+            if (matcher != null) {
+                return matcher;
             }
         }
         
         throw new SpongeMatcherParseException("Invalid data matcher: " + element.getString());
     }
     
-    private static final class DataMatcher {
+    private <T> DataMatcher<?> parseDataMatcherForType(MatcherType<T> type, StringElement element)
+            throws SpongeMatcherParseException {
+        if (MatcherType.optional(type).canParseMatcher(element, true)) {
+            return new DataMatcher<T>(MatcherType.optional(type).parseMatcher(element), type);
+        }
         
-        private SpongeMatcher<?> matcher;
+        if (MatcherType.optional(MatcherType.list(type)).canParseMatcher(element, true)) {
+            return new DataMatcher<List<T>>(MatcherType.optional(MatcherType.list(type)).parseMatcher(element),
+                    MatcherType.list(type));
+        }
         
-        private Class<?> objectClass;
+        return null;
+    }
+    
+    private static final class DataMatcher<T> {
+        
+        private SpongeMatcher<Optional<T>> matcher;
+        
+        private MatcherType<T> type;
 
-        private DataMatcher(SpongeMatcher<?> matcher, Class<?> objectClass) {
+        private DataMatcher(SpongeMatcher<Optional<T>> matcher, MatcherType<T> type) {
             this.matcher = matcher;
-            this.objectClass = objectClass;
+            this.type = type;
         }
  
-        public SpongeMatcher<?> getMatcher() {
+        public SpongeMatcher<Optional<T>> getMatcher() {
             return matcher;
         }
 
-        public Class<?> getObjectClass() {
-            return objectClass;
+        public MatcherType<T> getType() {
+            return type;
         }
     }
 }

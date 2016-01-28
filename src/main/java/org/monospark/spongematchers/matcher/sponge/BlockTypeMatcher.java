@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.property.PropertyHolder;
 
@@ -15,7 +16,7 @@ public final class BlockTypeMatcher extends SpongeObjectMatcher<BlockType> {
     
     public static SpongeMatcher<BlockType> create(SpongeMatcher<String> id, SpongeMatcher<PropertyHolder> properties) {
         return new BlockTypeMatcher(MapMatcher.builder()
-                .addMatcher("id", String.class, id)
+                .addMatcher("id", MatcherType.STRING, id)
                 .addMatcher("properties", PropertyHolder.class, properties)
                 .build());
     }

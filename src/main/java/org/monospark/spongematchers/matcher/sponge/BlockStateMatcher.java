@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.trait.BlockTrait;
@@ -22,7 +23,7 @@ public final class BlockStateMatcher extends SpongeObjectMatcher<BlockState> {
         return new BlockStateMatcher(MapMatcher.builder()
                 .addMatcher("type", BlockType.class, type)
                 .addMatcher("traits", Map.class, traits)
-                .addOptionalMatcher("data", DataView.class, data)
+                .addOptionalMatcher("data", MatcherType.DATA_VIEW, data)
                 .build());
     }
     

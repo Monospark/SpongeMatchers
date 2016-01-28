@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.type;
+package org.monospark.spongematchers.type;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
@@ -11,10 +11,15 @@ public final class BaseType<T> extends MatcherType<T> {
     private BaseMatcherParser<T> parser;
 
     BaseType(BaseMatcherParser<T> parser) {
-        super(parser.getName(), parser.getBaseClass());
+        super(parser.getName());
         this.parser = parser;
     }
 
+    @Override
+    public boolean canMatch(Object o) {
+        return parser.getBaseClass().equals(o.getClass());
+    }
+    
     @Override
     protected boolean canParse(StringElement element, boolean deep) {
         if (element instanceof BaseElement) {

@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.type.sponge;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.ItemStackMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.monospark.spongematchers.parser.type.MatcherType;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.item.inventory.ItemStack;
 
 public final class ItemStackType extends MatcherType<ItemStack> {
@@ -18,7 +18,12 @@ public final class ItemStackType extends MatcherType<ItemStack> {
             .build();
     
     public ItemStackType() {
-        super("item stack", ItemStack.class);
+        super("item stack");
+    }
+
+    @Override
+    public boolean canMatch(Object o) {
+        return o instanceof ItemStack;
     }
 
     @Override

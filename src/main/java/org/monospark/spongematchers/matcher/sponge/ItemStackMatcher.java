@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -59,10 +60,10 @@ public final class ItemStackMatcher extends SpongeObjectMatcher<ItemStack> {
     public static SpongeMatcher<ItemStack> create(SpongeMatcher<String> type, SpongeMatcher<Long> damage,
             SpongeMatcher<Long> amount, SpongeMatcher<Optional<DataView>> data) {
         return new ItemStackMatcher(MapMatcher.builder()
-                .addMatcher("type", String.class, type)
-                .addMatcher("durability", Long.class, damage)
-                .addMatcher("quantity", Long.class, amount)
-                .addMatcher("data", DataView.class, data)
+                .addMatcher("type", MatcherType.STRING, type)
+                .addMatcher("durability", MatcherType.INTEGER, damage)
+                .addMatcher("quantity", MatcherType.INTEGER, amount)
+                .addOptionalMatcher("data", MatcherType.DATA_VIEW, data)
                 .build());
     }
 

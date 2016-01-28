@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.parser.type;
+package org.monospark.spongematchers.type;
 
 import java.util.List;
 
@@ -17,11 +17,26 @@ public final class ListType<T> extends MatcherType<List<T>> {
     private MatcherType<T> type;
 
     ListType(MatcherType<T> type) {
-        super(type.getName() + " list", List.class);
+        super(type.getName() + " list");
         this.type = type;
     }
 
-
+    @Override
+    public boolean canMatch(Object o) {
+        if (!(o instanceof List)) {
+            return false;
+        }
+        
+        List<?> list = (List<?>) o;
+        for (Object element : list) {
+            if (!type.canMatch(element)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     @Override
     protected boolean canParse(StringElement element, boolean deep) {
         if (element instanceof ListElement) {
