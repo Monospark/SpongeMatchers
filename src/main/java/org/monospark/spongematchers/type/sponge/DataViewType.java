@@ -26,8 +26,7 @@ public final class DataViewType extends MatcherType<DataView> {
 
     @Override
     public boolean canMatch(Object o) {
-        // TODO Auto-generated method stub
-        return false;
+        return o instanceof DataView;
     }
     
     private Set<MatcherType<?>> getAvailableTypes() {
