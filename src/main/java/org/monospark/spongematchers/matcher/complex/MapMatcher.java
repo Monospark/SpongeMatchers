@@ -74,13 +74,13 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
         
         private String key;
         
-        private MatcherType<Optional<T>> type;
+        private MatcherType<T> type;
         
         private SpongeMatcher<Optional<T>> matcher;
 
         private MatcherEntry(String key, MatcherType<T> type, SpongeMatcher<Optional<T>> matcher) {
             this.key = key;
-            this.type = MatcherType.optional(type);
+            this.type = type;
             this.matcher = matcher;
         }
 
@@ -88,7 +88,7 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
             return key;
         }
 
-        public MatcherType<Optional<T>> getType() {
+        public MatcherType<T> getType() {
             return type;
         }
 
