@@ -15,6 +15,11 @@ public final class OptionalMatcher {
             public boolean matches(Optional<T> o) {
                 return !o.isPresent();
             }
+
+            @Override
+            public String toString() {
+               return "empty";
+            }
         };
     }
     
@@ -24,6 +29,11 @@ public final class OptionalMatcher {
             @Override
             public boolean matches(Optional<T> o) {
                 return o.isPresent() ? matcher.matches(o.get()) : false;
+            }
+
+            @Override
+            public String toString() {
+               return matcher.toString() + "(optional)";
             }
         };
     }

@@ -32,6 +32,11 @@ public final class ListMatcher {
                 }
                 return allMatch;
             }
+            
+            @Override
+            public String toString() {
+               return (allMatch ? "all:" : "any:") + matcher.toString();
+            }
         };
     }
     
@@ -54,6 +59,11 @@ public final class ListMatcher {
                     }
                 }
                 return true;
+            }
+            
+            @Override
+            public String toString() {
+               return matchers.toString();
             }
         };
     }

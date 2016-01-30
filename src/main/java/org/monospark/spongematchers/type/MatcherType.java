@@ -3,7 +3,6 @@ package org.monospark.spongematchers.type;
 import java.util.List;
 import java.util.Optional;
 
-import org.monospark.spongematchers.matcher.MatcherLogic;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.base.BaseMatcherParser;
@@ -64,12 +63,12 @@ public abstract class MatcherType<T> {
             ConnectedElement con = (ConnectedElement) element;
             SpongeMatcher<T> matcher1 = parseMatcher(con.getFirstElement());
             SpongeMatcher<T> matcher2 = parseMatcher(con.getSecondElement());
-            return con.getOperator() == Operator.AND ? MatcherLogic.and(matcher1, matcher2)
-                    : MatcherLogic.or(matcher1, matcher2);
+            return con.getOperator() == Operator.AND ? SpongeMatcher.and(matcher1, matcher2)
+                    : SpongeMatcher.or(matcher1, matcher2);
         } else if (element instanceof PatternElement) {
             PatternElement p = (PatternElement) element;
             if (p.getType() == Type.NOT) {
-                return MatcherLogic.not(parseMatcher(p.getElement()));
+                return SpongeMatcher.not(parseMatcher(p.getElement()));
             } else if(p.getType() == Type.PARANTHESES) {
                 return parseMatcher(p.getElement());
             }

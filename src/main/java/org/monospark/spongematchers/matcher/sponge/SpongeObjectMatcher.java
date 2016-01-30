@@ -22,4 +22,9 @@ public abstract class SpongeObjectMatcher<T> implements SpongeMatcher<T> {
     }
 
     protected abstract void fillMap(T o, Map<String, Object> map);
+
+    @Override
+    public String toString() {
+       return matcher.toString();
+    }
 }

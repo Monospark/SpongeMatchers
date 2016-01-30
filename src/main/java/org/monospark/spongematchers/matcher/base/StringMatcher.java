@@ -16,6 +16,11 @@ public final class StringMatcher {
             public boolean matches(String o) {
                 return pattern.matcher(o).matches();
             }
+            
+            @Override
+            public String toString() {
+               return regex;
+            }
         };
     }
 }

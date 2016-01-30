@@ -1,7 +1,5 @@
 package org.monospark.spongematchers.matcher.base;
 
-import java.util.Arrays;
-
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 
 public final class FloatingPointMatcher {
@@ -13,6 +11,11 @@ public final class FloatingPointMatcher {
             @Override
             public boolean matches(Double o) {
                 return o.doubleValue() == value;
+            }
+            
+            @Override
+            public String toString() {
+               return Double.toString(value);
             }
         };
     }
@@ -30,14 +33,10 @@ public final class FloatingPointMatcher {
             public boolean matches(Double o) {
                 return o.doubleValue() >= start && o.doubleValue() <= end;
             }
-        };
-    }
-    
-    public static SpongeMatcher<Double> amount(double[] values) {
-        return new SpongeMatcher<Double>() {
+            
             @Override
-            public boolean matches(Double o) {
-                return Arrays.stream(values).anyMatch(i -> o.doubleValue() == i);
+            public String toString() {
+               return Double.toString(start) + "-" + Double.toString(end);
             }
         };
     }
@@ -48,6 +47,11 @@ public final class FloatingPointMatcher {
             public boolean matches(Double o) {
                 return o.doubleValue() > value;
             }
+            
+            @Override
+            public String toString() {
+               return ">" + Double.toString(value);
+            }
         };
     }
     
@@ -56,6 +60,11 @@ public final class FloatingPointMatcher {
             @Override
             public boolean matches(Double o) {
                 return o.doubleValue() >= value;
+            }
+            
+            @Override
+            public String toString() {
+               return ">=" + Double.toString(value);
             }
         };
     }
@@ -66,6 +75,11 @@ public final class FloatingPointMatcher {
             public boolean matches(Double o) {
                 return o.doubleValue() < value;
             }
+            
+            @Override
+            public String toString() {
+               return "<" + Double.toString(value);
+            }
         };
     }
     
@@ -74,6 +88,11 @@ public final class FloatingPointMatcher {
             @Override
             public boolean matches(Double o) {
                 return o.doubleValue() <= value;
+            }
+            
+            @Override
+            public String toString() {
+               return "<=" + Double.toString(value);
             }
         };
     }

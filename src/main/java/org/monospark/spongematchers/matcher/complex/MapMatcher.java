@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.monospark.spongematchers.matcher.MatcherHelper;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 
@@ -41,6 +40,19 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
         boolean matches = matcher.matches(object);
         return matches;
     }
+
+    @Override
+    public String toString() {
+       StringBuilder builder = new StringBuilder();
+       builder.append("{");
+       for (MatcherEntry<?> entry : entries) {
+           builder.append(entry.getKey()).append(":").append(entry.getMatcher().toString());
+           builder.append(",");
+       }
+       builder.deleteCharAt(builder.length() - 1);
+       builder.append("}");
+       return builder.toString();
+    }
     
     public static Builder builder() {
         return new Builder();
@@ -55,13 +67,12 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
         }
         
         public <T> Builder addMatcher(String key, MatcherType<T> type, SpongeMatcher<T> matcher) {
-            entries.add(new MatcherEntry<T>(key, type,
-                    MatcherHelper.genericWrapper(OptionalMatcher.wrapper(matcher))));
+            entries.add(new MatcherEntry<T>(key, type, OptionalMatcher.wrapper(matcher)));
             return this;
         }
         
         public <T> Builder addOptionalMatcher(String key, MatcherType<T> type, SpongeMatcher<Optional<T>> matcher) {
-            entries.add(new MatcherEntry<T>(key, type, MatcherHelper.genericWrapper(matcher)));
+            entries.add(new MatcherEntry<T>(key, type, matcher));
             return this;
         }
         

@@ -1,7 +1,5 @@
 package org.monospark.spongematchers.matcher.base;
 
-import java.util.Arrays;
-
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 
 public final class IntegerMatcher {
@@ -13,6 +11,11 @@ public final class IntegerMatcher {
             @Override
             public boolean matches(Long o) {
                 return o.longValue() == value;
+            }
+            
+            @Override
+            public String toString() {
+               return Long.toString(value);
             }
         };
     }
@@ -30,23 +33,24 @@ public final class IntegerMatcher {
             public boolean matches(Long o) {
                 return o.longValue() >= start && o.longValue() <= end;
             }
-        };
-    }
-    
-    public static SpongeMatcher<Long> amount(long[] values) {
-        return new SpongeMatcher<Long>() {
+            
             @Override
-            public boolean matches(Long o) {
-                return Arrays.stream(values).anyMatch(i -> o.longValue() == i);
+            public String toString() {
+               return Long.toString(start) + "-" + Long.toString(end);
             }
         };
     }
-    
+
     public static SpongeMatcher<Long> greaterThan(long value) {
         return new SpongeMatcher<Long>() {
             @Override
             public boolean matches(Long o) {
                 return o.longValue() > value;
+            }
+            
+            @Override
+            public String toString() {
+               return ">" + Long.toString(value);
             }
         };
     }
@@ -57,6 +61,11 @@ public final class IntegerMatcher {
             public boolean matches(Long o) {
                 return o.longValue() >= value;
             }
+            
+            @Override
+            public String toString() {
+               return ">=" + Long.toString(value);
+            }
         };
     }
     
@@ -66,6 +75,11 @@ public final class IntegerMatcher {
             public boolean matches(Long o) {
                 return o.longValue() < value;
             }
+            
+            @Override
+            public String toString() {
+               return "<" + Long.toString(value);
+            }
         };
     }
     
@@ -74,6 +88,11 @@ public final class IntegerMatcher {
             @Override
             public boolean matches(Long o) {
                 return o.longValue() <= value;
+            }
+            
+            @Override
+            public String toString() {
+               return "<=" + Long.toString(value);
             }
         };
     }
