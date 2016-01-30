@@ -25,9 +25,9 @@ public final class BooleanMatcherParser extends BaseMatcherParser<Boolean> {
     @Override
     protected SpongeMatcher<Boolean> parse(Matcher matcher) {
         if (matcher.group("true") != null) {
-            return BooleanMatcher.trueOnly();
+            return BooleanMatcher.trueValue();
         } else  {
-            return BooleanMatcher.falseOnly();
+            return BooleanMatcher.falseValue();
         }
     }
 }

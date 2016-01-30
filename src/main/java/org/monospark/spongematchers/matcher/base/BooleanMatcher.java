@@ -4,25 +4,27 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 
 public final class BooleanMatcher implements SpongeMatcher<Boolean> {
 
-    public static SpongeMatcher<Boolean> trueOnly() {
-        return new BooleanMatcher(false, true);
+    public static SpongeMatcher<Boolean> trueValue() {
+        return new BooleanMatcher(true);
     }
     
-    public static SpongeMatcher<Boolean> falseOnly() {
-        return new BooleanMatcher(true, false);
+    public static SpongeMatcher<Boolean> falseValue() {
+        return new BooleanMatcher(false);
     }
     
-    private boolean matchOnFalse;
-    
-    private boolean matchOnTrue;
+    private boolean value;
 
-    private BooleanMatcher(boolean matchOnFalse, boolean matchOnTrue) {
-        this.matchOnFalse = matchOnFalse;
-        this.matchOnTrue = matchOnTrue;
+    private BooleanMatcher(boolean value) {
+        this.value = value;
     }
 
     @Override
     public boolean matches(Boolean o) {
-        return o.booleanValue() ? matchOnTrue : matchOnFalse;
+        return o.booleanValue() == value;
+    }
+    
+    @Override
+    public String toString() {
+       return Boolean.toString(value);
     }
 }
