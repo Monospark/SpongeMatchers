@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type.sponge;
+package org.monospark.spongematchers.type;
 
 import java.util.Map;
 
@@ -6,7 +6,6 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.PropertyHolderMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.property.PropertyHolder;
 
 public final class PropertyHolderType extends MatcherType<PropertyHolder> {
@@ -17,7 +16,7 @@ public final class PropertyHolderType extends MatcherType<PropertyHolder> {
             .addType(MatcherType.FLOATING_POINT)
             .build();
    
-    public PropertyHolderType() {
+    PropertyHolderType() {
         super("property holder");
     }
 

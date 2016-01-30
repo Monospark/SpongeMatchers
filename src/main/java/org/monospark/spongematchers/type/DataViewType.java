@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type.sponge;
+package org.monospark.spongematchers.type;
 
 import java.util.Map;
 
@@ -6,14 +6,13 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.DataViewMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.DataView;
 
 public final class DataViewType extends MatcherType<DataView> {
 
     private MatcherType<Map<String,Object>> type;
     
-    public DataViewType() {
+    DataViewType() {
         super("data view");
     }
     

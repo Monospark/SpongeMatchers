@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type.sponge;
+package org.monospark.spongematchers.type;
 
 import java.util.Map;
 
@@ -6,7 +6,6 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.ItemStackMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.item.inventory.ItemStack;
 
 public final class ItemStackType extends MatcherType<ItemStack> {
@@ -17,7 +16,7 @@ public final class ItemStackType extends MatcherType<ItemStack> {
             .addEntry("amount", MatcherType.INTEGER)
             .build();
     
-    public ItemStackType() {
+    ItemStackType() {
         super("item stack");
     }
 

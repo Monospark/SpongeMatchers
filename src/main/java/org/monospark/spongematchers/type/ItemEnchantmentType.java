@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type.sponge;
+package org.monospark.spongematchers.type;
 
 import java.util.Map;
 
@@ -6,7 +6,6 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.ItemEnchantmentMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 
 public final class ItemEnchantmentType extends MatcherType<ItemEnchantment> {
@@ -16,7 +15,7 @@ public final class ItemEnchantmentType extends MatcherType<ItemEnchantment> {
             .addEntry("level", MatcherType.INTEGER)
             .build();
     
-    public ItemEnchantmentType() {
+    ItemEnchantmentType() {
         super("item enchantment");
     }
 
