@@ -17,7 +17,7 @@ public final class BlockTypeMatcher extends SpongeObjectMatcher<BlockType> {
     public static SpongeMatcher<BlockType> create(SpongeMatcher<String> id, SpongeMatcher<PropertyHolder> properties) {
         return new BlockTypeMatcher(MapMatcher.builder()
                 .addMatcher("id", MatcherType.STRING, id)
-                .addMatcher("properties", PropertyHolder.class, properties)
+                .addMatcher("properties", MatcherType.PROPERTY_HOLDER, properties)
                 .build());
     }
     

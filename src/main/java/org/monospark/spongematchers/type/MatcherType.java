@@ -14,8 +14,10 @@ import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.type.sponge.DataViewType;
 import org.monospark.spongematchers.type.sponge.ItemEnchantmentType;
 import org.monospark.spongematchers.type.sponge.ItemStackType;
+import org.monospark.spongematchers.type.sponge.PropertyHolderType;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
+import org.spongepowered.api.data.property.PropertyHolder;
 import org.spongepowered.api.item.inventory.ItemStack;
 
 public abstract class MatcherType<T> {
@@ -33,6 +35,8 @@ public abstract class MatcherType<T> {
     public static final MatcherType<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentType();
     
     public static final MatcherType<DataView> DATA_VIEW = new DataViewType();
+    
+    public static final MatcherType<PropertyHolder> PROPERTY_HOLDER = new PropertyHolderType();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
