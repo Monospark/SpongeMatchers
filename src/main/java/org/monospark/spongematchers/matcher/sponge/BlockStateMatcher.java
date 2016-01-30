@@ -21,7 +21,7 @@ public final class BlockStateMatcher extends SpongeObjectMatcher<BlockState> {
     public static SpongeMatcher<BlockState> create(SpongeMatcher<BlockType> type,
             SpongeMatcher<Map<String, Object>> traits, SpongeMatcher<Optional<DataView>> data) {
         return new BlockStateMatcher(MapMatcher.builder()
-                .addMatcher("type", BlockType.class, type)
+                .addMatcher("type", MatcherType.BLOCK_TYPE, type)
                 .addMatcher("traits", Map.class, traits)
                 .addOptionalMatcher("data", MatcherType.DATA_VIEW, data)
                 .build());
