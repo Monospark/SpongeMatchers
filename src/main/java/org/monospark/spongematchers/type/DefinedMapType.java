@@ -12,11 +12,11 @@ import org.monospark.spongematchers.parser.element.StringElement;
 
 import com.google.common.collect.Sets;
 
-public final class MapType<V> extends MatcherType<Map<String, Object>>{
+public final class DefinedMapType extends MatcherType<Map<String, Object>>{
 
     private Set<MapTypeEntry<?>> entries;
     
-    private MapType(Set<MapTypeEntry<?>> entries) {
+    private DefinedMapType(Set<MapTypeEntry<?>> entries) {
         super("map");
         this.entries = entries;
     }
@@ -111,7 +111,7 @@ public final class MapType<V> extends MatcherType<Map<String, Object>>{
         }
         
         public MatcherType<Map<String, Object>> build() {
-            return new MapType<>(entries);
+            return new DefinedMapType(entries);
         }
     }
 

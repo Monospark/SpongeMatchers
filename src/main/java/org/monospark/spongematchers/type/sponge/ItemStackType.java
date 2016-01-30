@@ -11,7 +11,7 @@ import org.spongepowered.api.item.inventory.ItemStack;
 
 public final class ItemStackType extends MatcherType<ItemStack> {
 
-    private static final MatcherType<Map<String, Object>> MAP_TYPE = MatcherType.map()
+    private static final MatcherType<Map<String, Object>> MAP_TYPE = MatcherType.definedMap()
             .addEntry("type", MatcherType.STRING)
             .addEntry("damage", MatcherType.INTEGER)
             .addEntry("amount", MatcherType.INTEGER)

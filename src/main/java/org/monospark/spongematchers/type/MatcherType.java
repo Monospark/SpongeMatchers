@@ -12,11 +12,12 @@ import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElementParser.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.monospark.spongematchers.type.MapType.Builder;
 import org.monospark.spongematchers.type.sponge.DataViewType;
 import org.monospark.spongematchers.type.sponge.ItemEnchantmentType;
+import org.monospark.spongematchers.type.sponge.ItemStackType;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
+import org.spongepowered.api.item.inventory.ItemStack;
 
 public abstract class MatcherType<T> {
 
@@ -28,6 +29,8 @@ public abstract class MatcherType<T> {
     
     public static final MatcherType<String> STRING = new BaseType<>(BaseMatcherParser.STRING);
 
+    public static final MatcherType<ItemStack> ITEM_STACK = new ItemStackType();
+    
     public static final MatcherType<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentType();
     
     public static final MatcherType<DataView> DATA_VIEW = new DataViewType();
@@ -36,8 +39,12 @@ public abstract class MatcherType<T> {
         return new ListType<T>(type);
     }
     
-    public static Builder map() {
-        return MapType.builder();
+    public static DefinedMapType.Builder definedMap() {
+        return DefinedMapType.builder();
+    }
+    
+    public static UndefinedMapType.Builder undefinedMap() {
+        return UndefinedMapType.builder();
     }
     
     public static <T> MatcherType<Optional<T>> optional(MatcherType<T> type) {

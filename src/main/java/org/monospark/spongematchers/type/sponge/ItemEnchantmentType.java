@@ -11,7 +11,7 @@ import org.spongepowered.api.data.meta.ItemEnchantment;
 
 public final class ItemEnchantmentType extends MatcherType<ItemEnchantment> {
 
-    private static final MatcherType<Map<String, Object>> MAP_TYPE = MatcherType.map()
+    private static final MatcherType<Map<String, Object>> MAP_TYPE = MatcherType.definedMap()
             .addEntry("id", MatcherType.STRING)
             .addEntry("level", MatcherType.INTEGER)
             .build();
