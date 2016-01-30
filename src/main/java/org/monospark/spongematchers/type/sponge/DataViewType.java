@@ -24,10 +24,12 @@ public final class DataViewType extends MatcherType<DataView> {
                     .addType(MatcherType.INTEGER)
                     .addType(MatcherType.FLOATING_POINT)
                     .addType(MatcherType.STRING)
+                    .addType(MatcherType.DATA_VIEW)
                     .addType(MatcherType.list(MatcherType.BOOLEAN))
                     .addType(MatcherType.list(MatcherType.INTEGER))
                     .addType(MatcherType.list(MatcherType.FLOATING_POINT))
                     .addType(MatcherType.list(MatcherType.STRING))
+                    .addType(MatcherType.list(MatcherType.DATA_VIEW))
                     .build();
         }
         return type;

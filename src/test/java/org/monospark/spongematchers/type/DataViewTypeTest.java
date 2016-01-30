@@ -67,7 +67,7 @@ public class DataViewTypeTest {
     @Test
     public void parseMatcher_ValidMapEntries_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement(
-                "{boolean:true,integer:1,fp:1.5f,string:'test',list:[1,2]}");
+                "{boolean:true,integer:1,fp:1.5f,string:'test',list:[1,2],dataview:{nested:1}}");
         
         SpongeMatcher<DataView> matcher = MatcherType.DATA_VIEW.parseMatcher(element);
         
@@ -77,6 +77,7 @@ public class DataViewTypeTest {
         view1.set(DataQuery.of("fp"), 1.5D);
         view1.set(DataQuery.of("string"), "test");
         view1.set(DataQuery.of("list"), ImmutableList.of(1L, 2L));
+        view1.set(DataQuery.of("dataview", "nested"), 1L);
         assertThat(matcher, matches(view1));
         
         DataView view2 = new MemoryDataContainer();

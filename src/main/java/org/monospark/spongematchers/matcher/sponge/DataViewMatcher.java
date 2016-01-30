@@ -2,6 +2,7 @@ package org.monospark.spongematchers.matcher.sponge;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.spongepowered.api.data.DataQuery;
@@ -30,7 +31,12 @@ public final class DataViewMatcher implements SpongeMatcher<DataView> {
         Map<String, Object> map = Maps.newHashMap();
         for (Entry<DataQuery, Object> entry : view.getValues(false).entrySet()) {
             String name = entry.getKey().getParts().get(entry.getKey().getParts().size() - 1);
-            map.put(name, entry.getValue());
+            Optional<DataView> dataView = view.getView(entry.getKey());
+            if (dataView.isPresent()) {
+                map.put(name, dataView.get());
+            } else {
+                map.put(name, entry.getValue());
+            }
         }
         return map;
     }
