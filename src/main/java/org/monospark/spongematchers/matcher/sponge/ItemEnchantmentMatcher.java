@@ -5,7 +5,6 @@ import java.util.Map;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
-import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 
 public final class ItemEnchantmentMatcher extends SpongeObjectMatcher<ItemEnchantment> {
@@ -28,6 +27,6 @@ public final class ItemEnchantmentMatcher extends SpongeObjectMatcher<ItemEnchan
     @Override
     protected void fillMap(ItemEnchantment o, Map<String, Object> map) {
         map.put("id", o.getEnchantment().getId());
-        map.put("level", o.toContainer().getLong(DataQuery.of("UnsafeDamage")).get());
+        map.put("level", (long) o.getLevel());
     }
 }
