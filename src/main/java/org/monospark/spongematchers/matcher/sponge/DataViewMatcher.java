@@ -35,9 +35,23 @@ public final class DataViewMatcher implements SpongeMatcher<DataView> {
             if (dataView.isPresent()) {
                 map.put(name, dataView.get());
             } else {
-                map.put(name, entry.getValue());
+                map.put(name, makeMatchable(entry.getValue()));
             }
         }
         return map;
+    }
+    
+    private Object makeMatchable(Object o) {
+        if (o instanceof Byte) {
+            return ((Byte) o).longValue();
+        } else if (o instanceof Short) {
+            return ((Short) o).longValue();
+        } else if (o instanceof Integer) {
+            return ((Integer) o).longValue();
+        } else if(o instanceof Float) {
+            return ((Float) o).doubleValue();
+        } else {
+            return o;
+        }
     }
 }
