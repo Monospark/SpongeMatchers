@@ -17,6 +17,7 @@ import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.data.property.PropertyHolder;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.world.Location;
 
 public abstract class MatcherType<T> {
 
@@ -39,6 +40,8 @@ public abstract class MatcherType<T> {
     public static final MatcherType<BlockType> BLOCK_TYPE = new BlockTypeType();
     
     public static final MatcherType<BlockState> BLOCK_STATE = new BlockStateType();
+    
+    public static final MatcherType<Location<?>> BIOME_LOCATION = new BiomeLocationType();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
