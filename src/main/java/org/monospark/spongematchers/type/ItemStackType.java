@@ -12,8 +12,9 @@ public final class ItemStackType extends MatcherType<ItemStack> {
 
     private static final MatcherType<Map<String, Object>> MAP_TYPE = MatcherType.definedMap()
             .addEntry("type", MatcherType.STRING)
-            .addEntry("damage", MatcherType.INTEGER)
-            .addEntry("amount", MatcherType.INTEGER)
+            .addEntry("durability", MatcherType.INTEGER)
+            .addEntry("quantity", MatcherType.INTEGER)
+            .addEntry("data", MatcherType.DATA_VIEW)
             .build();
     
     ItemStackType() {
