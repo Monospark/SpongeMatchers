@@ -57,6 +57,11 @@ public interface SpongeMatcher<T> {
             public boolean matches(T o) {
                 return true;
             }
+            
+            @Override
+            public String toString() {
+               return "*";
+            }
         };
         return matcher;
     }
