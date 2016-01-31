@@ -42,6 +42,8 @@ public abstract class MatcherType<T> {
     public static final MatcherType<BlockState> BLOCK_STATE = new BlockStateType();
     
     public static final MatcherType<Location<?>> BIOME_LOCATION = new BiomeLocationType();
+    
+    public static final MatcherType<Location<?>> BLOCK_LOCATION = new BiomeLocationType();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
