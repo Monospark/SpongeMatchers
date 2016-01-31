@@ -11,6 +11,7 @@ import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElementParser.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
+import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
@@ -36,6 +37,8 @@ public abstract class MatcherType<T> {
     public static final MatcherType<PropertyHolder> PROPERTY_HOLDER = new PropertyHolderType();
     
     public static final MatcherType<BlockType> BLOCK_TYPE = new BlockTypeType();
+    
+    public static final MatcherType<BlockState> BLOCK_STATE = new BlockStateType();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
