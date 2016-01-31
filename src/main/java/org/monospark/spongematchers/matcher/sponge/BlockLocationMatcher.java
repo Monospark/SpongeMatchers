@@ -9,10 +9,12 @@ import org.spongepowered.api.world.Location;
 
 public final class BlockLocationMatcher extends SpongeObjectMatcher<Location<?>> {
 
-    public static SpongeMatcher<Location<?>> create(SpongeMatcher<Long> x, SpongeMatcher<Long> y) {
+    public static SpongeMatcher<Location<?>> create(SpongeMatcher<Long> x, SpongeMatcher<Long> y,
+            SpongeMatcher<Long> z) {
         SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
                 .addMatcher("x", MatcherType.INTEGER, x)
                 .addMatcher("y", MatcherType.INTEGER, y)
+                .addMatcher("z", MatcherType.INTEGER, z)
                 .build();
         return new BlockLocationMatcher(matcher);
     }
@@ -38,5 +40,6 @@ public final class BlockLocationMatcher extends SpongeObjectMatcher<Location<?>>
     protected void fillMap(Location<?> o, Map<String, Object> map) {
         map.put("x", o.getBlockPosition().getX());
         map.put("y", o.getBlockPosition().getY());
+        map.put("z", o.getBlockPosition().getZ());
     }
 }
