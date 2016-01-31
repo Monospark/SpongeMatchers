@@ -80,6 +80,8 @@ public final class ItemStackMatcher extends SpongeObjectMatcher<ItemStack> {
         map.put("type", o.getItem().getId());
         map.put("durability", o.toContainer().getLong(DataQuery.of("UnsafeDamage")).get());
         map.put("quantity", (long) o.getQuantity());
-        map.put("data", o.toContainer().getView(DataQuery.of("UnsafeData")));
+        if (o.toContainer().getView(DataQuery.of("UnsafeData")).isPresent()) {
+            map.put("data", o.toContainer().getView(DataQuery.of("UnsafeData")).get());
+        }
     }
 }
