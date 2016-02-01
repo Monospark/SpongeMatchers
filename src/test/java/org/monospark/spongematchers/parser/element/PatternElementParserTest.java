@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.element.PatternElementParser.Type;
+import org.monospark.spongematchers.parser.element.PatternElement.Type;
 
 public class PatternElementParserTest {
 

@@ -9,7 +9,7 @@ import org.monospark.spongematchers.parser.base.BaseMatcherParser;
 import org.monospark.spongematchers.parser.element.ConnectedElement;
 import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.parser.element.PatternElement;
-import org.monospark.spongematchers.parser.element.PatternElementParser.Type;
+import org.monospark.spongematchers.parser.element.PatternElement.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;

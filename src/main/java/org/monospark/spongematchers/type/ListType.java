@@ -7,7 +7,7 @@ import org.monospark.spongematchers.matcher.complex.ListMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.ListElement;
 import org.monospark.spongematchers.parser.element.PatternElement;
-import org.monospark.spongematchers.parser.element.PatternElementParser.Type;
+import org.monospark.spongematchers.parser.element.PatternElement.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
 
 import com.google.common.collect.Lists;
