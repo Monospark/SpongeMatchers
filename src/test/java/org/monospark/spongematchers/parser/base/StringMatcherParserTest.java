@@ -22,6 +22,16 @@ public class StringMatcherParserTest {
     }
     
     @Test
+    public void parseMatcher_EscapedCharacters_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
+        String input = "'\\'test\\\\\\'\\\\'";
+        
+        SpongeMatcher<String> matcher = BaseMatcherParser.STRING.parseMatcher(input);
+        
+        assertThat(matcher, matches("'test\\'\\"));
+        assertThat(matcher, not(matches("testing")));
+    }
+    
+    @Test
     public void parseMatcher_InvalidRegex_ThrowsException() throws SpongeMatcherParseException {
         String input = "'(test))'";
         

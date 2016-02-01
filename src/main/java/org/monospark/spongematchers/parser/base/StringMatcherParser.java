@@ -19,15 +19,16 @@ public final class StringMatcherParser extends BaseMatcherParser<String> {
     protected Pattern createAcceptancePattern() {
         return new PatternBuilder()
                 .appendNonCapturingPart("'")
-                .appendCapturingPart(".+?", "regex")
+                .appendCapturingPart("(\\'|.)+?", "regex")
                 .appendNonCapturingPart("'")
                 .build();
     }
 
     @Override
     protected SpongeMatcher<String> parse(Matcher matcher) throws SpongeMatcherParseException {
+        String replacedSingleQuotes = matcher.group("regex").replace("\\'", "'");  
         try {
-            return StringMatcher.create(matcher.group("regex"));
+            return StringMatcher.create(replacedSingleQuotes);
         } catch (PatternSyntaxException e) {
             throw new SpongeMatcherParseException(e);
         }
