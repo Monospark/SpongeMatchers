@@ -14,42 +14,42 @@ public abstract class StringElementParser {
 
     public static final Pattern REPLACE_PATTERN = Pattern.compile("#+");
     
-    private static final Set<StringElementParser> BASE_ELEMENT_PARSERS = createBaseElementParsers();
+    private static final Set<StringElementParser> ONE_TIME_ELEMENT_PARSERS = createOneTimeElementParsers();
     
-    private static final Set<StringElementParser> OTHER_ELEMENT_PARSERS = createOtherElementParsers();
+    private static final Set<StringElementParser> MANY_TIMES_ELEMENT_PARSERS = createManyTimesElementParsers();
     
-    private static Set<StringElementParser> createBaseElementParsers() {
-        Set<StringElementParser> baseParsers = Sets.newLinkedHashSet();
-        baseParsers.add(new BaseElementParser<>(BaseMatcherParser.STRING));
-        baseParsers.add(new BaseElementParser<>(BaseMatcherParser.BOOLEAN));
-        baseParsers.add(new BaseElementParser<>(BaseMatcherParser.FLOATING_POINT));
-        baseParsers.add(new BaseElementParser<>(BaseMatcherParser.INTEGER));
-        baseParsers.add(new LiteralElementParser(LiteralElement.Type.EMPTY));
-        baseParsers.add(new LiteralElementParser(LiteralElement.Type.WILDCARD));
-        return baseParsers;
+    private static Set<StringElementParser> createOneTimeElementParsers() {
+        Set<StringElementParser> oneTimeParsers = Sets.newLinkedHashSet();
+        oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.STRING));
+        oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.BOOLEAN));
+        oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.FLOATING_POINT));
+        oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.INTEGER));
+        oneTimeParsers.add(new LiteralElementParser(LiteralElement.Type.EMPTY));
+        oneTimeParsers.add(new LiteralElementParser(LiteralElement.Type.WILDCARD));
+        return oneTimeParsers;
     }
     
-    private static Set<StringElementParser> createOtherElementParsers() {
-        Set<StringElementParser> otherParsers = Sets.newHashSet();
-        otherParsers.add(new PatternElementParser(Type.PARANTHESES));
-        otherParsers.add(new PatternElementParser(Type.NOT));
-        otherParsers.add(new ConnectedElementParser());
-        otherParsers.add(new ListElementParser());
-        otherParsers.add(new PatternElementParser(Type.LIST_MATCH_ANY));
-        otherParsers.add(new PatternElementParser(Type.LIST_MATCH_ALL));
-        otherParsers.add(new MapElementParser());
-        return otherParsers;
+    private static Set<StringElementParser> createManyTimesElementParsers() {
+        Set<StringElementParser> manyTimesParsers = Sets.newHashSet();
+        manyTimesParsers.add(new PatternElementParser(Type.PARANTHESES));
+        manyTimesParsers.add(new PatternElementParser(Type.NOT));
+        manyTimesParsers.add(new ConnectedElementParser());
+        manyTimesParsers.add(new ListElementParser());
+        manyTimesParsers.add(new PatternElementParser(Type.LIST_MATCH_ANY));
+        manyTimesParsers.add(new PatternElementParser(Type.LIST_MATCH_ALL));
+        manyTimesParsers.add(new MapElementParser());
+        return manyTimesParsers;
     }
     
     public static StringElement parseStringElement(String string) throws SpongeMatcherParseException {
         StringElementContext context = new StringElementContext(string.trim());
-        for (StringElementParser parser : BASE_ELEMENT_PARSERS) {
+        for (StringElementParser parser : ONE_TIME_ELEMENT_PARSERS) {
             parser.parseElements(context);
         }
         String lastContextString;
         do {
             lastContextString = context.getString();
-            for (StringElementParser parser : OTHER_ELEMENT_PARSERS) {
+            for (StringElementParser parser : MANY_TIMES_ELEMENT_PARSERS) {
                 parser.parseElements(context);
             }
         } while (!lastContextString.equals(context.getString()));
