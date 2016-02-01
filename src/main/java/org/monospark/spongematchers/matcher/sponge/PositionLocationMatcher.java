@@ -28,18 +28,9 @@ public final class PositionLocationMatcher extends SpongeObjectMatcher<Location<
     }
 
     @Override
-    public boolean matches(Location<?> o) {
-        if (o.hasBiome() || o.hasBlock()) {
-            return false;
-        }
-        
-        return super.matches(o);
-    }
-
-    @Override
     protected void fillMap(Location<?> o, Map<String, Object> map) {
-        map.put("x", o.getPosition().getX());
-        map.put("y", o.getPosition().getY());
-        map.put("y", o.getPosition().getZ());
+        map.put("x", (double) o.getPosition().getX());
+        map.put("y", (double) o.getPosition().getY());
+        map.put("y", (double) o.getPosition().getZ());
     }
 }

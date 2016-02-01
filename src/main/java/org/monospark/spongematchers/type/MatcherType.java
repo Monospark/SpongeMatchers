@@ -43,9 +43,9 @@ public abstract class MatcherType<T> {
     
     public static final MatcherType<Location<?>> BIOME_LOCATION = new BiomeLocationType();
     
-    public static final MatcherType<Location<?>> BLOCK_LOCATION = new BiomeLocationType();
+    public static final MatcherType<Location<?>> BLOCK_LOCATION = new BlockLocationType();
     
-    public static final MatcherType<Location<?>> POSITION_LOCATION = new BiomeLocationType();
+    public static final MatcherType<Location<?>> POSITION_LOCATION = new PositionLocationType();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);

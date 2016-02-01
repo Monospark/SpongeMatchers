@@ -22,11 +22,7 @@ public final class BlockLocationType extends MatcherType<Location<?>> {
 
     @Override
     public boolean canMatch(Object o) {
-        if (!(o instanceof Location)) {
-            return false;
-        }
-        
-        return ((Location<?>) o).hasBlock();
+        return o instanceof Location;
     }
 
     @Override

@@ -21,11 +21,7 @@ public final class BiomeLocationType extends MatcherType<Location<?>> {
 
     @Override
     public boolean canMatch(Object o) {
-        if (!(o instanceof Location)) {
-            return false;
-        }
-        
-        return ((Location<?>) o).hasBiome();
+        return o instanceof Location;
     }
 
     @Override
