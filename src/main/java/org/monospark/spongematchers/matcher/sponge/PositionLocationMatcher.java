@@ -29,8 +29,8 @@ public final class PositionLocationMatcher extends SpongeObjectMatcher<Location<
 
     @Override
     protected void fillMap(Location<?> o, Map<String, Object> map) {
-        map.put("x", (double) o.getPosition().getX());
-        map.put("y", (double) o.getPosition().getY());
-        map.put("y", (double) o.getPosition().getZ());
+        map.put("x", o.getPosition().getX());
+        map.put("y", o.getPosition().getY());
+        map.put("z", o.getPosition().getZ());
     }
 }
