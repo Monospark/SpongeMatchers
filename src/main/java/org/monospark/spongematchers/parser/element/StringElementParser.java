@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.base.BaseMatcherParser;
-import org.monospark.spongematchers.parser.element.PatternElementParser.Type;
+import org.monospark.spongematchers.parser.element.PatternElement.Type;
 
 import com.google.common.collect.Sets;
 
@@ -24,7 +24,8 @@ public abstract class StringElementParser {
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.BOOLEAN));
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.FLOATING_POINT));
         baseParsers.add(new BaseElementParser<>(BaseMatcherParser.INTEGER));
-        baseParsers.add(new EmptyElementParser());
+        baseParsers.add(new LiteralElementParser(LiteralElement.Type.EMPTY));
+        baseParsers.add(new LiteralElementParser(LiteralElement.Type.WILDCARD));
         return baseParsers;
     }
     

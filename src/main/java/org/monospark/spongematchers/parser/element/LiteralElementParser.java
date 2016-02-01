@@ -4,13 +4,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.element.PatternElement.Type;
+import org.monospark.spongematchers.parser.element.LiteralElement.Type;
 
-public final class PatternElementParser extends StringElementParser {
+public final class LiteralElementParser extends StringElementParser {
 
     private Type type;
 
-    PatternElementParser(Type type) {
+    LiteralElementParser(Type type) {
         this.type = type;
     }
 
@@ -21,10 +21,6 @@ public final class PatternElementParser extends StringElementParser {
 
     @Override
     void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException {
-        int start = matcher.start("element");
-        int end = matcher.end("element");
-        StringElement element = context.getElementAt(start, end);
-        context.removeElement(element);
-        context.addElement(new PatternElement(matcher, type, element));
+        context.addElement(new LiteralElement(matcher, type));
     }
 }
