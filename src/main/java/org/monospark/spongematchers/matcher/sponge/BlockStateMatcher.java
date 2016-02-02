@@ -11,7 +11,6 @@ import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.trait.BlockTrait;
-import org.spongepowered.api.block.trait.EnumTrait;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 
@@ -48,9 +47,18 @@ public final class BlockStateMatcher extends SpongeObjectMatcher<BlockState> {
     private Map<String, Object> createTraits(BlockState state) {
         Map<String, Object> map = Maps.newHashMap();
         for (Entry<BlockTrait<?>,?> entry : state.getTraitMap().entrySet()) {
-            Object value = entry.getKey() instanceof EnumTrait ? entry.getValue().toString() : entry.getValue();
-            map.put(entry.getKey().getId(), value);
+            map.put(entry.getKey().getId(), makeMatchable(entry.getKey(), entry.getValue()));
         }
         return map;
+    }
+    
+    private Object makeMatchable(BlockTrait<?> trait, Object value) {
+        if (trait.getValueClass().equals(Boolean.class)) {
+            return value;
+        } else if (trait.getValueClass().equals(Integer.class)) {
+            return ((Integer) value).longValue();
+        } else {
+            return value.toString();
+        }
     }
 }

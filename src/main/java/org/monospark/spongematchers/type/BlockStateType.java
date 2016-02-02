@@ -11,8 +11,8 @@ import org.spongepowered.api.block.BlockState;
 public final class BlockStateType extends MatcherType<BlockState> {
     
     public static final MatcherType<Map<String,Object>> TRAIT_TYPE = MatcherType.undefinedMap()
+            .addType(MatcherType.BOOLEAN)
             .addType(MatcherType.INTEGER)
-            .addType(MatcherType.FLOATING_POINT)
             .addType(MatcherType.STRING)
             .build();
 
