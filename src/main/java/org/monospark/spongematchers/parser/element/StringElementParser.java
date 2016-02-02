@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.base.BaseMatcherParser;
-import org.monospark.spongematchers.parser.element.PatternElement.Type;
 
 import com.google.common.collect.Sets;
 
@@ -31,12 +30,12 @@ public abstract class StringElementParser {
     
     private static Set<StringElementParser> createManyTimesElementParsers() {
         Set<StringElementParser> manyTimesParsers = Sets.newHashSet();
-        manyTimesParsers.add(new PatternElementParser(Type.PARANTHESES));
-        manyTimesParsers.add(new PatternElementParser(Type.NOT));
+        manyTimesParsers.add(new PatternElementParser(PatternElement.Type.PARANTHESES));
+        manyTimesParsers.add(new PatternElementParser(PatternElement.Type.NOT));
         manyTimesParsers.add(new ConnectedElementParser());
         manyTimesParsers.add(new ListElementParser());
-        manyTimesParsers.add(new PatternElementParser(Type.LIST_MATCH_ANY));
-        manyTimesParsers.add(new PatternElementParser(Type.LIST_MATCH_ALL));
+        manyTimesParsers.add(new PatternElementParser(PatternElement.Type.LIST_MATCH_ANY));
+        manyTimesParsers.add(new PatternElementParser(PatternElement.Type.LIST_MATCH_ALL));
         manyTimesParsers.add(new MapElementParser());
         return manyTimesParsers;
     }

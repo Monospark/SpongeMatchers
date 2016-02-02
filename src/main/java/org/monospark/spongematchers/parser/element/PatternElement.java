@@ -27,14 +27,14 @@ public final class PatternElement extends StringElement {
     
 
     public static enum Type {
-
+        
         LIST_MATCH_ANY(new PatternBuilder()
-                .appendNonCapturingPart("any\\s*:\\s*")
+                .appendNonCapturingPart("matchAny\\s+")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
                 .build()),
         
         LIST_MATCH_ALL(new PatternBuilder()
-                .appendNonCapturingPart("all\\s*:\\s*")
+                .appendNonCapturingPart("matchAll\\s+")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
                 .build()),
         
@@ -48,7 +48,7 @@ public final class PatternElement extends StringElement {
                 .appendNonCapturingPart("!\\s*")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
                 .build());
-        
+
         private Pattern pattern;
 
         private Type(Pattern pattern) {

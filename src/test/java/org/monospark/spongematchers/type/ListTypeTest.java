@@ -75,7 +75,7 @@ public class ListTypeTest {
     
     @Test
     public void canParse_ListMatchAnyAndDeepAndDifferentElementType_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("any:1");
+        StringElement element = StringElementParser.parseStringElement("matchAny 1");
         
         boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, true);
         
@@ -103,7 +103,7 @@ public class ListTypeTest {
     
     @Test
     public void parseMatcher_ListMatchAnyElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("any:false");
+        StringElement element = StringElementParser.parseStringElement("matchAny false");
         
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
         
@@ -113,7 +113,7 @@ public class ListTypeTest {
     
     @Test
     public void parseMatcher_ListMatchAllElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("all:false");
+        StringElement element = StringElementParser.parseStringElement("matchAll false");
         
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
         

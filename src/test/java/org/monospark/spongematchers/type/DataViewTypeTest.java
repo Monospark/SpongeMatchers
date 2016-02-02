@@ -57,7 +57,7 @@ public class DataViewTypeTest {
 
     @Test
     public void canParse_DeepAndUnparseableMapValue_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{test:any:any:1}");
+        StringElement element = StringElementParser.parseStringElement("{test:matchAny matchAny 1}");
         
         boolean canParse = MatcherType.DATA_VIEW.canParse(element, true);
         
