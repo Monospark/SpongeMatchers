@@ -21,4 +21,14 @@ public class MatcherTypeTest {
         assertThat(matcher, matches("test1"));
         assertThat(matcher, not(matches("test2")));
     }
+    
+    @Test
+    public void parseMatcher_WildcardMatcher_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
+        String input = "*";
+        
+        SpongeMatcher<String> matcher = MatcherType.STRING.parseMatcher(StringElementParser.parseStringElement(input));
+        
+        assertThat(matcher, matches("test1"));
+        assertThat(matcher, matches("test2"));
+    }
 }
