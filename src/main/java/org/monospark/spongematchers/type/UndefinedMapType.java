@@ -29,7 +29,7 @@ public final class UndefinedMapType extends MatcherType<Map<String,Object>> {
         }
         
         Map<?,?> map = (Map<?, ?>) o;
-        for (Entry<?,?> entry : map.entrySet()) {
+        out: for (Entry<?,?> entry : map.entrySet()) {
             if (!(entry.getKey() instanceof String)) {
                 return false;
             }
@@ -37,7 +37,7 @@ public final class UndefinedMapType extends MatcherType<Map<String,Object>> {
             Object value = entry.getValue();
             for (MatcherType<?> type : types) {
                 if (type.canMatch(value)) {
-                    continue;
+                    continue out;
                 }
             }
             return false;
