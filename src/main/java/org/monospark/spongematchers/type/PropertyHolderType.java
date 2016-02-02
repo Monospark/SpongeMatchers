@@ -14,6 +14,7 @@ public final class PropertyHolderType extends MatcherType<PropertyHolder> {
             .addType(MatcherType.BOOLEAN)
             .addType(MatcherType.INTEGER)
             .addType(MatcherType.FLOATING_POINT)
+            .addType(MatcherType.STRING)
             .build();
    
     PropertyHolderType() {

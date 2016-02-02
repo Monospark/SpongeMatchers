@@ -5,6 +5,7 @@ import java.util.Map;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.MapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
+import org.spongepowered.api.data.Property;
 import org.spongepowered.api.data.property.PropertyHolder;
 
 public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHolder> {
@@ -19,7 +20,27 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
 
     @Override
     protected void fillMap(PropertyHolder o, Map<String, Object> map) {
-        o.getApplicableProperties().stream().forEach(p -> map.put(p.getClass().getName(), p.getValue()));
+        for (Property<?,?> property : o.getApplicableProperties()) {
+            map.put(property.getKey().toString(), makeMatchable(property.getValue()));
+        }
+    }
+    
+    private Object makeMatchable(Object o) {
+        if (o instanceof Byte) {
+            return ((Byte) o).longValue();
+        } else if (o instanceof Short) {
+            return ((Short) o).longValue();
+        } else if (o instanceof Integer) {
+            return ((Integer) o).longValue();
+        } else if(o instanceof Float) {
+            return ((Float) o).doubleValue();
+        }
+        
+        if (o instanceof Boolean || o instanceof Long || o instanceof Double) {
+            return o;
+        } else {
+            return o.toString();
+        }
     }
        
     public static Builder builder() {
@@ -46,6 +67,11 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
         
         public Builder addFloatingPointProperty(String name, SpongeMatcher<Double> matcher) {
             builder.addMatcher(name, MatcherType.FLOATING_POINT, matcher);
+            return this;
+        }
+        
+        public <T> Builder addAbstractProperty(String name, MatcherType<T> type, SpongeMatcher<T> matcher) {
+            builder.addMatcher(name, type, matcher);
             return this;
         }
         
