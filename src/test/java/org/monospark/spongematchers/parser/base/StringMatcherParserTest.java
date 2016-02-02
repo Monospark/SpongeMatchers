@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.parser.base;
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
 
@@ -18,7 +17,6 @@ public class StringMatcherParserTest {
         SpongeMatcher<String> matcher = BaseMatcherParser.STRING.parseMatcher(input);
         
         assertThat(matcher, matches("testtesttest"));
-        assertThat(matcher, not(matches("testing")));
     }
     
     @Test
@@ -28,7 +26,6 @@ public class StringMatcherParserTest {
         SpongeMatcher<String> matcher = BaseMatcherParser.STRING.parseMatcher(input);
         
         assertThat(matcher, matches("'test\\'\\"));
-        assertThat(matcher, not(matches("testing")));
     }
     
     @Test

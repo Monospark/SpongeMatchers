@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.parser.base;
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
 
@@ -17,7 +16,6 @@ public class BooleanMatcherParserTest {
         SpongeMatcher<Boolean> matcher = BaseMatcherParser.BOOLEAN.parseMatcher(input);
         
         assertThat(matcher, matches(true));
-        assertThat(matcher, not(matches(false)));
     }
     
     @Test
@@ -27,6 +25,5 @@ public class BooleanMatcherParserTest {
         SpongeMatcher<Boolean> matcher = BaseMatcherParser.BOOLEAN.parseMatcher(input);
         
         assertThat(matcher, matches(false));
-        assertThat(matcher, not(matches(true)));
     }
 }

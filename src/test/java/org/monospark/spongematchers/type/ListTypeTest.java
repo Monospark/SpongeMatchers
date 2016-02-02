@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
 
@@ -12,7 +11,6 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
-import org.monospark.spongematchers.type.MatcherType;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -98,7 +96,6 @@ public class ListTypeTest {
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
         
         assertThat(matcher, matches(Lists.newArrayList(true, false)));
-        assertThat(matcher, not(matches(Lists.newArrayList(false, true))));
     }
     
     @Test
@@ -108,7 +105,6 @@ public class ListTypeTest {
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
         
         assertThat(matcher, matches(Lists.newArrayList(true, false)));
-        assertThat(matcher, not(matches(Lists.newArrayList(true, true))));
     }
     
     @Test
@@ -118,7 +114,6 @@ public class ListTypeTest {
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
         
         assertThat(matcher, matches(Lists.newArrayList(false, false)));
-        assertThat(matcher, not(matches(Lists.newArrayList(false, true))));
     }
     
     @Test
@@ -128,6 +123,5 @@ public class ListTypeTest {
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
         
         assertThat(matcher, matches(Lists.newArrayList()));
-        assertThat(matcher, not(matches(Lists.newArrayList(true))));
     }
 }

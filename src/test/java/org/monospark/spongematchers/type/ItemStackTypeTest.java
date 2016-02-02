@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -47,20 +46,13 @@ public class ItemStackTypeTest {
 
         ItemType type = mock(ItemType.class);
         when(type.getId()).thenReturn("minecraft:apple");
-        ItemStack s1 = mock(ItemStack.class);
-        when(s1.getItem()).thenReturn(type);
-        when(s1.getQuantity()).thenReturn(1);
+        ItemStack s = mock(ItemStack.class);
+        when(s.getItem()).thenReturn(type);
+        when(s.getQuantity()).thenReturn(1);
         DataContainer container1 = new MemoryDataContainer();
         container1.set(DataQuery.of("UnsafeDamage"), 0);
         container1.set(DataQuery.of("UnsafeData", "test"), 1);
-        when(s1.toContainer()).thenReturn(container1);
-        assertThat(matcher, matches(s1));
-        ItemStack s2 = mock(ItemStack.class);
-        when(s2.getItem()).thenReturn(type);
-        when(s2.getQuantity()).thenReturn(2);
-        DataContainer container2 = new MemoryDataContainer();
-        container2.set(DataQuery.of("UnsafeDamage"), 1);
-        when(s2.toContainer()).thenReturn(container2);
-        assertThat(matcher, not(matches(s2)));
+        when(s.toContainer()).thenReturn(container1);
+        assertThat(matcher, matches(s));
     }
 }

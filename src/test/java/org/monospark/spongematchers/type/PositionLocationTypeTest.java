@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
@@ -15,7 +14,6 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.extent.Extent;
 
 import com.flowpowered.math.vector.Vector3d;
-import com.flowpowered.math.vector.Vector3i;
 
 public class PositionLocationTypeTest {
 
@@ -46,6 +44,5 @@ public class PositionLocationTypeTest {
 
         Extent e = mock(Extent.class);
         assertThat(matcher, matches(new Location<Extent>(e, new Vector3d(1.0, 1.0, 1.0))));
-        assertThat(matcher, not(matches(new Location<Extent>(e, new Vector3i(2.0, 2.0, 1.0)))));
     }
 }

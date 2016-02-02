@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -58,18 +57,8 @@ public class PropertyHolderTest {
         Property<String,MatterProperty.Matter> p4 = mock(Property.class);
         when(p4.getKey()).thenReturn("test4");
         when(p4.getValue()).thenReturn(MatterProperty.Matter.LIQUID);
-        PropertyHolder holder1 = mock(PropertyHolder.class);
-        when(holder1.getApplicableProperties()).thenReturn(ImmutableSet.of(p1, p2, p3, p4));
-        assertThat(matcher, matches(holder1));
-        
-        Property<String,Boolean> p5 = mock(Property.class);
-        when(p5.getKey()).thenReturn("test1");
-        when(p5.getValue()).thenReturn(true);
-        Property<String, Integer> p6 = mock(Property.class);
-        when(p6.getKey()).thenReturn("test2");
-        when(p6.getValue()).thenReturn(2);
-        PropertyHolder holder2 = mock(PropertyHolder.class);
-        when(holder2.getApplicableProperties()).thenReturn(ImmutableSet.of(p5, p6));
-        assertThat(matcher, not(matches(holder2)));
+        PropertyHolder holder = mock(PropertyHolder.class);
+        when(holder.getApplicableProperties()).thenReturn(ImmutableSet.of(p1, p2, p3, p4));
+        assertThat(matcher, matches(holder));
     }
 }

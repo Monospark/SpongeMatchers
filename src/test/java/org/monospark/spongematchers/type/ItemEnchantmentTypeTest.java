@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -44,9 +43,7 @@ public class ItemEnchantmentTypeTest {
 
         Enchantment enchantment = mock(Enchantment.class);
         when(enchantment.getId()).thenReturn("minecraft:test");
-        ItemEnchantment e1 = new ItemEnchantment(enchantment, 2);
-        assertThat(matcher, matches(e1));
-        ItemEnchantment e2 = new ItemEnchantment(enchantment, 1);
-        assertThat(matcher, not(matches(e2)));
+        ItemEnchantment e = new ItemEnchantment(enchantment, 2);
+        assertThat(matcher, matches(e));
     }
 }

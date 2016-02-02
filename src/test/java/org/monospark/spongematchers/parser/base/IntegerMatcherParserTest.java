@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.parser.base;
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
 
@@ -20,8 +19,6 @@ public class IntegerMatcherParserTest {
         assertThat(matcher, matches(-1L));
         assertThat(matcher, matches(1L));
         assertThat(matcher, matches(3L));
-        assertThat(matcher, not(matches(-2L)));
-        assertThat(matcher, not(matches(4L)));
     }
     
     @Test
@@ -33,8 +30,6 @@ public class IntegerMatcherParserTest {
         assertThat(matcher, matches(-5L));
         assertThat(matcher, matches(-4L));
         assertThat(matcher, matches(-3L));
-        assertThat(matcher, not(matches(-2L)));
-        assertThat(matcher, not(matches(4L)));
     }
     
     @Test
@@ -52,7 +47,6 @@ public class IntegerMatcherParserTest {
         SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(1L));
-        assertThat(matcher, not(matches(2L)));
     }
     
     @Test
@@ -62,7 +56,6 @@ public class IntegerMatcherParserTest {
         SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(2L));
-        assertThat(matcher, not(matches(1L)));
     }
     
     @Test
@@ -72,7 +65,6 @@ public class IntegerMatcherParserTest {
         SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(0L));
-        assertThat(matcher, not(matches(-2L)));
     }
     
     @Test
@@ -83,7 +75,6 @@ public class IntegerMatcherParserTest {
         
         assertThat(matcher, matches(2L));
         assertThat(matcher, matches(1L));
-        assertThat(matcher, not(matches(0L)));
     }
     
     @Test
@@ -94,7 +85,6 @@ public class IntegerMatcherParserTest {
         
         assertThat(matcher, matches(0L));
         assertThat(matcher, matches(-1L));
-        assertThat(matcher, not(matches(-2L)));
     }
     
     @Test
@@ -104,7 +94,6 @@ public class IntegerMatcherParserTest {
         SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(0L));
-        assertThat(matcher, not(matches(2L)));
     }
     
     @Test
@@ -114,7 +103,6 @@ public class IntegerMatcherParserTest {
         SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
         
         assertThat(matcher, matches(-4L));
-        assertThat(matcher, not(matches(-2L)));
     }
     
     @Test
@@ -125,7 +113,6 @@ public class IntegerMatcherParserTest {
         
         assertThat(matcher, matches(0L));
         assertThat(matcher, matches(1L));
-        assertThat(matcher, not(matches(2L)));
     }
     
     @Test
@@ -136,6 +123,5 @@ public class IntegerMatcherParserTest {
         
         assertThat(matcher, matches(-2L));
         assertThat(matcher, matches(-3L));
-        assertThat(matcher, not(matches(-1L)));
     }
 }

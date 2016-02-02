@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
 
@@ -79,13 +78,5 @@ public class DataViewTypeTest {
         view1.set(DataQuery.of("list"), ImmutableList.of(1L, 2L));
         view1.set(DataQuery.of("dataview", "nested"), 1L);
         assertThat(matcher, matches(view1));
-        
-        DataView view2 = new MemoryDataContainer();
-        view2.set(DataQuery.of("boolean"), 1L);
-        view2.set(DataQuery.of("integer"), false);
-        view2.set(DataQuery.of("fp"), 1.5D);
-        view2.set(DataQuery.of("string"), "test");
-        view2.set(DataQuery.of("list"), ImmutableList.of(1D, 2D, 3D));
-        assertThat(matcher, not(matches(view2)));
     }
 }

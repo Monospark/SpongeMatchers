@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
@@ -45,6 +44,5 @@ public class BlockLocationTypeTest {
 
         Extent e = mock(Extent.class);
         assertThat(matcher, matches(new Location<Extent>(e, new Vector3i(1, 1, 1))));
-        assertThat(matcher, not(matches(new Location<Extent>(e, new Vector3i(2, 2, 1)))));
     }
 }

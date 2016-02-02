@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
 
@@ -12,7 +11,6 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
-import org.monospark.spongematchers.type.MatcherType;
 
 public class OptionalTypeTest {
 
@@ -68,7 +66,6 @@ public class OptionalTypeTest {
         SpongeMatcher<Optional<Boolean>> matcher = MatcherType.optional(MatcherType.BOOLEAN).parseMatcher(element);
         
         assertThat(matcher, matches(Optional.empty()));
-        assertThat(matcher, not(matches(Optional.of(false))));
     }
     
     @Test
@@ -78,7 +75,5 @@ public class OptionalTypeTest {
         SpongeMatcher<Optional<Boolean>> matcher = MatcherType.optional(MatcherType.BOOLEAN).parseMatcher(element);
         
         assertThat(matcher, matches(Optional.of(true)));
-        assertThat(matcher, not(matches(Optional.of(false))));
-        assertThat(matcher, not(matches(Optional.empty())));
     }
 }

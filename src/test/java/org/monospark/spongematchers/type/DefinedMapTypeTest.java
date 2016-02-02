@@ -1,7 +1,6 @@
 package org.monospark.spongematchers.type;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
 
@@ -92,6 +91,5 @@ public class DefinedMapTypeTest {
         
         assertThat(matcher, matches(ImmutableMap.of("boolean", true, "integer", 1L)));
         assertThat(matcher, matches(ImmutableMap.of("boolean", true, "integer", 1L, "other", "test")));
-        assertThat(matcher, not(matches(ImmutableMap.of("boolean", false, "integer", 1L))));
     }
 }

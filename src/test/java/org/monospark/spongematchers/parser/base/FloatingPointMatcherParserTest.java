@@ -1,6 +1,5 @@
 package org.monospark.spongematchers.parser.base;
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.matches;
 
@@ -20,8 +19,6 @@ public class FloatingPointMatcherParserTest {
         assertThat(matcher, matches(-1D));
         assertThat(matcher, matches(1D));
         assertThat(matcher, matches(3D));
-        assertThat(matcher, not(matches(-2D)));
-        assertThat(matcher, not(matches(4D)));
     }
     
     @Test
@@ -33,8 +30,6 @@ public class FloatingPointMatcherParserTest {
         assertThat(matcher, matches(-5D));
         assertThat(matcher, matches(-4D));
         assertThat(matcher, matches(-3D));
-        assertThat(matcher, not(matches(-2D)));
-        assertThat(matcher, not(matches(4D)));
     }
     
     @Test
@@ -52,7 +47,6 @@ public class FloatingPointMatcherParserTest {
         SpongeMatcher<Double> matcher = BaseMatcherParser.FLOATING_POINT.parseMatcher(input);
         
         assertThat(matcher, matches(-1.2D));
-        assertThat(matcher, not(matches(2D)));
     }
     
     @Test
@@ -62,7 +56,6 @@ public class FloatingPointMatcherParserTest {
         SpongeMatcher<Double> matcher = BaseMatcherParser.FLOATING_POINT.parseMatcher(input);
         
         assertThat(matcher, matches(2D));
-        assertThat(matcher, not(matches(1D)));
     }
     
     @Test
@@ -72,7 +65,6 @@ public class FloatingPointMatcherParserTest {
         SpongeMatcher<Double> matcher = BaseMatcherParser.FLOATING_POINT.parseMatcher(input);
         
         assertThat(matcher, matches(0.2D));
-        assertThat(matcher, not(matches(0D)));
     }
     
     @Test
@@ -83,7 +75,6 @@ public class FloatingPointMatcherParserTest {
         
         assertThat(matcher, matches(2D));
         assertThat(matcher, matches(1.2D));
-        assertThat(matcher, not(matches(0D)));
     }
     
     @Test
@@ -94,7 +85,6 @@ public class FloatingPointMatcherParserTest {
         
         assertThat(matcher, matches(-2.5D));
         assertThat(matcher, matches(-3.1D));
-        assertThat(matcher, not(matches(-4D)));
     }
     
     @Test
@@ -104,7 +94,6 @@ public class FloatingPointMatcherParserTest {
         SpongeMatcher<Double> matcher = BaseMatcherParser.FLOATING_POINT.parseMatcher(input);
         
         assertThat(matcher, matches(0D));
-        assertThat(matcher, not(matches(2D)));
     }
     
     @Test
@@ -114,7 +103,6 @@ public class FloatingPointMatcherParserTest {
         SpongeMatcher<Double> matcher = BaseMatcherParser.FLOATING_POINT.parseMatcher(input);
         
         assertThat(matcher, matches(2D));
-        assertThat(matcher, not(matches(2.2D)));
     }
     
     @Test
@@ -125,7 +113,6 @@ public class FloatingPointMatcherParserTest {
         
         assertThat(matcher, matches(0D));
         assertThat(matcher, matches(0.992D));
-        assertThat(matcher, not(matches(2D)));
     }
     
     @Test
@@ -136,6 +123,5 @@ public class FloatingPointMatcherParserTest {
         
         assertThat(matcher, matches(-2D));
         assertThat(matcher, matches(-1.123D));
-        assertThat(matcher, not(matches(-1D)));
     }
 }
