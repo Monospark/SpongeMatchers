@@ -7,6 +7,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.base.BaseMatcherParser;
 import org.monospark.spongematchers.parser.element.ConnectedElement;
+import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElement.Type;
@@ -85,6 +86,11 @@ public abstract class MatcherType<T> {
             } else if(p.getType() == Type.PARANTHESES) {
                 return parseMatcher(p.getElement());
             }
+        } else if (element instanceof LiteralElement) {
+            LiteralElement l = (LiteralElement) element;
+            if (l.getType() == LiteralElement.Type.WILDCARD) {
+                return SpongeMatcher.wildcard();
+            }
         }
         
         if (!canParse(element, false)) {
@@ -103,6 +109,9 @@ public abstract class MatcherType<T> {
             if (p.getType() == Type.NOT || p.getType() == Type.PARANTHESES) {
                 return canParseMatcher(p.getElement(), deep);
             }
+        } else if (element instanceof LiteralElement) {
+            LiteralElement l = (LiteralElement) element;
+            return l.getType() == LiteralElement.Type.WILDCARD;
         }
         
         return canParse(element, deep);
