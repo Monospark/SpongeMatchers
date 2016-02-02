@@ -16,7 +16,7 @@ public final class ItemStackType extends MatcherType<ItemStack> {
             .addEntry("quantity", MatcherType.INTEGER)
             .addEntry("data", MatcherType.DATA_VIEW)
             .build();
-    
+
     ItemStackType() {
         super("item stack");
     }
@@ -30,10 +30,10 @@ public final class ItemStackType extends MatcherType<ItemStack> {
     protected boolean canParse(StringElement element, boolean deep) {
         return MAP_TYPE.canParseMatcher(element, deep);
     }
-    
+
     @Override
     protected SpongeMatcher<ItemStack> parse(StringElement element) throws SpongeMatcherParseException {
         SpongeMatcher<Map<String, Object>> matcher = MAP_TYPE.parseMatcher(element);
-        return ItemStackMatcher.create(matcher);  
+        return ItemStackMatcher.create(matcher);
     }
 }

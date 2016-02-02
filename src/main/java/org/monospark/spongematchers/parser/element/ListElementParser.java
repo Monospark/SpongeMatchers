@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 public final class ListElementParser extends StringElementParser {
 
     ListElementParser() {}
-    
+
     @Override
     Pattern createPattern() {
         return new PatternBuilder()

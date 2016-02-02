@@ -13,18 +13,18 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
     public static SpongeMatcher<PropertyHolder> create(SpongeMatcher<Map<String, Object>> matcher) {
         return new PropertyHolderMatcher(matcher);
     }
-    
+
     private PropertyHolderMatcher(SpongeMatcher<Map<String, Object>> matcher) {
         super(matcher);
     }
 
     @Override
     protected void fillMap(PropertyHolder o, Map<String, Object> map) {
-        for (Property<?,?> property : o.getApplicableProperties()) {
+        for (Property<?, ?> property : o.getApplicableProperties()) {
             map.put(property.getKey().toString(), makeMatchable(property.getValue()));
         }
     }
-    
+
     private Object makeMatchable(Object o) {
         if (o instanceof Byte) {
             return ((Byte) o).longValue();
@@ -32,49 +32,49 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
             return ((Short) o).longValue();
         } else if (o instanceof Integer) {
             return ((Integer) o).longValue();
-        } else if(o instanceof Float) {
+        } else if (o instanceof Float) {
             return ((Float) o).doubleValue();
         }
-        
+
         if (o instanceof Boolean || o instanceof Long || o instanceof Double) {
             return o;
         } else {
             return o.toString();
         }
     }
-       
+
     public static Builder builder() {
         return new Builder();
     }
-    
+
     public static final class Builder {
-        
+
         private MapMatcher.Builder builder;
-        
+
         private Builder() {
             builder = MapMatcher.builder();
         }
-        
+
         public Builder addBooleanProperty(String name, SpongeMatcher<Boolean> matcher) {
             builder.addMatcher(name, MatcherType.BOOLEAN, matcher);
             return this;
         }
-        
+
         public Builder addIntegerProperty(String name, SpongeMatcher<Long> matcher) {
             builder.addMatcher(name, MatcherType.INTEGER, matcher);
             return this;
         }
-        
+
         public Builder addFloatingPointProperty(String name, SpongeMatcher<Double> matcher) {
             builder.addMatcher(name, MatcherType.FLOATING_POINT, matcher);
             return this;
         }
-        
+
         public <T> Builder addAbstractProperty(String name, MatcherType<T> type, SpongeMatcher<T> matcher) {
             builder.addMatcher(name, type, matcher);
             return this;
         }
-        
+
         public SpongeMatcher<PropertyHolder> build() {
             return new PropertyHolderMatcher(builder.build());
         }

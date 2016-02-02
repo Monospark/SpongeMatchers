@@ -27,18 +27,18 @@ public class BlockStateTypeTest {
     @Test
     public void canMatch_NonBlockStateObject_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
-        
+
         boolean canMatch = MatcherType.BLOCK_STATE.canMatch(o);
-        
+
         assertThat(canMatch, is(false));
     }
-    
+
     @Test
     public void canMatch_BlockStateObject_ReturnsTrue() throws Exception {
         Object o = mock(BlockState.class);
 
         boolean canMatch = MatcherType.BLOCK_STATE.canMatch(o);
-        
+
         assertThat(canMatch, is(true));
     }
 
@@ -65,8 +65,8 @@ public class BlockStateTypeTest {
         traits.put(trait2, false);
         when(state.getTraitMap()).thenReturn(traits);
         DataContainer container = new MemoryDataContainer();
-        container.set(DataQuery.of("UnsafeData","boolean"), true);
-        container.set(DataQuery.of("UnsafeData","integer"), 1);
+        container.set(DataQuery.of("UnsafeData", "boolean"), true);
+        container.set(DataQuery.of("UnsafeData", "integer"), 1);
         when(state.toContainer()).thenReturn(container);
         assertThat(matcher, matches(state));
     }

@@ -21,26 +21,26 @@ public class BlockTypeTypeTest {
     @Test
     public void canMatch_NonBlockTypeObject_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
-        
+
         boolean canMatch = MatcherType.BLOCK_TYPE.canMatch(o);
-        
+
         assertThat(canMatch, is(false));
     }
-    
+
     @Test
     public void canMatch_BlockTypeObject_ReturnsTrue() throws Exception {
         Object o = mock(BlockType.class);
 
         boolean canMatch = MatcherType.BLOCK_TYPE.canMatch(o);
-        
+
         assertThat(canMatch, is(true));
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{'id':'minecraft:appl.',"
-                + "'properties':{'test1':1,'test2':false}}");
+        StringElement element = StringElementParser.parseStringElement(
+                "{'id':'minecraft:appl.','properties':{'test1':1,'test2':false}}");
 
         SpongeMatcher<BlockType> matcher = MatcherType.BLOCK_TYPE.parseMatcher(element);
 

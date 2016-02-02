@@ -16,9 +16,9 @@ public final class MapElementParser extends StringElementParser {
             .appendNonCapturingPart("\\s*:\\s*")
             .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "value")
             .build();
-    
+
     MapElementParser() {}
-    
+
     @Override
     Pattern createPattern() {
         Pattern entryPattern = new PatternBuilder()
@@ -40,7 +40,7 @@ public final class MapElementParser extends StringElementParser {
 
     @Override
     void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException {
-        Map<String,StringElement> entries = Maps.newHashMap();
+        Map<String, StringElement> entries = Maps.newHashMap();
         Matcher entryMatcher = ENTRY_PATTERN.matcher(matcher.group());
         while (entryMatcher.find()) {
             StringElement key = context.getElementAt(matcher.start() + entryMatcher.start("key"),
@@ -48,7 +48,7 @@ public final class MapElementParser extends StringElementParser {
             if (!(key instanceof MapKeyElement)) {
                 throw new SpongeMatcherParseException("Invalid map key: " + key.getString());
             }
-            
+
             String keyName = ((MapKeyElement) key).getName();
             context.removeElement(key);
             StringElement value = context.getElementAt(matcher.start() + entryMatcher.start("value"),

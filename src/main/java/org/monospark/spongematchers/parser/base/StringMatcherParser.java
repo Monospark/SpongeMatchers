@@ -26,7 +26,7 @@ public final class StringMatcherParser extends BaseMatcherParser<String> {
 
     @Override
     protected SpongeMatcher<String> parse(Matcher matcher) throws SpongeMatcherParseException {
-        String replacedSingleQuotes = matcher.group("regex").replace("\\'", "'");  
+        String replacedSingleQuotes = matcher.group("regex").replace("\\'", "'");
         try {
             return StringMatcher.create(replacedSingleQuotes);
         } catch (PatternSyntaxException e) {

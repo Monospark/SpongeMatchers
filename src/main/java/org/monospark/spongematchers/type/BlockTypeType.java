@@ -10,11 +10,11 @@ import org.spongepowered.api.block.BlockType;
 
 public final class BlockTypeType extends MatcherType<BlockType> {
 
-    private static final MatcherType<Map<String,Object>> TYPE = MatcherType.definedMap()
+    private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
             .addEntry("id", MatcherType.STRING)
             .addEntry("properties", MatcherType.PROPERTY_HOLDER)
             .build();
-   
+
     BlockTypeType() {
         super("block type");
     }

@@ -7,7 +7,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 public final class OptionalMatcher {
 
     private OptionalMatcher() {}
-    
+
     public static <T> SpongeMatcher<Optional<T>> matchEmpty() {
         return new SpongeMatcher<Optional<T>>() {
 
@@ -18,11 +18,11 @@ public final class OptionalMatcher {
 
             @Override
             public String toString() {
-               return "empty";
+                return "empty";
             }
         };
     }
-    
+
     public static <T> SpongeMatcher<Optional<T>> wrapper(SpongeMatcher<T> matcher) {
         return new SpongeMatcher<Optional<T>>() {
 
@@ -33,7 +33,7 @@ public final class OptionalMatcher {
 
             @Override
             public String toString() {
-               return matcher.toString() + "(optional)";
+                return matcher.toString() + "(optional)";
             }
         };
     }

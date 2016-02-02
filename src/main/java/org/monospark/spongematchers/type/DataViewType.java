@@ -10,13 +10,13 @@ import org.spongepowered.api.data.DataView;
 
 public final class DataViewType extends MatcherType<DataView> {
 
-    private MatcherType<Map<String,Object>> type;
-    
+    private MatcherType<Map<String, Object>> type;
+
     DataViewType() {
         super("data view");
     }
-    
-    private MatcherType<Map<String,Object>> getMatcherType() {
+
+    private MatcherType<Map<String, Object>> getMatcherType() {
         if (type == null) {
             type = MatcherType.undefinedMap()
                     .addType(MatcherType.BOOLEAN)
@@ -33,7 +33,7 @@ public final class DataViewType extends MatcherType<DataView> {
         }
         return type;
     }
-    
+
     @Override
     public boolean canMatch(Object o) {
         return o instanceof DataView;

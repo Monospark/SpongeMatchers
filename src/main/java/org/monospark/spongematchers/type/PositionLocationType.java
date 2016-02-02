@@ -10,12 +10,12 @@ import org.spongepowered.api.world.Location;
 
 public final class PositionLocationType extends MatcherType<Location<?>> {
 
-    private static final MatcherType<Map<String,Object>> TYPE = MatcherType.definedMap()
+    private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
             .addEntry("x", MatcherType.FLOATING_POINT)
             .addEntry("y", MatcherType.FLOATING_POINT)
             .addEntry("z", MatcherType.FLOATING_POINT)
             .build();
-    
+
     protected PositionLocationType() {
         super("position location");
     }

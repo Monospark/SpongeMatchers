@@ -5,11 +5,11 @@ import java.util.regex.Matcher;
 public final class ConnectedElement extends StringElement {
 
     private StringElement firstElement;
-    
+
     private StringElement secondElement;
-    
+
     private Operator operator;
-    
+
     ConnectedElement(Matcher matcher, StringElement firstElement, StringElement secondElement, Operator operator) {
         super(matcher);
         this.firstElement = firstElement;
@@ -24,15 +24,13 @@ public final class ConnectedElement extends StringElement {
     public StringElement getSecondElement() {
         return secondElement;
     }
-    
+
     public Operator getOperator() {
         return operator;
     }
 
+    public enum Operator {
 
-    public static enum Operator {
-        
-        AND,
-        OR;
+        AND, OR;
     }
 }

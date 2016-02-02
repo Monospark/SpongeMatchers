@@ -23,22 +23,22 @@ public final class OptionalType<T> extends MatcherType<Optional<T>> {
         if (!(o instanceof Optional)) {
             return false;
         }
-        
+
         Optional<?> optional = (Optional<?>) o;
         return optional.isPresent() ? type.canMatch(optional.get()) : true;
     }
-    
+
     @Override
     protected boolean canParse(StringElement element, boolean deep) {
-        boolean isEmptyOptional = element instanceof LiteralElement &&
-                ((LiteralElement) element).getType() == Type.EMPTY;
+        boolean isEmptyOptional = element instanceof LiteralElement
+                && ((LiteralElement) element).getType() == Type.EMPTY;
         if (deep && !isEmptyOptional) {
             return type.canParse(element, true);
         } else {
             return true;
         }
     }
-    
+
     @Override
     protected SpongeMatcher<Optional<T>> parse(StringElement element) throws SpongeMatcherParseException {
         if (element instanceof LiteralElement && ((LiteralElement) element).getType() == Type.EMPTY) {

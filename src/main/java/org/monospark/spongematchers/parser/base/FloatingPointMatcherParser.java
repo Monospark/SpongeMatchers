@@ -68,7 +68,7 @@ public final class FloatingPointMatcherParser extends BaseMatcherParser<Double> 
                 .closeParantheses()
                 .build();
     }
-    
+
     public SpongeMatcher<Double> parse(Matcher matcher) throws SpongeMatcherParseException {
         if (matcher.group("range") != null) {
             double start = parseDouble(matcher.group("rangestart"));
@@ -90,11 +90,11 @@ public final class FloatingPointMatcherParser extends BaseMatcherParser<Double> 
             return FloatingPointMatcher.lessThanOrEqual(parseDouble(matcher.group("lessorequalvalue")));
         }
     }
-    
+
     private double parseDouble(String s) throws SpongeMatcherParseException {
         try {
             return Double.parseDouble(s);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new SpongeMatcherParseException(e);
         }
     }

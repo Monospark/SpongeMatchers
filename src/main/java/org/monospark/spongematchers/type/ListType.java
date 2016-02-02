@@ -27,24 +27,24 @@ public final class ListType<T> extends MatcherType<List<T>> {
         if (!(o instanceof List)) {
             return false;
         }
-        
+
         List<?> list = (List<?>) o;
         for (Object element : list) {
             if (!type.canMatch(element)) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     @Override
     protected boolean canParse(StringElement element, boolean deep) {
         if (element instanceof ListElement) {
             if (!deep) {
                 return true;
             }
-            
+
             ListElement list = (ListElement) element;
             for (StringElement e : list.getElements()) {
                 if (!type.canParse(e, true)) {
@@ -52,7 +52,7 @@ public final class ListType<T> extends MatcherType<List<T>> {
                 }
             }
             return true;
-        } else if(element instanceof PatternElement) {
+        } else if (element instanceof PatternElement) {
             PatternElement pattern = (PatternElement) element;
             return deep ? type.canParse(pattern.getElement(), true) : true;
         } else if (element instanceof LiteralElement) {
@@ -61,7 +61,7 @@ public final class ListType<T> extends MatcherType<List<T>> {
             return false;
         }
     }
-    
+
     @Override
     protected SpongeMatcher<List<T>> parse(StringElement element) throws SpongeMatcherParseException {
         if (element instanceof ListElement) {
@@ -71,16 +71,16 @@ public final class ListType<T> extends MatcherType<List<T>> {
                 matchers.add(type.parseMatcher(listElement));
             }
             return ListMatcher.matchExactly(matchers);
-        } else if(element instanceof PatternElement) {
+        } else if (element instanceof PatternElement) {
             PatternElement pattern = (PatternElement) element;
             if (pattern.getType().equals(Type.LIST_MATCH_ANY)) {
                 SpongeMatcher<T> matcher = type.parseMatcher(pattern.getElement());
                 return ListMatcher.matchAny(matcher);
-            } else if(pattern.getType().equals(Type.LIST_MATCH_ALL)) {
+            } else if (pattern.getType().equals(Type.LIST_MATCH_ALL)) {
                 SpongeMatcher<T> matcher = type.parseMatcher(pattern.getElement());
                 return ListMatcher.matchAll(matcher);
             }
-        } else if(element instanceof LiteralElement) {
+        } else if (element instanceof LiteralElement) {
             LiteralElement literal = (LiteralElement) element;
             if (literal.getType() == LiteralElement.Type.NONE) {
                 return ListMatcher.none();

@@ -26,11 +26,11 @@ public final class BlockStateMatcher extends SpongeObjectMatcher<BlockState> {
                 .addOptionalMatcher("data", MatcherType.DATA_VIEW, data)
                 .build());
     }
-    
+
     public static SpongeMatcher<BlockState> create(SpongeMatcher<Map<String, Object>> matcher) {
         return new BlockStateMatcher(matcher);
     }
-    
+
     private BlockStateMatcher(SpongeMatcher<Map<String, Object>> matcher) {
         super(matcher);
     }
@@ -43,15 +43,15 @@ public final class BlockStateMatcher extends SpongeObjectMatcher<BlockState> {
             map.put("data", o.toContainer().get(DataQuery.of("UnsafeData")).get());
         }
     }
-    
+
     private Map<String, Object> createTraits(BlockState state) {
         Map<String, Object> map = Maps.newHashMap();
-        for (Entry<BlockTrait<?>,?> entry : state.getTraitMap().entrySet()) {
+        for (Entry<BlockTrait<?>, ?> entry : state.getTraitMap().entrySet()) {
             map.put(entry.getKey().getId(), makeMatchable(entry.getKey(), entry.getValue()));
         }
         return map;
     }
-    
+
     private Object makeMatchable(BlockTrait<?> trait, Object value) {
         if (trait.getValueClass().equals(Boolean.class)) {
             return value;

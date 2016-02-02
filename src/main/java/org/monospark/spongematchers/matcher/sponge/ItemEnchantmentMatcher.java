@@ -15,11 +15,11 @@ public final class ItemEnchantmentMatcher extends SpongeObjectMatcher<ItemEnchan
                 .addMatcher("level", MatcherType.INTEGER, level)
                 .build());
     }
-    
+
     public static ItemEnchantmentMatcher create(SpongeMatcher<Map<String, Object>> matcher) {
         return new ItemEnchantmentMatcher(matcher);
     }
-    
+
     private ItemEnchantmentMatcher(SpongeMatcher<Map<String, Object>> matcher) {
         super(matcher);
     }

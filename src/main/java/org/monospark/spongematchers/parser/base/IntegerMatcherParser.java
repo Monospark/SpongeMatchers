@@ -47,7 +47,7 @@ public final class IntegerMatcherParser extends BaseMatcherParser<Long> {
                 .closeParantheses()
                 .build();
     }
-    
+
     public SpongeMatcher<Long> parse(Matcher matcher) throws SpongeMatcherParseException {
         if (matcher.group("range") != null) {
             long start = parseLong(matcher.group("rangestart"));
@@ -69,11 +69,11 @@ public final class IntegerMatcherParser extends BaseMatcherParser<Long> {
             return IntegerMatcher.lessThanOrEqual(parseLong(matcher.group("lessorequalvalue")));
         }
     }
-    
+
     private long parseLong(String s) throws SpongeMatcherParseException {
         try {
             return Long.parseLong(s);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new SpongeMatcherParseException(e);
         }
     }

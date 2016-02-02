@@ -14,7 +14,7 @@ public final class ItemEnchantmentType extends MatcherType<ItemEnchantment> {
             .addEntry("id", MatcherType.STRING)
             .addEntry("level", MatcherType.INTEGER)
             .build();
-    
+
     ItemEnchantmentType() {
         super("item enchantment");
     }
@@ -23,15 +23,15 @@ public final class ItemEnchantmentType extends MatcherType<ItemEnchantment> {
     public boolean canMatch(Object o) {
         return o instanceof ItemEnchantment;
     }
-    
+
     @Override
     protected boolean canParse(StringElement element, boolean deep) {
         return MAP_TYPE.canParseMatcher(element, deep);
     }
-    
+
     @Override
     protected SpongeMatcher<ItemEnchantment> parse(StringElement element) throws SpongeMatcherParseException {
         SpongeMatcher<Map<String, Object>> matcher = MAP_TYPE.parseMatcher(element);
-        return ItemEnchantmentMatcher.create(matcher); 
+        return ItemEnchantmentMatcher.create(matcher);
     }
 }

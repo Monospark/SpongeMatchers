@@ -10,9 +10,9 @@ import com.google.common.collect.Sets;
 public final class StringElementContext {
 
     private String original;
-    
+
     private String string;
-    
+
     private Set<StringElement> elements;
 
     StringElementContext(String string) {
@@ -20,7 +20,7 @@ public final class StringElementContext {
         this.string = string;
         this.elements = Sets.newHashSet();
     }
-    
+
     public StringElement getFinalElement() throws SpongeMatcherParseException {
         if (elements.size() != 1) {
             throw new SpongeMatcherParseException("Invalid input string: " + original);
@@ -29,7 +29,7 @@ public final class StringElementContext {
         if (element.getStart() != 0 || element.getEnd() != original.length()) {
             throw new SpongeMatcherParseException("Invalid input string: " + original);
         }
-        
+
         return element;
     }
 
@@ -40,11 +40,11 @@ public final class StringElementContext {
         string = newString;
         elements.add(e);
     }
-    
+
     public void removeElement(StringElement e) {
         elements.remove(e);
     }
-    
+
     public StringElement getElementAt(int start, int end) throws SpongeMatcherParseException {
         for (StringElement e : elements) {
             if (e.getStart() == start && e.getEnd() == end) {
@@ -53,7 +53,7 @@ public final class StringElementContext {
         }
         throw new SpongeMatcherParseException("No element found at: " + start + " - " + end);
     }
- 
+
     public String getString() {
         return string;
     }

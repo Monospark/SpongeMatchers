@@ -19,25 +19,24 @@ public class ItemEnchantmentTypeTest {
     @Test
     public void canMatch_NonItemEnchantmentObject_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
-        
+
         boolean canMatch = MatcherType.ITEM_ENCHANTMENT.canMatch(o);
-        
+
         assertThat(canMatch, is(false));
     }
-    
+
     @Test
     public void canMatch_ItemEnchantmentObject_ReturnsTrue() throws SpongeMatcherParseException {
         Object o = new ItemEnchantment(mock(Enchantment.class), 2);
-        
+
         boolean canMatch = MatcherType.ITEM_ENCHANTMENT.canMatch(o);
-        
+
         assertThat(canMatch, is(true));
     }
 
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement(
-                "{'id':'minecraft:.+','level':2}");
+        StringElement element = StringElementParser.parseStringElement("{'id':'minecraft:.+','level':2}");
 
         SpongeMatcher<ItemEnchantment> matcher = MatcherType.ITEM_ENCHANTMENT.parseMatcher(element);
 

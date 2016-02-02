@@ -20,56 +20,56 @@ public class DataViewTypeTest {
     @Test
     public void canMatch_NonDataViewObject_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
-        
+
         boolean canMatch = MatcherType.DATA_VIEW.canMatch(o);
-        
+
         assertThat(canMatch, is(false));
     }
-    
+
     @Test
     public void canMatch_DataViewObject_ReturnsTrue() throws SpongeMatcherParseException {
         DataView view = new MemoryDataContainer();
         view.set(DataQuery.of("boolean"), true);
-        
+
         boolean canMatch = MatcherType.DATA_VIEW.canMatch(view);
-        
+
         assertThat(canMatch, is(true));
     }
-    
+
     @Test
     public void canMatch_SameClasses_ReturnsTrue() throws SpongeMatcherParseException {
         Object o = true;
-        
+
         boolean canMatch = MatcherType.BOOLEAN.canMatch(o);
-        
+
         assertThat(canMatch, is(true));
     }
-    
+
     @Test
     public void canParse_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("empty");
-        
+
         boolean canParse = MatcherType.DATA_VIEW.canParse(element, false);
-        
+
         assertThat(canParse, is(false));
     }
 
     @Test
     public void canParse_DeepAndUnparseableMapValue_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("{'test':matchAny:matchAny:1}");
-        
+
         boolean canParse = MatcherType.DATA_VIEW.canParse(element, true);
-        
+
         assertThat(canParse, is(false));
     }
-    
+
     @Test
     public void parseMatcher_ValidMapEntries_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement(
                 "{'boolean':true,'integer':1,'fp':1.5f,'string':'test','list':[1,2],'dataview':{'nested':1}}");
-        
+
         SpongeMatcher<DataView> matcher = MatcherType.DATA_VIEW.parseMatcher(element);
-        
+
         DataView view1 = new MemoryDataContainer();
         view1.set(DataQuery.of("boolean"), true);
         view1.set(DataQuery.of("integer"), 1L);

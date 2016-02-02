@@ -6,9 +6,9 @@ import java.util.regex.Pattern;
 import org.monospark.spongematchers.util.PatternBuilder;
 
 public final class PatternElement extends StringElement {
-    
+
     private Type type;
-    
+
     private StringElement element;
 
     PatternElement(Matcher matcher, Type type, StringElement element) {
@@ -24,26 +24,26 @@ public final class PatternElement extends StringElement {
     public StringElement getElement() {
         return element;
     }
-    
 
-    public static enum Type {
-        
+
+    public enum Type {
+
         LIST_MATCH_ANY(new PatternBuilder()
                 .appendNonCapturingPart("matchAny\\s*:\\s*")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
                 .build()),
-        
+
         LIST_MATCH_ALL(new PatternBuilder()
                 .appendNonCapturingPart("matchAll\\s*:\\s*")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
                 .build()),
-        
+
         PARANTHESES(new PatternBuilder()
                 .appendNonCapturingPart("\\(\\s*")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
                 .appendNonCapturingPart("\\s*\\)")
                 .build()),
-        
+
         NOT(new PatternBuilder()
                 .appendNonCapturingPart("!\\s*")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
@@ -51,7 +51,7 @@ public final class PatternElement extends StringElement {
 
         private Pattern pattern;
 
-        private Type(Pattern pattern) {
+        Type(Pattern pattern) {
             this.pattern = pattern;
         }
 

@@ -18,11 +18,11 @@ public final class BlockLocationMatcher extends SpongeObjectMatcher<Location<?>>
                 .build();
         return new BlockLocationMatcher(matcher);
     }
-    
+
     public static SpongeMatcher<Location<?>> create(SpongeMatcher<Map<String, Object>> matcher) {
         return new BlockLocationMatcher(matcher);
     }
-    
+
     private BlockLocationMatcher(SpongeMatcher<Map<String, Object>> matcher) {
         super(matcher);
     }

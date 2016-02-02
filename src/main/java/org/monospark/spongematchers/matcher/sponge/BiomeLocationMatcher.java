@@ -16,11 +16,11 @@ public final class BiomeLocationMatcher extends SpongeObjectMatcher<Location<?>>
                 .build();
         return new BiomeLocationMatcher(matcher);
     }
-    
+
     public static SpongeMatcher<Location<?>> create(SpongeMatcher<Map<String, Object>> matcher) {
         return new BiomeLocationMatcher(matcher);
     }
-    
+
     private BiomeLocationMatcher(SpongeMatcher<Map<String, Object>> matcher) {
         super(matcher);
     }

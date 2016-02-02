@@ -10,12 +10,12 @@ import org.spongepowered.api.world.Location;
 
 public final class BlockLocationType extends MatcherType<Location<?>> {
 
-    private static final MatcherType<Map<String,Object>> TYPE = MatcherType.definedMap()
+    private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
             .addEntry("x", MatcherType.INTEGER)
             .addEntry("y", MatcherType.INTEGER)
             .addEntry("z", MatcherType.INTEGER)
             .build();
-    
+
     protected BlockLocationType() {
         super("block location");
     }

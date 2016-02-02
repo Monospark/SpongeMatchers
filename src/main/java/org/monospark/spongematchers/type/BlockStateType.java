@@ -9,19 +9,19 @@ import org.monospark.spongematchers.parser.element.StringElement;
 import org.spongepowered.api.block.BlockState;
 
 public final class BlockStateType extends MatcherType<BlockState> {
-    
-    public static final MatcherType<Map<String,Object>> TRAIT_TYPE = MatcherType.undefinedMap()
+
+    public static final MatcherType<Map<String, Object>> TRAIT_TYPE = MatcherType.undefinedMap()
             .addType(MatcherType.BOOLEAN)
             .addType(MatcherType.INTEGER)
             .addType(MatcherType.STRING)
             .build();
 
-    private static final MatcherType<Map<String,Object>> TYPE = MatcherType.definedMap()
+    private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
             .addEntry("type", MatcherType.BLOCK_TYPE)
             .addEntry("traits", TRAIT_TYPE)
             .addEntry("data", MatcherType.DATA_VIEW)
             .build();
-    
+
     protected BlockStateType() {
         super("block state");
     }

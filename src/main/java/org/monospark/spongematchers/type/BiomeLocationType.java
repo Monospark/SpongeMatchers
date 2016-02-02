@@ -10,11 +10,11 @@ import org.spongepowered.api.world.Location;
 
 public final class BiomeLocationType extends MatcherType<Location<?>> {
 
-    private static final MatcherType<Map<String,Object>> TYPE = MatcherType.definedMap()
+    private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
             .addEntry("x", MatcherType.INTEGER)
             .addEntry("y", MatcherType.INTEGER)
             .build();
-    
+
     protected BiomeLocationType() {
         super("biome location");
     }

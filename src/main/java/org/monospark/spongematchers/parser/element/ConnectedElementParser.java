@@ -10,7 +10,7 @@ import org.monospark.spongematchers.util.PatternBuilder;
 public final class ConnectedElementParser extends StringElementParser {
 
     ConnectedElementParser() {}
-    
+
     @Override
     Pattern createPattern() {
         return new PatternBuilder()
@@ -19,7 +19,7 @@ public final class ConnectedElementParser extends StringElementParser {
                     .appendCapturingPart("\\s*\\|\\s*", "or")
                     .or()
                     .appendCapturingPart("\\s*&\\s*", "and")
-                .closeParantheses() 
+                .closeParantheses()
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "secondelement")
                 .build();
     }
@@ -29,7 +29,7 @@ public final class ConnectedElementParser extends StringElementParser {
         StringElement element1 = context.getElementAt(matcher.start("firstelement"), matcher.end("firstelement"));
         StringElement element2 = context.getElementAt(matcher.start("secondelement"), matcher.end("secondelement"));
         Operator op = matcher.group("or") != null ? Operator.OR : Operator.AND;
-        
+
         context.removeElement(element1);
         context.removeElement(element2);
         context.addElement(new ConnectedElement(matcher, element1, element2, op));

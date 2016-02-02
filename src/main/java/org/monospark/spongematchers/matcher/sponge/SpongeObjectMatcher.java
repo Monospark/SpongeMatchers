@@ -8,14 +8,14 @@ import com.google.common.collect.Maps;
 
 public abstract class SpongeObjectMatcher<T> implements SpongeMatcher<T> {
 
-    private SpongeMatcher<Map<String, Object>> matcher; 
+    private SpongeMatcher<Map<String, Object>> matcher;
 
     public SpongeObjectMatcher(SpongeMatcher<Map<String, Object>> matcher) {
         this.matcher = matcher;
     }
 
     @Override
-    public boolean matches(T o) {
+    public final boolean matches(T o) {
         Map<String, Object> map = Maps.newHashMap();
         fillMap(o, map);
         return matcher.matches(map);
@@ -24,7 +24,7 @@ public abstract class SpongeObjectMatcher<T> implements SpongeMatcher<T> {
     protected abstract void fillMap(T o, Map<String, Object> map);
 
     @Override
-    public String toString() {
-       return matcher.toString();
+    public final String toString() {
+        return matcher.toString();
     }
 }

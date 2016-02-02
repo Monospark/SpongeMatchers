@@ -23,55 +23,55 @@ import org.spongepowered.api.world.Location;
 public abstract class MatcherType<T> {
 
     public static final MatcherType<Boolean> BOOLEAN = new BaseType<>(BaseMatcherParser.BOOLEAN);
-    
+
     public static final MatcherType<Long> INTEGER = new BaseType<>(BaseMatcherParser.INTEGER);
-    
+
     public static final MatcherType<Double> FLOATING_POINT = new BaseType<>(BaseMatcherParser.FLOATING_POINT);
-    
+
     public static final MatcherType<String> STRING = new BaseType<>(BaseMatcherParser.STRING);
 
     public static final MatcherType<DataView> DATA_VIEW = new DataViewType();
 
     public static final MatcherType<ItemStack> ITEM_STACK = new ItemStackType();
-    
+
     public static final MatcherType<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentType();
-    
+
     public static final MatcherType<PropertyHolder> PROPERTY_HOLDER = new PropertyHolderType();
-    
+
     public static final MatcherType<BlockType> BLOCK_TYPE = new BlockTypeType();
-    
+
     public static final MatcherType<BlockState> BLOCK_STATE = new BlockStateType();
-    
+
     public static final MatcherType<Location<?>> BIOME_LOCATION = new BiomeLocationType();
-    
+
     public static final MatcherType<Location<?>> BLOCK_LOCATION = new BlockLocationType();
-    
+
     public static final MatcherType<Location<?>> POSITION_LOCATION = new PositionLocationType();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
     }
-    
+
     public static DefinedMapType.Builder definedMap() {
         return DefinedMapType.builder();
     }
-    
+
     public static UndefinedMapType.Builder undefinedMap() {
         return UndefinedMapType.builder();
     }
-    
+
     public static <T> MatcherType<Optional<T>> optional(MatcherType<T> type) {
         return new OptionalType<T>(type);
     }
-    
+
     private String name;
 
     protected MatcherType(String name) {
         this.name = name;
     }
-    
+
     public abstract boolean canMatch(Object o);
-    
+
     public final SpongeMatcher<T> parseMatcher(StringElement element) throws SpongeMatcherParseException {
         if (element instanceof ConnectedElement) {
             ConnectedElement con = (ConnectedElement) element;
@@ -83,7 +83,7 @@ public abstract class MatcherType<T> {
             PatternElement p = (PatternElement) element;
             if (p.getType() == Type.NOT) {
                 return SpongeMatcher.not(parseMatcher(p.getElement()));
-            } else if(p.getType() == Type.PARANTHESES) {
+            } else if (p.getType() == Type.PARANTHESES) {
                 return parseMatcher(p.getElement());
             }
         } else if (element instanceof LiteralElement) {
@@ -92,14 +92,14 @@ public abstract class MatcherType<T> {
                 return SpongeMatcher.wildcard();
             }
         }
-        
+
         if (!canParse(element, false)) {
             throw new SpongeMatcherParseException("Invalid " + name + " matcher: " + element.getString());
         }
-        
+
         return parse(element);
     }
-    
+
     public final boolean canParseMatcher(StringElement element, boolean deep) {
         if (element instanceof ConnectedElement) {
             ConnectedElement con = (ConnectedElement) element;
@@ -113,15 +113,15 @@ public abstract class MatcherType<T> {
             LiteralElement l = (LiteralElement) element;
             return l.getType() == LiteralElement.Type.WILDCARD;
         }
-        
+
         return canParse(element, deep);
     }
-    
+
     protected abstract boolean canParse(StringElement element, boolean deep);
-    
+
     protected abstract SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException;
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 }

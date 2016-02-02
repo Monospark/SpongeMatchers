@@ -6,18 +6,17 @@ import java.util.regex.Matcher;
 
 public final class MapElement extends StringElement {
 
-    private Map<String,StringElement> elements;
-    
-    MapElement(Matcher matcher, Map<String,StringElement> elements) {
+    private Map<String, StringElement> elements;
+
+    MapElement(Matcher matcher, Map<String, StringElement> elements) {
         super(matcher);
         this.elements = elements;
     }
-    
+
     public Optional<StringElement> getElement(String key) {
         return Optional.ofNullable(elements.get(key));
     }
 
-    
     public Map<String, StringElement> getElements() {
         return elements;
     }

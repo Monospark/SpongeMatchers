@@ -22,18 +22,18 @@ public class ItemStackTypeTest {
     @Test
     public void canMatch_NonItemStackObject_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
-        
+
         boolean canMatch = MatcherType.ITEM_STACK.canMatch(o);
-        
+
         assertThat(canMatch, is(false));
     }
-    
+
     @Test
     public void canMatch_ItemStackObject_ReturnsTrue() throws Exception {
         Object o = mock(ItemStack.class);
 
         boolean canMatch = MatcherType.ITEM_STACK.canMatch(o);
-        
+
         assertThat(canMatch, is(true));
     }
 

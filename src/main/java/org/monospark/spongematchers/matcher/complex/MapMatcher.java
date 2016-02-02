@@ -12,7 +12,7 @@ import com.google.common.collect.Sets;
 public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
 
     private Set<MatcherEntry<?>> entries;
-    
+
     private MapMatcher(Set<MatcherEntry<?>> entries) {
         this.entries = entries;
     }
@@ -26,7 +26,7 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
         }
         return true;
     }
-    
+
     private <T> boolean matchesEntry(MatcherEntry<T> entry, Map<String, Object> o) {
         @SuppressWarnings("unchecked")
         Optional<T> object = (Optional<T>) Optional.ofNullable(o.get(entry.getKey()));
@@ -35,7 +35,7 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
                 return false;
             }
         }
-        
+
         SpongeMatcher<Optional<T>> matcher = entry.getMatcher();
         boolean matches = matcher.matches(object);
         return matches;
@@ -43,50 +43,50 @@ public final class MapMatcher implements SpongeMatcher<Map<String, Object>> {
 
     @Override
     public String toString() {
-       StringBuilder builder = new StringBuilder();
-       builder.append("{");
-       for (MatcherEntry<?> entry : entries) {
-           builder.append(entry.getKey()).append(":").append(entry.getMatcher().toString());
-           builder.append(",");
-       }
-       builder.deleteCharAt(builder.length() - 1);
-       builder.append("}");
-       return builder.toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append("{");
+        for (MatcherEntry<?> entry : entries) {
+            builder.append(entry.getKey()).append(":").append(entry.getMatcher().toString());
+            builder.append(",");
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        builder.append("}");
+        return builder.toString();
     }
-    
+
     public static Builder builder() {
         return new Builder();
     }
-    
+
     public static final class Builder {
-        
+
         private Set<MatcherEntry<?>> entries;
-        
+
         private Builder() {
             entries = Sets.newHashSet();
         }
-        
+
         public <T> Builder addMatcher(String key, MatcherType<T> type, SpongeMatcher<T> matcher) {
             entries.add(new MatcherEntry<T>(key, type, OptionalMatcher.wrapper(matcher)));
             return this;
         }
-        
+
         public <T> Builder addOptionalMatcher(String key, MatcherType<T> type, SpongeMatcher<Optional<T>> matcher) {
             entries.add(new MatcherEntry<T>(key, type, matcher));
             return this;
         }
-        
+
         public SpongeMatcher<Map<String, Object>> build() {
             return new MapMatcher(entries);
         }
     }
-    
+
     private static final class MatcherEntry<T> {
-        
+
         private String key;
-        
+
         private MatcherType<T> type;
-        
+
         private SpongeMatcher<Optional<T>> matcher;
 
         private MatcherEntry(String key, MatcherType<T> type, SpongeMatcher<Optional<T>> matcher) {

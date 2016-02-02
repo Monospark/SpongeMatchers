@@ -20,19 +20,19 @@ public class PositionLocationTypeTest {
     @Test
     public void canMatch_NonLocationObject_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
-        
+
         boolean canMatch = MatcherType.POSITION_LOCATION.canMatch(o);
-        
+
         assertThat(canMatch, is(false));
     }
-    
+
     @Test
     public void canMatch_LocationObject_ReturnsTrue() throws Exception {
         Extent e = mock(Extent.class);
         Object o = new Location<Extent>(e, new Vector3d(1.0, 1.0, 1.0));
 
         boolean canMatch = MatcherType.POSITION_LOCATION.canMatch(o);
-        
+
         assertThat(canMatch, is(true));
     }
 

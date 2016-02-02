@@ -15,18 +15,18 @@ public final class LiteralElement extends StringElement {
     public Type getType() {
         return type;
     }
-    
-    public static enum Type {
+
+    public enum Type {
 
         EMPTY(Pattern.compile("(?:E|e)mpty")),
-        
+
         NONE(Pattern.compile("(?:N|n)one")),
-        
+
         WILDCARD(Pattern.compile("\\*"));
-        
+
         private Pattern pattern;
 
-        private Type(Pattern pattern) {
+        Type(Pattern pattern) {
             this.pattern = pattern;
         }
 

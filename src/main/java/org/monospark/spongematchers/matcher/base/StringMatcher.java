@@ -7,7 +7,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 public final class StringMatcher {
 
     private StringMatcher() {}
-    
+
     public static SpongeMatcher<String> create(String regex) {
         Pattern pattern = Pattern.compile(regex);
         return new SpongeMatcher<String>() {
@@ -16,10 +16,10 @@ public final class StringMatcher {
             public boolean matches(String o) {
                 return pattern.matcher(o).matches();
             }
-            
+
             @Override
             public String toString() {
-               return regex;
+                return regex;
             }
         };
     }

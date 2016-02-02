@@ -12,47 +12,47 @@ public class LiteralElementParserTest {
     @Test
     public void parseElements_EmptyLowerCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
         String input = "empty";
-        
+
         StringElement element = StringElementParser.parseStringElement(input);
 
         LiteralElement e = (LiteralElement) element;
         assertThat(e.getType(), is(Type.EMPTY));
     }
-    
+
     @Test
     public void parseElements_EmptyUpperCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
         String input = "Empty";
-        
+
         StringElement element = StringElementParser.parseStringElement(input);
 
         LiteralElement e = (LiteralElement) element;
         assertThat(e.getType(), is(Type.EMPTY));
     }
-    
+
     @Test
     public void parseElements_NoneLowerCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
         String input = "none";
-        
+
         StringElement element = StringElementParser.parseStringElement(input);
 
         LiteralElement e = (LiteralElement) element;
         assertThat(e.getType(), is(Type.NONE));
     }
-    
+
     @Test
     public void parseElements_NoneUpperCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
         String input = "None";
-        
+
         StringElement element = StringElementParser.parseStringElement(input);
 
         LiteralElement e = (LiteralElement) element;
         assertThat(e.getType(), is(Type.NONE));
     }
-    
+
     @Test
     public void parseElements_Wildcard_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
         String input = "*";
-        
+
         StringElement element = StringElementParser.parseStringElement(input);
 
         LiteralElement e = (LiteralElement) element;

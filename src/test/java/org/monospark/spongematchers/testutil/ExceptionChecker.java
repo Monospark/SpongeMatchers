@@ -11,8 +11,8 @@ public class ExceptionChecker {
                 Assert.fail("No exception was thrown. expected: " + exceptionClass.getName());
             } catch (Exception e) {
                 if (!exceptionClass.isInstance(e)) {
-                    throw new AssertionError("Wrong exception was thrown. expected: " + exceptionClass.getSimpleName()
-                            + ", got: " + e.getClass().getName(), e);
+                    throw new AssertionError("Wrong exception was thrown. expected: "
+                            + exceptionClass.getSimpleName() + ", got: " + e.getClass().getName(), e);
                 }
 
                 if (e.getMessage() == null) {
@@ -21,10 +21,10 @@ public class ExceptionChecker {
             }
         }
     }
-    
+
     @FunctionalInterface
-    public static interface ExceptionRunnable {
-        
+    public interface ExceptionRunnable {
+
         void run() throws Exception;
     }
 }

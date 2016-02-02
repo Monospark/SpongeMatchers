@@ -13,18 +13,18 @@ public final class BlockTypeMatcher extends SpongeObjectMatcher<BlockType> {
     public static SpongeMatcher<BlockType> id(SpongeMatcher<String> id) {
         return create(id, SpongeMatcher.wildcard());
     }
-    
+
     public static SpongeMatcher<BlockType> create(SpongeMatcher<String> id, SpongeMatcher<PropertyHolder> properties) {
         return new BlockTypeMatcher(MapMatcher.builder()
                 .addMatcher("id", MatcherType.STRING, id)
                 .addMatcher("properties", MatcherType.PROPERTY_HOLDER, properties)
                 .build());
     }
-    
+
     public static SpongeMatcher<BlockType> create(SpongeMatcher<Map<String, Object>> matcher) {
         return new BlockTypeMatcher(matcher);
     }
-    
+
     private BlockTypeMatcher(SpongeMatcher<Map<String, Object>> matcher) {
         super(matcher);
     }

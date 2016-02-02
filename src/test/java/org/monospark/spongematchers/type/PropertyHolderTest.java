@@ -22,30 +22,30 @@ public class PropertyHolderTest {
     @Test
     public void canMatch_NonLocationObject_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
-        
+
         boolean canMatch = MatcherType.PROPERTY_HOLDER.canMatch(o);
-        
+
         assertThat(canMatch, is(false));
     }
-    
+
     @Test
     public void canMatch_PropertyHolderObject_ReturnsTrue() throws Exception {
         Object o = mock(PropertyHolder.class);
 
         boolean canMatch = MatcherType.PROPERTY_HOLDER.canMatch(o);
-        
+
         assertThat(canMatch, is(true));
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{'test1':false,'test2':1,'test3':2f,"
-                + "'test4':'LIQUID'}");
+        StringElement element = StringElementParser.parseStringElement(
+                "{'test1':false,'test2':1,'test3':2f," + "'test4':'LIQUID'}");
 
         SpongeMatcher<PropertyHolder> matcher = MatcherType.PROPERTY_HOLDER.parseMatcher(element);
 
-        Property<String,Boolean> p1 = mock(Property.class);
+        Property<String, Boolean> p1 = mock(Property.class);
         when(p1.getKey()).thenReturn("test1");
         when(p1.getValue()).thenReturn(false);
         Property<String, Integer> p2 = mock(Property.class);
@@ -54,7 +54,7 @@ public class PropertyHolderTest {
         Property<String, Double> p3 = mock(Property.class);
         when(p3.getKey()).thenReturn("test3");
         when(p3.getValue()).thenReturn(2.0);
-        Property<String,MatterProperty.Matter> p4 = mock(Property.class);
+        Property<String, MatterProperty.Matter> p4 = mock(Property.class);
         when(p4.getKey()).thenReturn("test4");
         when(p4.getValue()).thenReturn(MatterProperty.Matter.LIQUID);
         PropertyHolder holder = mock(PropertyHolder.class);

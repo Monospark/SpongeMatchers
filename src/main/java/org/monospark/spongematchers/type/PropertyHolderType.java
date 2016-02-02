@@ -10,13 +10,13 @@ import org.spongepowered.api.data.property.PropertyHolder;
 
 public final class PropertyHolderType extends MatcherType<PropertyHolder> {
 
-    private MatcherType<Map<String,Object>> type = MatcherType.undefinedMap()
+    private MatcherType<Map<String, Object>> type = MatcherType.undefinedMap()
             .addType(MatcherType.BOOLEAN)
             .addType(MatcherType.INTEGER)
             .addType(MatcherType.FLOATING_POINT)
             .addType(MatcherType.STRING)
             .build();
-   
+
     PropertyHolderType() {
         super("property holder");
     }

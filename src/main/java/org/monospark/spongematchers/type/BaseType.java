@@ -19,7 +19,7 @@ public final class BaseType<T> extends MatcherType<T> {
     public boolean canMatch(Object o) {
         return parser.getBaseClass().equals(o.getClass());
     }
-    
+
     @Override
     protected boolean canParse(StringElement element, boolean deep) {
         if (element instanceof BaseElement) {
@@ -27,13 +27,13 @@ public final class BaseType<T> extends MatcherType<T> {
             if (!base.getParser().equals(parser)) {
                 return false;
             }
-            
+
             return true;
         } else {
             return false;
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     protected SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException {

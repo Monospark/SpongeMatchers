@@ -12,11 +12,11 @@ import com.google.common.collect.Sets;
 public abstract class StringElementParser {
 
     public static final Pattern REPLACE_PATTERN = Pattern.compile("#+");
-    
+
     private static final Set<StringElementParser> ONE_TIME_ELEMENT_PARSERS = createOneTimeElementParsers();
-    
+
     private static final Set<StringElementParser> MANY_TIMES_ELEMENT_PARSERS = createManyTimesElementParsers();
-    
+
     private static Set<StringElementParser> createOneTimeElementParsers() {
         Set<StringElementParser> oneTimeParsers = Sets.newLinkedHashSet();
         oneTimeParsers.add(new MapKeyElementParser());
@@ -29,7 +29,7 @@ public abstract class StringElementParser {
         oneTimeParsers.add(new LiteralElementParser(LiteralElement.Type.WILDCARD));
         return oneTimeParsers;
     }
-    
+
     private static Set<StringElementParser> createManyTimesElementParsers() {
         Set<StringElementParser> manyTimesParsers = Sets.newHashSet();
         manyTimesParsers.add(new PatternElementParser(PatternElement.Type.PARANTHESES));
@@ -41,7 +41,7 @@ public abstract class StringElementParser {
         manyTimesParsers.add(new MapElementParser());
         return manyTimesParsers;
     }
-    
+
     public static StringElement parseStringElement(String string) throws SpongeMatcherParseException {
         StringElementContext context = new StringElementContext(string.trim());
         for (StringElementParser parser : ONE_TIME_ELEMENT_PARSERS) {
@@ -54,26 +54,26 @@ public abstract class StringElementParser {
                 parser.parseElements(context);
             }
         } while (!lastContextString.equals(context.getString()));
-        
+
         return context.getFinalElement();
     }
 
     private Pattern pattern;
-    
+
     StringElementParser() {}
-    
+
     abstract Pattern createPattern();
-    
+
     final void parseElements(StringElementContext context) throws SpongeMatcherParseException {
         if (pattern == null) {
             pattern = createPattern();
         }
-        
+
         Matcher matcher = pattern.matcher(context.getString());
         while (matcher.find()) {
             parse(matcher, context);
         }
     }
-    
+
     abstract void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException;
 }
