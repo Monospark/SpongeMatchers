@@ -20,6 +20,8 @@ public final class LiteralElement extends StringElement {
 
         EMPTY(Pattern.compile("(?:E|e)mpty")),
         
+        NONE(Pattern.compile("(?:N|n)one")),
+        
         WILDCARD(Pattern.compile("\\*"));
         
         private Pattern pattern;

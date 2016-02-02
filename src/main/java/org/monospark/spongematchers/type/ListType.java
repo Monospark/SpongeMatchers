@@ -6,6 +6,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.complex.ListMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.ListElement;
+import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElement.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
@@ -54,6 +55,8 @@ public final class ListType<T> extends MatcherType<List<T>> {
         } else if(element instanceof PatternElement) {
             PatternElement pattern = (PatternElement) element;
             return deep ? type.canParse(pattern.getElement(), true) : true;
+        } else if (element instanceof LiteralElement) {
+            return ((LiteralElement) element).getType() == LiteralElement.Type.NONE;
         } else {
             return false;
         }
@@ -76,6 +79,11 @@ public final class ListType<T> extends MatcherType<List<T>> {
             } else if(pattern.getType().equals(Type.LIST_MATCH_ALL)) {
                 SpongeMatcher<T> matcher = type.parseMatcher(pattern.getElement());
                 return ListMatcher.matchAll(matcher);
+            }
+        } else if(element instanceof LiteralElement) {
+            LiteralElement literal = (LiteralElement) element;
+            if (literal.getType() == LiteralElement.Type.NONE) {
+                return ListMatcher.none();
             }
         }
         throw new AssertionError();

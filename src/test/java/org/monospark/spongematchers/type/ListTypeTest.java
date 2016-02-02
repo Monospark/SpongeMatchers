@@ -56,14 +56,14 @@ public class ListTypeTest {
     }
     
     @Test
-    public void canParse_DifferentPatternElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void canParse_DifferentLiteralElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("empty");
         
         boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, false);
         
         assertThat(canParse, is(false));
     }
-    
+
     @Test
     public void canParse_DeepAndDifferentElementType_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("[1,2]");
@@ -119,5 +119,15 @@ public class ListTypeTest {
         
         assertThat(matcher, matches(Lists.newArrayList(false, false)));
         assertThat(matcher, not(matches(Lists.newArrayList(false, true))));
+    }
+    
+    @Test
+    public void parseMatcher_NoneElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("none");
+        
+        SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
+        
+        assertThat(matcher, matches(Lists.newArrayList()));
+        assertThat(matcher, not(matches(Lists.newArrayList(true))));
     }
 }

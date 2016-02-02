@@ -9,6 +9,16 @@ public final class ListMatcher {
     
     private ListMatcher() {}
     
+    public static <T> SpongeMatcher<List<T>> none() {
+        return new SpongeMatcher<List<T>>() {
+
+            @Override
+            public boolean matches(List<T> o) {
+                return o.size() == 0;
+            }
+        };
+    }
+    
     public static <T> SpongeMatcher<List<T>> matchAny(SpongeMatcher<T> matcher) {
         return createFromSingleMatcher(matcher, false);
     }
