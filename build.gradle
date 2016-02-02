@@ -79,5 +79,5 @@ artifacts {
 }
 
 if(isCiServer) {
-    apply from: 'deploy.gradle'
+    apply from: 'publish.gradle'
 }
