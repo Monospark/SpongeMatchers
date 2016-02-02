@@ -29,12 +29,12 @@ public final class PatternElement extends StringElement {
     public static enum Type {
         
         LIST_MATCH_ANY(new PatternBuilder()
-                .appendNonCapturingPart("matchAny\\s+")
+                .appendNonCapturingPart("matchAny\\s*:\\s*")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
                 .build()),
         
         LIST_MATCH_ALL(new PatternBuilder()
-                .appendNonCapturingPart("matchAll\\s+")
+                .appendNonCapturingPart("matchAll\\s*:\\s*")
                 .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "element")
                 .build()),
         

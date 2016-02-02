@@ -55,7 +55,7 @@ public class DefinedMapTypeTest {
     
     @Test
     public void canParse_MapWithUnknownEntry_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{testing:true}");
+        StringElement element = StringElementParser.parseStringElement("{'testing':true}");
         
         boolean canParse = MatcherType.definedMap().addEntry("test", MatcherType.BOOLEAN).build().canParse(element, false);
         
@@ -64,7 +64,7 @@ public class DefinedMapTypeTest {
     
     @Test
     public void canParse_DeepAndDifferentValueType_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{test:1}");
+        StringElement element = StringElementParser.parseStringElement("{'test':1}");
         
         boolean canParse = MatcherType.definedMap().addEntry("test", MatcherType.BOOLEAN).build().canParse(element, true);
         
@@ -73,7 +73,7 @@ public class DefinedMapTypeTest {
     
     @Test
     public void canParse_DeepAndValidMapElements_ReturnsTrue() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{test:true}");
+        StringElement element = StringElementParser.parseStringElement("{'test':true}");
         
         boolean canParse = MatcherType.definedMap().addEntry("test", MatcherType.BOOLEAN).build().canParse(element, true);
         
@@ -82,7 +82,7 @@ public class DefinedMapTypeTest {
     
     @Test
     public void parseMatcher_ValidMapElements_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{boolean:true,integer:1}");
+        StringElement element = StringElementParser.parseStringElement("{'boolean':true,'integer':1}");
         
         SpongeMatcher<Map<String, Object>> matcher = MatcherType.definedMap()
                 .addEntry("boolean", MatcherType.BOOLEAN)

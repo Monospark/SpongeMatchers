@@ -19,6 +19,7 @@ public abstract class StringElementParser {
     
     private static Set<StringElementParser> createOneTimeElementParsers() {
         Set<StringElementParser> oneTimeParsers = Sets.newLinkedHashSet();
+        oneTimeParsers.add(new MapKeyElementParser());
         oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.STRING));
         oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.BOOLEAN));
         oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.FLOATING_POINT));

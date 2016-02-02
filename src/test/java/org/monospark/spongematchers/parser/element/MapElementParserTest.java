@@ -11,7 +11,7 @@ public class MapElementParserTest {
     @Test
     public void parseElements_MapElementWithSingleEntry_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = "{test:'test'}";
+        String input = "{'test':'test'}";
         
         StringElement element = StringElementParser.parseStringElement(input);
         
@@ -23,7 +23,7 @@ public class MapElementParserTest {
     @Test
     public void parseElements_MapElementWithSingleEntryWithSpaces_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = " { test  :  'test' }  ";
+        String input = " { 'test'  :  'test' }  ";
         
         StringElement element = StringElementParser.parseStringElement(input);
         
@@ -34,16 +34,16 @@ public class MapElementParserTest {
     
     @Test
     public void parseElements_MapElement_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
-        String input = "{firsttest:'test1',secondtest:'test2',thirdtest:'test3'}";
+        String input = "{'test1':'test1','test2':'test2','test3':'test3'}";
         
         StringElement element = StringElementParser.parseStringElement(input);
         
         MapElement map = (MapElement) element;
-        BaseElement<?> base1 = (BaseElement<?>) map.getElement("firsttest").get();
+        BaseElement<?> base1 = (BaseElement<?>) map.getElement("test1").get();
         assertThat(base1.getString(), equalTo("'test1'"));
-        BaseElement<?> base2 = (BaseElement<?>) map.getElement("secondtest").get();
+        BaseElement<?> base2 = (BaseElement<?>) map.getElement("test2").get();
         assertThat(base2.getString(), equalTo("'test2'"));
-        BaseElement<?> base3 = (BaseElement<?>) map.getElement("thirdtest").get();
+        BaseElement<?> base3 = (BaseElement<?>) map.getElement("test3").get();
         assertThat(base3.getString(), equalTo("'test3'"));
     }
 }

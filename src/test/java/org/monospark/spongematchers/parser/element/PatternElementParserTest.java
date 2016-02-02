@@ -12,7 +12,7 @@ public class PatternElementParserTest {
     @Test
     public void parseElements_ListMatchAnyType_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = "matchAny 'test'";
+        String input = "matchAny:'test'";
         
         verifyPatternElement(input, Type.LIST_MATCH_ANY);
     }
@@ -20,7 +20,7 @@ public class PatternElementParserTest {
     @Test
     public void parseElements_ListMatchAnyTypeWithSpaces_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = "matchAny     'test' ";
+        String input = "matchAny  :   'test' ";
         
         verifyPatternElement(input, Type.LIST_MATCH_ANY);
     }
@@ -28,7 +28,7 @@ public class PatternElementParserTest {
     @Test
     public void parseElements_ListMatchAllType_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = "matchAll 'test'";
+        String input = "matchAll:'test'";
         
         verifyPatternElement(input, Type.LIST_MATCH_ALL);
     }
@@ -36,7 +36,7 @@ public class PatternElementParserTest {
     @Test
     public void parseElements_ListMatchAllTypeWithSpaces_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = " matchAll  'test' ";
+        String input = " matchAll : 'test' ";
         
         verifyPatternElement(input, Type.LIST_MATCH_ALL);
     }

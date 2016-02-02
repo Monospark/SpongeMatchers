@@ -18,7 +18,7 @@ public final class LiteralElement extends StringElement {
     
     public static enum Type {
 
-        EMPTY(Pattern.compile("(?:E|e)mpty(?!\\s*:)")),
+        EMPTY(Pattern.compile("(?:E|e)mpty")),
         
         WILDCARD(Pattern.compile("\\*"));
         

@@ -57,7 +57,7 @@ public class DataViewTypeTest {
 
     @Test
     public void canParse_DeepAndUnparseableMapValue_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{test:matchAny matchAny 1}");
+        StringElement element = StringElementParser.parseStringElement("{'test':matchAny:matchAny:1}");
         
         boolean canParse = MatcherType.DATA_VIEW.canParse(element, true);
         
@@ -67,7 +67,7 @@ public class DataViewTypeTest {
     @Test
     public void parseMatcher_ValidMapEntries_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement(
-                "{boolean:true,integer:1,fp:1.5f,string:'test',list:[1,2],dataview:{nested:1}}");
+                "{'boolean':true,'integer':1,'fp':1.5f,'string':'test','list':[1,2],'dataview':{'nested':1}}");
         
         SpongeMatcher<DataView> matcher = MatcherType.DATA_VIEW.parseMatcher(element);
         

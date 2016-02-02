@@ -28,16 +28,7 @@ public class LiteralElementParserTest {
         LiteralElement e = (LiteralElement) element;
         assertThat(e.getType(), is(Type.EMPTY));
     }
-    
-    @Test
-    public void parseElements_EmptyWithSucceedingColon_GetsIgnored() throws SpongeMatcherParseException {
-        String input = "{empty:1}";
-        
-        StringElement element = StringElementParser.parseStringElement(input);
-        
-        assertThat(element instanceof MapElement, is(true));
-    }
-    
+
     @Test
     public void parseElements_Wildcard_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
         String input = "*";
