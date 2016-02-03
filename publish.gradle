@@ -68,6 +68,59 @@ publishing {
                     description 'SpongeMatchers is a library that makes creating and using Sponge plugins easier by providing easy to use matchers.'
                     url 'https://monospark.org/projects/sponge/spongematchers'
                     inceptionYear '2016'
+                    
+                    organization {
+                        name 'Monospark'
+                        url 'https://www.monospark.org'
+                    }
+        
+                    licenses {
+                        license {
+                               name 'MIT License'
+                               url 'http://www.opensource.org/licenses/mit-license.php'
+                               distribution 'repo'
+                        }
+                    }
+        
+                    scm {
+                        connection 'scm:git:https://github.com/monospark/spongematchers.git'
+                        developerConnection 'scm:git:https://github.com/monospark/spongematchers.git'
+                        url 'https://github.com/monospark/spongematchers'
+                        tag 'master'
+                    }
+        
+                    issueManagement {
+                        system 'GitHub Issues'
+                        url 'https://github.com/monospark/spongematchers/issues'
+                    }
+        
+                    ciManagement {
+                        system 'Jenkins'
+                        url 'https://ci.monospark.org/job/spongematchers'
+                    }
+                    
+                    distributionManagement {
+                        repository {
+                            name 'Monospark Releases'
+                            url 'https://repo.monospark.org/content/repositories/releases'
+                            layout 'default'
+                            uniqueVersion 'false'
+                        }
+                        snapshotRepository {
+                            name 'Monospark Snapshots'
+                            url 'https://repo.monospark.org/content/repositories/snapshots'
+                            layout 'default'
+                            uniqueVersion 'true'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'milchshakee'
+                            name 'Christopher Schnick'
+                            email 'c.schnick@monospark.org'
+                        }
+                    }
                 }
             }
         }
