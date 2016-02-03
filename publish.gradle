@@ -44,7 +44,7 @@ def getPomSignature = {
 
 publishing {
     publications {
-        objectdiff(MavenPublication) {
+        spongematchers(MavenPublication) {
             //Add jars
             artifact jar
             artifact javadocJar
