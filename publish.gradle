@@ -65,7 +65,7 @@ publishing {
                     resolveStrategy = Closure.DELEGATE_FIRST
                     packaging 'jar'
                     name 'SpongeMatchers'
-                    description '<TODO>'
+                    description 'SpongeMatchers is a library that makes creating and using Sponge plugins easier by providing easy to use matchers.'
                     url 'https://monospark.org/projects/sponge/spongematchers'
                     inceptionYear '2016'
                 }
