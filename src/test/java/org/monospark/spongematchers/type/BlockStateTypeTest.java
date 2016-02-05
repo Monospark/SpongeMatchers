@@ -45,7 +45,7 @@ public class BlockStateTypeTest {
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{'type':{'id':'minecraft:appl.'},"
+        StringElement element = StringElementParser.parseStringElement("{'type':{'id':r'minecraft:appl.'},"
                 + "'traits':{'trait1':1,'trait2':false},'data':{'boolean':true,'integer':>0}}");
 
         SpongeMatcher<BlockState> matcher = MatcherType.BLOCK_STATE.parseMatcher(element);

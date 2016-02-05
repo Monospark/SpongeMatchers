@@ -40,7 +40,7 @@ public class BlockTypeTypeTest {
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement(
-                "{'id':'minecraft:appl.','properties':{'test1':1,'test2':false}}");
+                "{'id':r'minecraft:appl.','properties':{'test1':1,'test2':false}}");
 
         SpongeMatcher<BlockType> matcher = MatcherType.BLOCK_TYPE.parseMatcher(element);
 

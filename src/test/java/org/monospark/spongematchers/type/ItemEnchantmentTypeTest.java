@@ -36,7 +36,7 @@ public class ItemEnchantmentTypeTest {
 
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{'id':'minecraft:.+','level':2}");
+        StringElement element = StringElementParser.parseStringElement("{'id':r'minecraft:.+','level':2}");
 
         SpongeMatcher<ItemEnchantment> matcher = MatcherType.ITEM_ENCHANTMENT.parseMatcher(element);
 

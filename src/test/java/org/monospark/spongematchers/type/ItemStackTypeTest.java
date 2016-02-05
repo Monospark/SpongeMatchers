@@ -40,7 +40,7 @@ public class ItemStackTypeTest {
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement(
-                "{'type':'minecraft:appl.+','durability':0,'quantity':1,'data':{'test':1}}");
+                "{'type':r'minecraft:appl.+','durability':0,'quantity':1,'data':{'test':1}}");
 
         SpongeMatcher<ItemStack> matcher = MatcherType.ITEM_STACK.parseMatcher(element);
 

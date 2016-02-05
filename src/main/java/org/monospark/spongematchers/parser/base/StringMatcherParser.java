@@ -18,17 +18,20 @@ public final class StringMatcherParser extends BaseMatcherParser<String> {
     @Override
     protected Pattern createAcceptancePattern() {
         return new PatternBuilder()
+                .appendCapturingPart("r", "regex")
+                .optional()
                 .appendNonCapturingPart("'")
-                .appendCapturingPart("(\\'|.)+?", "regex")
+                .appendCapturingPart("(\\'|.)+?", "content")
                 .appendNonCapturingPart("'")
                 .build();
     }
 
     @Override
     protected SpongeMatcher<String> parse(Matcher matcher) throws SpongeMatcherParseException {
-        String replacedSingleQuotes = matcher.group("regex").replace("\\'", "'");
+        boolean isRegex = matcher.group("regex") != null;
+        String replacedSingleQuotes = matcher.group("content").replace("\\'", "'");
         try {
-            return StringMatcher.create(replacedSingleQuotes);
+            return isRegex ? StringMatcher.regex(replacedSingleQuotes) : StringMatcher.literal(replacedSingleQuotes);
         } catch (PatternSyntaxException e) {
             throw new SpongeMatcherParseException(e);
         }
