@@ -39,7 +39,7 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
         if (o instanceof Boolean || o instanceof Long || o instanceof Double) {
             return o;
         } else {
-            return o.toString();
+            return o.toString().toLowerCase();
         }
     }
 

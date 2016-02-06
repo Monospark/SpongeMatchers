@@ -41,7 +41,7 @@ public class PropertyHolderTest {
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement(
-                "{'test1':false,'test2':1,'test3':2f," + "'test4':'LIQUID'}");
+                "{'test1':false,'test2':1,'test3':2f," + "'test4':'liquid'}");
 
         SpongeMatcher<PropertyHolder> matcher = MatcherType.PROPERTY_HOLDER.parseMatcher(element);
 
