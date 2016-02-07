@@ -6,39 +6,8 @@ import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.match
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 public class FloatingPointMatcherParserTest {
-
-    @Test
-    public void parseMatcher_Range_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
-        String input = "-1f-3f";
-
-        SpongeMatcher<Double> matcher = BaseMatcherParser.FLOATING_POINT.parseMatcher(input);
-
-        assertThat(matcher, matches(-1D));
-        assertThat(matcher, matches(1D));
-        assertThat(matcher, matches(3D));
-    }
-
-    @Test
-    public void parseMatcher_RangeWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
-        String input = " -5f --3f ";
-
-        SpongeMatcher<Double> matcher = BaseMatcherParser.FLOATING_POINT.parseMatcher(input);
-
-        assertThat(matcher, matches(-5D));
-        assertThat(matcher, matches(-4D));
-        assertThat(matcher, matches(-3D));
-    }
-
-    @Test
-    public void parseMatcher_InvalidRange_ThrowsException() {
-        String input = "2f-1f";
-
-        ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> BaseMatcherParser.FLOATING_POINT.parseMatcher(input));
-    }
 
     @Test
     public void parseMatcher_Value_ReturnsCorrectMatcher() throws SpongeMatcherParseException {

@@ -39,12 +39,6 @@ public final class FloatingPointMatcherParser extends BaseMatcherParser<Double> 
                  .closeParantheses()
                 .build();
         return new PatternBuilder()
-                .openNamedParantheses("range")
-                    .appendCapturingPart(floatingPointPattern, "rangestart")
-                    .appendNonCapturingPart("\\s*-\\s*")
-                    .appendCapturingPart(floatingPointPattern, "rangeend")
-                .closeParantheses()
-                .or()
                 .appendCapturingPart(floatingPointPattern, "value")
                 .or()
                 .openNamedParantheses("greater")
@@ -70,14 +64,7 @@ public final class FloatingPointMatcherParser extends BaseMatcherParser<Double> 
     }
 
     public SpongeMatcher<Double> parse(Matcher matcher) throws SpongeMatcherParseException {
-        if (matcher.group("range") != null) {
-            double start = parseDouble(matcher.group("rangestart"));
-            double end = parseDouble(matcher.group("rangeend"));
-            if (start >= end) {
-                throw new SpongeMatcherParseException("The start value of a range must be smaller than the end value");
-            }
-            return FloatingPointMatcher.range(start, end);
-        } else if (matcher.group("value") != null) {
+        if (matcher.group("value") != null) {
             double value = parseDouble(matcher.group("value"));
             return FloatingPointMatcher.value(value);
         } else if (matcher.group("greater") != null) {

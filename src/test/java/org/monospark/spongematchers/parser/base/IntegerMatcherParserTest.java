@@ -6,38 +6,8 @@ import static org.monospark.spongematchers.testutil.HamcrestSpongeMatchers.match
 import org.junit.Test;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 public class IntegerMatcherParserTest {
-
-    @Test
-    public void parseMatcher_Range_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
-        String input = "-1-3";
-
-        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
-
-        assertThat(matcher, matches(-1L));
-        assertThat(matcher, matches(1L));
-        assertThat(matcher, matches(3L));
-    }
-
-    @Test
-    public void parseMatcher_RangeWithSpaces_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
-        String input = " -5 --3 ";
-
-        SpongeMatcher<Long> matcher = BaseMatcherParser.INTEGER.parseMatcher(input);
-
-        assertThat(matcher, matches(-5L));
-        assertThat(matcher, matches(-4L));
-        assertThat(matcher, matches(-3L));
-    }
-
-    @Test
-    public void parseMatcher_InvalidRange_ThrowsException() {
-        String input = "2-1";
-
-        ExceptionChecker.check(SpongeMatcherParseException.class, () -> BaseMatcherParser.INTEGER.parseMatcher(input));
-    }
 
     @Test
     public void parseMatcher_Value_ReturnsCorrectMatcher() throws SpongeMatcherParseException {

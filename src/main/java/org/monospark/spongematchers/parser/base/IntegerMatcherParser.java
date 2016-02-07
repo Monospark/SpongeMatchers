@@ -18,12 +18,6 @@ public final class IntegerMatcherParser extends BaseMatcherParser<Long> {
     protected Pattern createAcceptancePattern() {
         String integerPattern = "(?:-)?\\d+";
         return new PatternBuilder()
-                .openNamedParantheses("range")
-                    .appendCapturingPart(integerPattern, "rangestart")
-                    .appendNonCapturingPart("\\s*-\\s*")
-                    .appendCapturingPart(integerPattern, "rangeend")
-                .closeParantheses()
-                .or()
                 .appendCapturingPart(integerPattern, "value")
                 .or()
                 .openNamedParantheses("greater")
@@ -49,14 +43,7 @@ public final class IntegerMatcherParser extends BaseMatcherParser<Long> {
     }
 
     public SpongeMatcher<Long> parse(Matcher matcher) throws SpongeMatcherParseException {
-        if (matcher.group("range") != null) {
-            long start = parseLong(matcher.group("rangestart"));
-            long end = parseLong(matcher.group("rangeend"));
-            if (start >= end) {
-                throw new SpongeMatcherParseException("The start value of a range must be smaller than the end value");
-            }
-            return IntegerMatcher.range(start, end);
-        } else if (matcher.group("value") != null) {
+        if (matcher.group("value") != null) {
             long value = parseLong(matcher.group("value"));
             return IntegerMatcher.value(value);
         } else if (matcher.group("greater") != null) {
