@@ -14,8 +14,11 @@ import org.monospark.spongematchers.parser.element.StringElementParser;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.MemoryDataContainer;
+import org.spongepowered.api.data.Property;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.ItemStack;
+
+import com.google.common.collect.ImmutableSet;
 
 public class ItemStackTypeTest {
 
@@ -37,10 +40,12 @@ public class ItemStackTypeTest {
         assertThat(canMatch, is(true));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement(
-                "{'type':r'minecraft:appl.+','durability':0,'quantity':1,'data':{'test':1}}");
+                "{'type':r'minecraft:appl.+','durability':0,'quantity':1,'properties':{'test':false},"
+                        + "'data':{'test':1}}");
 
         SpongeMatcher<ItemStack> matcher = MatcherType.ITEM_STACK.parseMatcher(element);
 
@@ -49,6 +54,10 @@ public class ItemStackTypeTest {
         ItemStack s = mock(ItemStack.class);
         when(s.getItem()).thenReturn(type);
         when(s.getQuantity()).thenReturn(1);
+        Property<String, Boolean> p = mock(Property.class);
+        when(p.getKey()).thenReturn("test");
+        when(p.getValue()).thenReturn(false);
+        when(s.getApplicableProperties()).thenReturn(ImmutableSet.of(p));
         DataContainer container1 = new MemoryDataContainer();
         container1.set(DataQuery.of("UnsafeDamage"), 0);
         container1.set(DataQuery.of("UnsafeData", "test"), 1);

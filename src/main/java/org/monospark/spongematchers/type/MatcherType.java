@@ -32,11 +32,11 @@ public abstract class MatcherType<T> {
 
     public static final MatcherType<DataView> DATA_VIEW = new DataViewType();
 
+    public static final MatcherType<PropertyHolder> PROPERTY_HOLDER = new PropertyHolderType();
+
     public static final MatcherType<ItemStack> ITEM_STACK = new ItemStackType();
 
     public static final MatcherType<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentType();
-
-    public static final MatcherType<PropertyHolder> PROPERTY_HOLDER = new PropertyHolderType();
 
     public static final MatcherType<BlockType> BLOCK_TYPE = new BlockTypeType();
 

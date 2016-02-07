@@ -14,6 +14,7 @@ public final class ItemStackType extends MatcherType<ItemStack> {
             .addEntry("type", MatcherType.STRING)
             .addEntry("durability", MatcherType.INTEGER)
             .addEntry("quantity", MatcherType.INTEGER)
+            .addEntry("properties", MatcherType.PROPERTY_HOLDER)
             .addEntry("data", MatcherType.DATA_VIEW)
             .build();
 
