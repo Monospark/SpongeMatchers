@@ -23,9 +23,6 @@ repositories {
 	maven {
 		url "http://repo.spongepowered.org/maven/"
 	}
-    maven {
-        url "http://files.minecraftforge.net/maven/"
-    }
 }
 
 configurations {
