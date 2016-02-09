@@ -7,7 +7,7 @@ task generatePom(type: GenerateMavenPom) {
 }
 model {
     tasks.generatePom {
-        pom = publishing.publications.objectdiff.pom
+        pom = publishing.publications.spongematchers.pom
     }
 }
  
