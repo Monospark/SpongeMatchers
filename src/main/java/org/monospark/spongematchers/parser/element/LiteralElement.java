@@ -18,7 +18,7 @@ public final class LiteralElement extends StringElement {
 
     public enum Type {
 
-        EMPTY(Pattern.compile("(?:E|e)mpty")),
+        ABSENT(Pattern.compile("(?:A|a)bsent")),
 
         NONE(Pattern.compile("(?:N|n)one")),
 

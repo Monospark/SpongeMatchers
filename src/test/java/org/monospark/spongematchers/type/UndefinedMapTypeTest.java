@@ -54,7 +54,7 @@ public class UndefinedMapTypeTest {
 
     @Test
     public void canParse_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("empty");
+        StringElement element = StringElementParser.parseStringElement("absent");
 
         boolean canParse = MatcherType.undefinedMap()
                 .addType(MatcherType.BOOLEAN)

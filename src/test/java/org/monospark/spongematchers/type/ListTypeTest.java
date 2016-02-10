@@ -55,7 +55,7 @@ public class ListTypeTest {
 
     @Test
     public void canParse_DifferentLiteralElement_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("empty");
+        StringElement element = StringElementParser.parseStringElement("absent");
 
         boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, false);
 

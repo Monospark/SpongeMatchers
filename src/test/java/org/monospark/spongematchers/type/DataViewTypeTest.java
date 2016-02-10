@@ -47,7 +47,7 @@ public class DataViewTypeTest {
 
     @Test
     public void canParse_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("empty");
+        StringElement element = StringElementParser.parseStringElement("absent");
 
         boolean canParse = MatcherType.DATA_VIEW.canParse(element, false);
 

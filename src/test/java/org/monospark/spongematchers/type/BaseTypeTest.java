@@ -32,7 +32,7 @@ public class BaseTypeTest {
 
     @Test
     public void canParse_NonBaseElement_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("empty");
+        StringElement element = StringElementParser.parseStringElement("absent");
 
         boolean canParse = MatcherType.BOOLEAN.canParse(element, false);
 

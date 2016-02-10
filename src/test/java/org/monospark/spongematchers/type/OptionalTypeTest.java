@@ -60,8 +60,8 @@ public class OptionalTypeTest {
     }
 
     @Test
-    public void parseMatcher_EmptyElement_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("empty");
+    public void parseMatcher_AbsentElement_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("absent");
 
         SpongeMatcher<Optional<Boolean>> matcher = MatcherType.optional(MatcherType.BOOLEAN).parseMatcher(element);
 

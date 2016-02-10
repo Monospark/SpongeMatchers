@@ -10,23 +10,23 @@ import org.monospark.spongematchers.parser.element.LiteralElement.Type;
 public class LiteralElementParserTest {
 
     @Test
-    public void parseElements_EmptyLowerCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
-        String input = "empty";
+    public void parseElements_AbsentLowerCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
+        String input = "absent";
 
         StringElement element = StringElementParser.parseStringElement(input);
 
         LiteralElement e = (LiteralElement) element;
-        assertThat(e.getType(), is(Type.EMPTY));
+        assertThat(e.getType(), is(Type.ABSENT));
     }
 
     @Test
-    public void parseElements_EmptyUpperCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
-        String input = "Empty";
+    public void parseElements_AbsentUpperCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
+        String input = "Absent";
 
         StringElement element = StringElementParser.parseStringElement(input);
 
         LiteralElement e = (LiteralElement) element;
-        assertThat(e.getType(), is(Type.EMPTY));
+        assertThat(e.getType(), is(Type.ABSENT));
     }
 
     @Test
