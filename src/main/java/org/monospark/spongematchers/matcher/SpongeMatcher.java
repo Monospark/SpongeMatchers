@@ -1,35 +1,57 @@
 package org.monospark.spongematchers.matcher;
 
+import java.util.Set;
+
 public interface SpongeMatcher<T> {
 
     boolean matches(T o);
 
-    static <T> SpongeMatcher<T> or(SpongeMatcher<T> matcher1, SpongeMatcher<T> matcher2) {
+    static <T> SpongeMatcher<T> or(Set<SpongeMatcher<T>> matchers) {
         return new SpongeMatcher<T>() {
 
             @Override
             public boolean matches(T o) {
-                return matcher1.matches(o) || matcher2.matches(o);
+                for (SpongeMatcher<T> matcher : matchers) {
+                    if (matcher.matches(o)) {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             @Override
             public String toString() {
-                return matcher1.toString() + "|" + matcher2.toString();
+                StringBuilder builder = new StringBuilder();
+                for (SpongeMatcher<T> matcher : matchers) {
+                    builder.append(matcher.toString()).append("|");
+                }
+                builder.deleteCharAt(builder.length() - 1);
+                return builder.toString();
             }
         };
     }
 
-    static <T> SpongeMatcher<T> and(SpongeMatcher<T> matcher1, SpongeMatcher<T> matcher2) {
+    static <T> SpongeMatcher<T> and(Set<SpongeMatcher<T>> matchers) {
         return new SpongeMatcher<T>() {
 
             @Override
             public boolean matches(T o) {
-                return matcher1.matches(o) && matcher2.matches(o);
+                for (SpongeMatcher<T> matcher : matchers) {
+                    if (!matcher.matches(o)) {
+                        return false;
+                    }
+                }
+                return true;
             }
 
             @Override
             public String toString() {
-                return matcher1.toString() + "&" + matcher2.toString();
+                StringBuilder builder = new StringBuilder();
+                for (SpongeMatcher<T> matcher : matchers) {
+                    builder.append(matcher.toString()).append("&");
+                }
+                builder.deleteCharAt(builder.length() - 1);
+                return builder.toString();
             }
         };
     }

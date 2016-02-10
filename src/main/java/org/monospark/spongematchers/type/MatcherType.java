@@ -2,13 +2,14 @@ package org.monospark.spongematchers.type;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.base.BaseMatcherParser;
 import org.monospark.spongematchers.parser.element.ConnectedElement;
-import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
+import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElement.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
@@ -19,6 +20,8 @@ import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.data.property.PropertyHolder;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.world.Location;
+
+import com.google.common.collect.Sets;
 
 public abstract class MatcherType<T> {
 
@@ -75,10 +78,11 @@ public abstract class MatcherType<T> {
     public final SpongeMatcher<T> parseMatcher(StringElement element) throws SpongeMatcherParseException {
         if (element instanceof ConnectedElement) {
             ConnectedElement con = (ConnectedElement) element;
-            SpongeMatcher<T> matcher1 = parseMatcher(con.getFirstElement());
-            SpongeMatcher<T> matcher2 = parseMatcher(con.getSecondElement());
-            return con.getOperator() == Operator.AND ? SpongeMatcher.and(matcher1, matcher2)
-                    : SpongeMatcher.or(matcher1, matcher2);
+            Set<SpongeMatcher<T>> matchers = Sets.newHashSet();
+            for (StringElement e : con.getElements()) {
+                matchers.add(parseMatcher(e));
+            }
+            return con.getOperator() == Operator.AND ? SpongeMatcher.and(matchers) : SpongeMatcher.or(matchers);
         } else if (element instanceof PatternElement) {
             PatternElement p = (PatternElement) element;
             if (p.getType() == Type.NOT) {
@@ -103,7 +107,12 @@ public abstract class MatcherType<T> {
     public final boolean canParseMatcher(StringElement element, boolean deep) {
         if (element instanceof ConnectedElement) {
             ConnectedElement con = (ConnectedElement) element;
-            return canParseMatcher(con.getFirstElement(), deep) && canParseMatcher(con.getSecondElement(), deep);
+            for (StringElement e : con.getElements()) {
+                if (!canParseMatcher(e, deep)) {
+                    return false;
+                }
+            }
+            return true;
         } else if (element instanceof PatternElement) {
             PatternElement p = (PatternElement) element;
             if (p.getType() == Type.NOT || p.getType() == Type.PARANTHESES) {

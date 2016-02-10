@@ -1,28 +1,22 @@
 package org.monospark.spongematchers.parser.element;
 
+import java.util.Set;
 import java.util.regex.Matcher;
 
 public final class ConnectedElement extends StringElement {
 
-    private StringElement firstElement;
-
-    private StringElement secondElement;
+    private Set<StringElement> elements;;
 
     private Operator operator;
 
-    ConnectedElement(Matcher matcher, StringElement firstElement, StringElement secondElement, Operator operator) {
+    ConnectedElement(Matcher matcher, Set<StringElement> elements, Operator operator) {
         super(matcher);
-        this.firstElement = firstElement;
-        this.secondElement = secondElement;
+        this.elements = elements;
         this.operator = operator;
     }
 
-    public StringElement getFirstElement() {
-        return firstElement;
-    }
-
-    public StringElement getSecondElement() {
-        return secondElement;
+    public Set<StringElement> getElements() {
+        return elements;
     }
 
     public Operator getOperator() {

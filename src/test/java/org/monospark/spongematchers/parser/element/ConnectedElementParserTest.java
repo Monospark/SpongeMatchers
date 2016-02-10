@@ -1,7 +1,11 @@
 package org.monospark.spongematchers.parser.element;
 
+import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import java.util.Set;
 
 import org.junit.Test;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
@@ -11,7 +15,7 @@ public class ConnectedElementParserTest {
 
     @Test
     public void parseElements_ConnectedElementsWithOr_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
-        String input = "'test1'|'test2'";
+        String input = "'test1'|'test2'|'test3'";
 
         verifyConnectedElement(input, Operator.OR);
     }
@@ -19,7 +23,7 @@ public class ConnectedElementParserTest {
     @Test
     public void parseElements_ConnectedElementsWithOrWithSpaces_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = "    'test1' |   'test2' ";
+        String input = "    'test1' |   'test2' |    'test3' ";
 
         verifyConnectedElement(input, Operator.OR);
     }
@@ -27,7 +31,7 @@ public class ConnectedElementParserTest {
     @Test
     public void parseElements_ConnectedElementsWithAnd_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = "'test1'&'test2'";
+        String input = "'test1'&'test2'&'test3'";
 
         verifyConnectedElement(input, Operator.AND);
     }
@@ -35,7 +39,7 @@ public class ConnectedElementParserTest {
     @Test
     public void parseElements_ConnectedElementsWithAndWithSpaces_ReturnsCorrectStringElement()
             throws SpongeMatcherParseException {
-        String input = "    'test1' &   'test2' ";
+        String input = "    'test1' &   'test2' & 'test3'";
 
         verifyConnectedElement(input, Operator.AND);
     }
@@ -45,9 +49,11 @@ public class ConnectedElementParserTest {
 
         ConnectedElement con = (ConnectedElement) element;
         assertThat(con.getOperator(), equalTo(op));
-        BaseElement<?> base1 = (BaseElement<?>) con.getFirstElement();
-        BaseElement<?> base2 = (BaseElement<?>) con.getSecondElement();
-        assertThat(base1.getString(), equalTo("'test1'"));
-        assertThat(base2.getString(), equalTo("'test2'"));
+        Set<StringElement> elements = (Set<StringElement>) con.getElements();
+        assertThat(elements.size(), is(3));
+        for (StringElement e : elements) {
+            BaseElement<?> base = (BaseElement<?>) e;
+            assertThat(base.getString(), either(equalTo("'test1'")).or(equalTo("'test2'")).or(equalTo("'test3'")));
+        }
     }
 }

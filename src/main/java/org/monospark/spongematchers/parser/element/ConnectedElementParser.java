@@ -1,11 +1,14 @@
 package org.monospark.spongematchers.parser.element;
 
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.util.PatternBuilder;
+
+import com.google.common.collect.Sets;
 
 public final class ConnectedElementParser extends StringElementParser {
 
@@ -14,24 +17,38 @@ public final class ConnectedElementParser extends StringElementParser {
     @Override
     Pattern createPattern() {
         return new PatternBuilder()
-                .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "firstelement")
+            .openNamedParantheses("or")
+                .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
                 .openAnonymousParantheses()
-                    .appendCapturingPart("\\s*\\|\\s*", "or")
-                    .or()
-                    .appendCapturingPart("\\s*&\\s*", "and")
+                    .appendNonCapturingPart("\\s*\\|\\s*")
+                    .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
                 .closeParantheses()
-                .appendCapturingPart(StringElementParser.REPLACE_PATTERN, "secondelement")
-                .build();
+                .oneOrMore()
+            .closeParantheses()
+            .or()
+            .openNamedParantheses("and")
+                .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
+                .openAnonymousParantheses()
+                    .appendNonCapturingPart("\\s*\\&\\s*")
+                    .appendNonCapturingPart(StringElementParser.REPLACE_PATTERN)
+                .closeParantheses()
+                .oneOrMore()
+            .closeParantheses()
+            .build();
     }
 
     @Override
     void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException {
-        StringElement element1 = context.getElementAt(matcher.start("firstelement"), matcher.end("firstelement"));
-        StringElement element2 = context.getElementAt(matcher.start("secondelement"), matcher.end("secondelement"));
+        String matched = matcher.group("or") != null ? matcher.group("or") : matcher.group("and");
         Operator op = matcher.group("or") != null ? Operator.OR : Operator.AND;
-
-        context.removeElement(element1);
-        context.removeElement(element2);
-        context.addElement(new ConnectedElement(matcher, element1, element2, op));
+        Set<StringElement> elements = Sets.newHashSet();
+        Matcher replaceMatcher = StringElementParser.REPLACE_PATTERN.matcher(matched);
+        while (replaceMatcher.find()) {
+            StringElement element = context.getElementAt(matcher.start() + replaceMatcher.start(),
+                    matcher.start() + replaceMatcher.end());
+            elements.add(element);
+            context.removeElement(element);
+        }
+        context.addElement(new ConnectedElement(matcher, elements, op));
     }
 }
