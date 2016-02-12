@@ -140,6 +140,6 @@ publishing {
 task deployJavadoc(type: Copy, dependsOn: javadoc) {
     if (!isSnapshot) {
         from javadoc.destinationDir
-        into "${project.getProperty('javadocsDir')}/${project.name}/${project.version}"
+        into "${project.getProperty('javadocsDir')}/${project.name}/javadocs/${project.version}"
     }
 }
