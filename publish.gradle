@@ -1,3 +1,8 @@
+plugins {
+    id 'maven-publish'
+    id 'signing'
+}
+
 ext {
     pomFile = file("${project.buildDir}/libs/pom.xml")
 }
