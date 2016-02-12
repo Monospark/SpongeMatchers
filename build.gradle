@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'checkstyle'
+    id 'maven-publish'
+    id 'signing'
     id 'eclipse'
     id 'idea'
 }
