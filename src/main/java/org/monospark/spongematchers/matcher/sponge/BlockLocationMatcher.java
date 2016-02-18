@@ -29,8 +29,8 @@ public final class BlockLocationMatcher extends SpongeObjectMatcher<Location<?>>
 
     @Override
     protected void fillMap(Location<?> o, Map<String, Object> map) {
-        map.put("x", (long) o.getBlockPosition().getX());
-        map.put("y", (long) o.getBlockPosition().getY());
-        map.put("z", (long) o.getBlockPosition().getZ());
+        map.put("x", (long) o.getBlockX());
+        map.put("y", (long) o.getBlockY());
+        map.put("z", (long) o.getBlockZ());
     }
 }

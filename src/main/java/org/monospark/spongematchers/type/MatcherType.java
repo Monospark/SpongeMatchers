@@ -13,8 +13,8 @@ import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElement.Type;
 import org.monospark.spongematchers.parser.element.StringElement;
+import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
-import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.data.property.PropertyHolder;
@@ -41,7 +41,7 @@ public abstract class MatcherType<T> {
 
     public static final MatcherType<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentType();
 
-    public static final MatcherType<BlockType> BLOCK_TYPE = new BlockTypeType();
+    public static final MatcherType<org.spongepowered.api.block.BlockType> BLOCK_TYPE = new BlockTypeType();
 
     public static final MatcherType<BlockState> BLOCK_STATE = new BlockStateType();
 
@@ -50,6 +50,8 @@ public abstract class MatcherType<T> {
     public static final MatcherType<Location<?>> BLOCK_LOCATION = new BlockLocationType();
 
     public static final MatcherType<Location<?>> POSITION_LOCATION = new PositionLocationType();
+
+    public static final MatcherType<BlockSnapshot> BLOCK = new BlockType();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
