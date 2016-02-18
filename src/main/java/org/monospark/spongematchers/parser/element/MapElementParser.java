@@ -56,6 +56,7 @@ public final class MapElementParser extends StringElementParser {
             context.removeElement(value);
             entries.put(keyName, value);
         }
-        context.addElement(new MapElement(matcher, entries));
+        context.addElement(new MapElement(context.getOriginalStringAt(matcher.start(), matcher.end()), matcher,
+                entries));
     }
 }

@@ -25,6 +25,7 @@ public final class PatternElementParser extends StringElementParser {
         int end = matcher.end("element");
         StringElement element = context.getElementAt(start, end);
         context.removeElement(element);
-        context.addElement(new PatternElement(matcher, type, element));
+        context.addElement(new PatternElement(context.getOriginalStringAt(matcher.start(), matcher.end()),
+                matcher, type, element));
     }
 }

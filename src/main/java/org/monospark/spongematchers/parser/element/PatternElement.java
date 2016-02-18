@@ -11,8 +11,8 @@ public final class PatternElement extends StringElement {
 
     private StringElement element;
 
-    PatternElement(Matcher matcher, Type type, StringElement element) {
-        super(matcher);
+    PatternElement(String string, Matcher matcher, Type type, StringElement element) {
+        super(string, matcher);
         this.type = type;
         this.element = element;
     }

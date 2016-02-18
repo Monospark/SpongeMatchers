@@ -7,8 +7,8 @@ public final class ListElement extends StringElement {
 
     private List<StringElement> elements;
 
-    ListElement(Matcher matcher, List<StringElement> elements) {
-        super(matcher);
+    ListElement(String string, Matcher matcher, List<StringElement> elements) {
+        super(string, matcher);
         this.elements = elements;
     }
 

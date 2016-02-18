@@ -10,10 +10,10 @@ public abstract class StringElement {
 
     private String string;
 
-    StringElement(Matcher matcher) {
+    StringElement(String string, Matcher matcher) {
+        this.string = string;
         start = matcher.start();
         end = matcher.end();
-        string = matcher.group();
     }
 
     public final int getStart() {

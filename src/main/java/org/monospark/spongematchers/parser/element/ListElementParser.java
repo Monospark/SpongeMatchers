@@ -37,6 +37,7 @@ public final class ListElementParser extends StringElementParser {
             context.removeElement(element);
             elements.add(element);
         }
-        context.addElement(new ListElement(matcher, elements));
+        context.addElement(new ListElement(context.getOriginalStringAt(matcher.start(), matcher.end()),
+                matcher, elements));
     }
 }

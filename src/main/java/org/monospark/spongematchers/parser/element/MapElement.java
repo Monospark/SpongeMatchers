@@ -8,8 +8,8 @@ public final class MapElement extends StringElement {
 
     private Map<String, StringElement> elements;
 
-    MapElement(Matcher matcher, Map<String, StringElement> elements) {
-        super(matcher);
+    MapElement(String string, Matcher matcher, Map<String, StringElement> elements) {
+        super(string, matcher);
         this.elements = elements;
     }
 

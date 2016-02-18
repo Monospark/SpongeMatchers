@@ -9,7 +9,7 @@ public final class BaseElement<T> extends StringElement {
     private BaseMatcherParser<T> parser;
 
     BaseElement(Matcher matcher, BaseMatcherParser<T> parser) {
-        super(matcher);
+        super(matcher.group(), matcher);
         this.parser = parser;
     }
 

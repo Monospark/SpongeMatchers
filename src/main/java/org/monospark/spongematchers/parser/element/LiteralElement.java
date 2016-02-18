@@ -8,7 +8,7 @@ public final class LiteralElement extends StringElement {
     private Type type;
 
     LiteralElement(Matcher matcher, Type type) {
-        super(matcher);
+        super(matcher.group(), matcher);
         this.type = type;
     }
 

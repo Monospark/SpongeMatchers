@@ -9,8 +9,8 @@ public final class ConnectedElement extends StringElement {
 
     private Operator operator;
 
-    ConnectedElement(Matcher matcher, Set<StringElement> elements, Operator operator) {
-        super(matcher);
+    ConnectedElement(String string, Matcher matcher, Set<StringElement> elements, Operator operator) {
+        super(string, matcher);
         this.elements = elements;
         this.operator = operator;
     }

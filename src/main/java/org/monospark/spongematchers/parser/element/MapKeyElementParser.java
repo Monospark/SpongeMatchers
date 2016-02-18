@@ -20,6 +20,7 @@ public final class MapKeyElementParser extends StringElementParser {
 
     @Override
     void parse(Matcher matcher, StringElementContext context) throws SpongeMatcherParseException {
-        context.addElement(new MapKeyElement(matcher, matcher.group("name")));
+        context.addElement(new MapKeyElement(context.getOriginalStringAt(matcher.start(), matcher.end()),
+                matcher, matcher.group("name")));
     }
 }

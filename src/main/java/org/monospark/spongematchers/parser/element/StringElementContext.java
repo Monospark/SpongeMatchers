@@ -57,4 +57,8 @@ public final class StringElementContext {
     public String getString() {
         return string;
     }
+
+    public String getOriginalStringAt(int start, int end) {
+        return original.substring(start, end);
+    }
 }

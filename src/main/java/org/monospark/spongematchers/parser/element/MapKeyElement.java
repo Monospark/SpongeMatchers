@@ -6,8 +6,8 @@ public final class MapKeyElement extends StringElement {
 
     private String name;
 
-    MapKeyElement(Matcher matcher, String name) {
-        super(matcher);
+    MapKeyElement(String string, Matcher matcher, String name) {
+        super(string, matcher);
         this.name = name;
     }
 

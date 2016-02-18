@@ -49,6 +49,7 @@ public final class ConnectedElementParser extends StringElementParser {
             elements.add(element);
             context.removeElement(element);
         }
-        context.addElement(new ConnectedElement(matcher, elements, op));
+        context.addElement(new ConnectedElement(context.getOriginalStringAt(matcher.start(), matcher.end()), matcher,
+                elements, op));
     }
 }
