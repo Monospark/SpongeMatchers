@@ -87,4 +87,15 @@ public interface SpongeMatcher<T> {
         };
         return matcher;
     }
+
+    static <T, U> SpongeMatcher<T> genericWrapper(SpongeMatcher<U> matcher) {
+        return new SpongeMatcher<T>() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public boolean matches(T o) {
+                return matcher.matches((U) o);
+            }
+        };
+    }
 }

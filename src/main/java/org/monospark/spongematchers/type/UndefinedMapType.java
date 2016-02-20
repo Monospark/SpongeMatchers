@@ -62,9 +62,6 @@ public final class UndefinedMapType extends MatcherType<Map<String, Object>> {
                 if (MatcherType.optional(type).canParseMatcher(entry.getValue(), true)) {
                     continue out;
                 }
-                if (MatcherType.optional(MatcherType.list(type)).canParseMatcher(element, true)) {
-                    continue out;
-                }
             }
             return false;
         }

@@ -8,11 +8,12 @@ import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.world.Location;
+import org.spongepowered.api.world.World;
 
 public final class BlockMatcher extends SpongeObjectMatcher<BlockSnapshot> {
 
     public static SpongeMatcher<BlockSnapshot> create(SpongeMatcher<BlockState> state,
-            SpongeMatcher<Location<?>> location) {
+            SpongeMatcher<Location<World>> location) {
         SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
                 .addMatcher("state", MatcherType.BLOCK_STATE, state)
                 .addMatcher("location", MatcherType.BLOCK_LOCATION, location)

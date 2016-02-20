@@ -42,16 +42,11 @@ public class BlockStateTypeTest {
         assertThat(canMatch, is(true));
     }
 
+    public static final BlockState TEST_BLOCK_STATE = createTestBlockState();
+
     @SuppressWarnings({"unchecked", "rawtypes"})
-    @Test
-    public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{'type':{'id':r'minecraft:appl.'},"
-                + "'traits':{'trait1':1,'trait2':false},'data':{'boolean':true,'integer':>0}}");
-
-        SpongeMatcher<BlockState> matcher = MatcherType.BLOCK_STATE.parseMatcher(element);
-
-        BlockType type = mock(BlockType.class);
-        when(type.getId()).thenReturn("minecraft:apple");
+    private static BlockState createTestBlockState() {
+        BlockType type = BlockTypeTypeTest.TEST_BLOCK_TYPE;
         BlockState state = mock(BlockState.class);
         when(state.getType()).thenReturn(type);
         BlockTrait<Integer> trait1 = mock(BlockTrait.class);
@@ -68,6 +63,18 @@ public class BlockStateTypeTest {
         container.set(DataQuery.of("UnsafeData", "boolean"), true);
         container.set(DataQuery.of("UnsafeData", "integer"), 1);
         when(state.toContainer()).thenReturn(container);
-        assertThat(matcher, matches(state));
+        return state;
+    }
+
+    public static final String TEST_BLOCK_STATE_MATCHER = "{'type':" + BlockTypeTypeTest.TEST_BLOCK_TYPE_MATCHER
+            + ",'traits': {'trait1': 1, 'trait2': false}, 'data':{'boolean': true, 'integer': >0}}";
+
+    @Test
+    public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement(TEST_BLOCK_STATE_MATCHER);
+
+        SpongeMatcher<BlockState> matcher = MatcherType.BLOCK_STATE.parseMatcher(element);
+
+        assertThat(matcher, matches(TEST_BLOCK_STATE));
     }
 }

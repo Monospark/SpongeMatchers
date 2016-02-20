@@ -36,23 +36,31 @@ public class BlockTypeTypeTest {
         assertThat(canMatch, is(true));
     }
 
+    public static final BlockType TEST_BLOCK_TYPE = createTestBlockType();
+
     @SuppressWarnings("unchecked")
-    @Test
-    public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement(
-                "{'id':r'minecraft:appl.','properties':{'test1':1,'test2':false}}");
-
-        SpongeMatcher<BlockType> matcher = MatcherType.BLOCK_TYPE.parseMatcher(element);
-
+    private static BlockType createTestBlockType() {
+        BlockType type = mock(BlockType.class);
+        when(type.getId()).thenReturn("minecraft:apple");
         Property<String, Integer> p1 = mock(Property.class);
         when(p1.getKey()).thenReturn("test1");
         when(p1.getValue()).thenReturn(1);
         Property<String, Boolean> p2 = mock(Property.class);
         when(p2.getKey()).thenReturn("test2");
         when(p2.getValue()).thenReturn(false);
-        BlockType type = mock(BlockType.class);
-        when(type.getId()).thenReturn("minecraft:apple");
         when(type.getApplicableProperties()).thenReturn(ImmutableSet.of(p1, p2));
-        assertThat(matcher, matches(type));
+        return type;
+    }
+
+    public static final String TEST_BLOCK_TYPE_MATCHER =
+            "{'id':r'minecraft:appl.','properties':{'test1':1,'test2':false}}";
+
+    @Test
+    public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement(TEST_BLOCK_TYPE_MATCHER);
+
+        SpongeMatcher<BlockType> matcher = MatcherType.BLOCK_TYPE.parseMatcher(element);
+
+        assertThat(matcher, matches(TEST_BLOCK_TYPE));
     }
 }

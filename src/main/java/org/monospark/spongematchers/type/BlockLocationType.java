@@ -7,13 +7,15 @@ import org.monospark.spongematchers.matcher.sponge.BlockLocationMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.spongepowered.api.world.Location;
+import org.spongepowered.api.world.World;
 
-public final class BlockLocationType extends MatcherType<Location<?>> {
+public final class BlockLocationType extends MatcherType<Location<World>> {
 
     private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
             .addEntry("x", MatcherType.INTEGER)
             .addEntry("y", MatcherType.INTEGER)
             .addEntry("z", MatcherType.INTEGER)
+            .addEntry("world", MatcherType.WORLD)
             .build();
 
     protected BlockLocationType() {
@@ -31,7 +33,7 @@ public final class BlockLocationType extends MatcherType<Location<?>> {
     }
 
     @Override
-    protected SpongeMatcher<Location<?>> parse(StringElement element) throws SpongeMatcherParseException {
+    protected SpongeMatcher<Location<World>> parse(StringElement element) throws SpongeMatcherParseException {
         return BlockLocationMatcher.create(TYPE.parseMatcher(element));
     }
 }

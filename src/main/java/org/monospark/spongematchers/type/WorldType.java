@@ -3,27 +3,27 @@ package org.monospark.spongematchers.type;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.sponge.BiomeLocationMatcher;
+import org.monospark.spongematchers.matcher.sponge.WorldMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
-import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
-public final class BiomeLocationType extends MatcherType<Location<World>> {
+public final class WorldType extends MatcherType<World> {
 
     private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
-            .addEntry("x", MatcherType.INTEGER)
-            .addEntry("y", MatcherType.INTEGER)
-            .addEntry("world", MatcherType.WORLD)
+            .addEntry("name", MatcherType.STRING)
+            .addEntry("dimension", MatcherType.DIMENSION)
+            .addEntry("seed", MatcherType.INTEGER)
+            .addEntry("gameRules", MatcherType.undefinedMap().addType(MatcherType.STRING).build())
             .build();
 
-    protected BiomeLocationType() {
-        super("biome location");
+    protected WorldType() {
+        super("world");
     }
 
     @Override
     public boolean canMatch(Object o) {
-        return o instanceof Location;
+        return o instanceof World;
     }
 
     @Override
@@ -32,7 +32,7 @@ public final class BiomeLocationType extends MatcherType<Location<World>> {
     }
 
     @Override
-    protected SpongeMatcher<Location<World>> parse(StringElement element) throws SpongeMatcherParseException {
-        return BiomeLocationMatcher.create(TYPE.parseMatcher(element));
+    protected SpongeMatcher<World> parse(StringElement element) throws SpongeMatcherParseException {
+        return WorldMatcher.create(TYPE.parseMatcher(element));
     }
 }
