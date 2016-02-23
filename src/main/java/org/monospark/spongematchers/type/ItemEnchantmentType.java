@@ -10,14 +10,12 @@ import org.spongepowered.api.data.meta.ItemEnchantment;
 
 public final class ItemEnchantmentType extends MatcherType<ItemEnchantment> {
 
-    private static final MatcherType<Map<String, Object>> MAP_TYPE = MatcherType.definedMap()
+    private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
             .addEntry("id", MatcherType.STRING)
             .addEntry("level", MatcherType.INTEGER)
             .build();
 
-    ItemEnchantmentType() {
-        super("item enchantment");
-    }
+    ItemEnchantmentType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -25,13 +23,16 @@ public final class ItemEnchantmentType extends MatcherType<ItemEnchantment> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return MAP_TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<ItemEnchantment> parse(StringElement element) throws SpongeMatcherParseException {
-        SpongeMatcher<Map<String, Object>> matcher = MAP_TYPE.parseMatcher(element);
-        return ItemEnchantmentMatcher.create(matcher);
+        try {
+            return ItemEnchantmentMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse item enchantment matcher: " + element.getString(), e);
+        }
     }
 }

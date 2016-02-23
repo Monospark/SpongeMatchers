@@ -22,9 +22,7 @@ public final class BlockStateType extends MatcherType<BlockState> {
             .addEntry("data", MatcherType.DATA_VIEW)
             .build();
 
-    protected BlockStateType() {
-        super("block state");
-    }
+    BlockStateType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -32,12 +30,16 @@ public final class BlockStateType extends MatcherType<BlockState> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<BlockState> parse(StringElement element) throws SpongeMatcherParseException {
-        return BlockStateMatcher.create(TYPE.parseMatcher(element));
+        try {
+            return BlockStateMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse block state matcher: " + element.getString(), e);
+        }
     }
 }

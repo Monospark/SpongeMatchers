@@ -18,9 +18,7 @@ public final class BlockLocationType extends MatcherType<Location<World>> {
             .addEntry("world", MatcherType.WORLD)
             .build();
 
-    protected BlockLocationType() {
-        super("block location");
-    }
+    BlockLocationType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -28,12 +26,16 @@ public final class BlockLocationType extends MatcherType<Location<World>> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<Location<World>> parse(StringElement element) throws SpongeMatcherParseException {
-        return BlockLocationMatcher.create(TYPE.parseMatcher(element));
+        try {
+            return BlockLocationMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse biome location matcher: " + element.getString(), e);
+        }
     }
 }

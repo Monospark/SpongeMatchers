@@ -18,9 +18,7 @@ public final class PositionLocationType extends MatcherType<Location<World>> {
             .addEntry("world", MatcherType.WORLD)
             .build();
 
-    protected PositionLocationType() {
-        super("position location");
-    }
+    PositionLocationType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -28,12 +26,17 @@ public final class PositionLocationType extends MatcherType<Location<World>> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<Location<World>> parse(StringElement element) throws SpongeMatcherParseException {
-        return PositionLocationMatcher.create(TYPE.parseMatcher(element));
+        try {
+            return PositionLocationMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse position location matcher: "
+                    + element.getString(), e);
+        }
     }
 }

@@ -10,7 +10,7 @@ import org.spongepowered.api.item.inventory.ItemStack;
 
 public final class ItemStackType extends MatcherType<ItemStack> {
 
-    private static final MatcherType<Map<String, Object>> MAP_TYPE = MatcherType.definedMap()
+    private static final MatcherType<Map<String, Object>> TYPE = MatcherType.definedMap()
             .addEntry("type", MatcherType.STRING)
             .addEntry("durability", MatcherType.INTEGER)
             .addEntry("quantity", MatcherType.INTEGER)
@@ -18,9 +18,7 @@ public final class ItemStackType extends MatcherType<ItemStack> {
             .addEntry("data", MatcherType.DATA_VIEW)
             .build();
 
-    ItemStackType() {
-        super("item stack");
-    }
+    ItemStackType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -28,13 +26,16 @@ public final class ItemStackType extends MatcherType<ItemStack> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return MAP_TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<ItemStack> parse(StringElement element) throws SpongeMatcherParseException {
-        SpongeMatcher<Map<String, Object>> matcher = MAP_TYPE.parseMatcher(element);
-        return ItemStackMatcher.create(matcher);
+        try {
+            return ItemStackMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse item stack matcher: " + element.getString(), e);
+        }
     }
 }

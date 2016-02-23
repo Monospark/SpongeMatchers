@@ -15,9 +15,7 @@ public final class BlockType extends MatcherType<BlockSnapshot> {
             .addEntry("location", MatcherType.BLOCK_LOCATION)
             .build();
 
-    protected BlockType() {
-        super("block");
-    }
+    BlockType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -25,12 +23,16 @@ public final class BlockType extends MatcherType<BlockSnapshot> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<BlockSnapshot> parse(StringElement element) throws SpongeMatcherParseException {
-        return BlockMatcher.create(TYPE.parseMatcher(element));
+        try {
+            return BlockMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse block matcher: " + element.getString(), e);
+        }
     }
 }

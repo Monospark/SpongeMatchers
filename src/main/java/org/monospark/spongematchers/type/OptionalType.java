@@ -14,7 +14,6 @@ public final class OptionalType<T> extends MatcherType<Optional<T>> {
     private MatcherType<T> type;
 
     OptionalType(MatcherType<T> type) {
-        super("optional " + type.getName());
         this.type = type;
     }
 
@@ -29,14 +28,10 @@ public final class OptionalType<T> extends MatcherType<Optional<T>> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        boolean isEmptyOptional = element instanceof LiteralElement
+    protected boolean checkElement(StringElement element) {
+        boolean isAbsentOptional = element instanceof LiteralElement
                 && ((LiteralElement) element).getType() == Type.ABSENT;
-        if (deep && !isEmptyOptional) {
-            return type.canParse(element, true);
-        } else {
-            return true;
-        }
+        return !isAbsentOptional ? type.acceptsElement(element) : true;
     }
 
     @Override

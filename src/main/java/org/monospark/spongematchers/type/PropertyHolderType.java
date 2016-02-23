@@ -10,16 +10,14 @@ import org.spongepowered.api.data.property.PropertyHolder;
 
 public final class PropertyHolderType extends MatcherType<PropertyHolder> {
 
-    private MatcherType<Map<String, Object>> type = MatcherType.undefinedMap()
+    private static final MatcherType<Map<String, Object>> TYPE = MatcherType.undefinedMap()
             .addType(MatcherType.BOOLEAN)
             .addType(MatcherType.INTEGER)
             .addType(MatcherType.FLOATING_POINT)
             .addType(MatcherType.STRING)
             .build();
 
-    PropertyHolderType() {
-        super("property holder");
-    }
+    PropertyHolderType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -27,12 +25,17 @@ public final class PropertyHolderType extends MatcherType<PropertyHolder> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return type.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<PropertyHolder> parse(StringElement element) throws SpongeMatcherParseException {
-        return PropertyHolderMatcher.create(type.parseMatcher(element));
+        try {
+            return PropertyHolderMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse property holder matcher: "
+                    + element.getString(), e);
+        }
     }
 }

@@ -11,6 +11,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
+import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 public class OptionalTypeTest {
 
@@ -41,39 +42,54 @@ public class OptionalTypeTest {
         assertThat(canMatch, is(true));
     }
 
+
+
     @Test
-    public void canParse_DeepAndDifferentElementType_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("1");
+    public void checkElement_ElementOfDifferentType_ReturnsFalse() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("true");
 
-        boolean canParse = MatcherType.optional(MatcherType.BOOLEAN).canParse(element, true);
-
-        assertThat(canParse, is(false));
+        assertThat(MatcherType.optional(MatcherType.INTEGER).checkElement(element), is(false));
     }
 
     @Test
-    public void canParse_NotDeepAndAnyElement_ReturnsTrue() throws SpongeMatcherParseException {
+    public void checkElement_ElementOfSameType_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("1");
 
-        boolean canParse = MatcherType.optional(MatcherType.BOOLEAN).canParse(element, false);
-
-        assertThat(canParse, is(true));
+        assertThat(MatcherType.optional(MatcherType.INTEGER).checkElement(element), is(true));
     }
 
     @Test
-    public void parseMatcher_AbsentElement_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
+    public void checkElement_AbsentElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        SpongeMatcher<Optional<Boolean>> matcher = MatcherType.optional(MatcherType.BOOLEAN).parseMatcher(element);
+        assertThat(MatcherType.optional(MatcherType.INTEGER).checkElement(element), is(true));
+    }
 
-        assertThat(matcher, matches(Optional.empty()));
+
+
+    @Test
+    public void parse_ElementOfDifferentType_ThrowsException() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("true");
+
+        ExceptionChecker.check(SpongeMatcherParseException.class,
+                () -> MatcherType.optional(MatcherType.INTEGER).parseMatcher(element));
     }
 
     @Test
-    public void parseMatcher_ValueTypeElement_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
+    public void parse_ElementOfSameType_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("true");
 
         SpongeMatcher<Optional<Boolean>> matcher = MatcherType.optional(MatcherType.BOOLEAN).parseMatcher(element);
 
         assertThat(matcher, matches(Optional.of(true)));
+    }
+
+    @Test
+    public void parse_AbsentElement_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("absent");
+
+        SpongeMatcher<Optional<Boolean>> matcher = MatcherType.optional(MatcherType.BOOLEAN).parseMatcher(element);
+
+        assertThat(matcher, matches(Optional.empty()));
     }
 }

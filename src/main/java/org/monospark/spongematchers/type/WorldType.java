@@ -17,9 +17,7 @@ public final class WorldType extends MatcherType<World> {
             .addEntry("gameRules", MatcherType.undefinedMap().addType(MatcherType.STRING).build())
             .build();
 
-    protected WorldType() {
-        super("world");
-    }
+    WorldType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -27,12 +25,17 @@ public final class WorldType extends MatcherType<World> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<World> parse(StringElement element) throws SpongeMatcherParseException {
-        return WorldMatcher.create(TYPE.parseMatcher(element));
+        try {
+            return WorldMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse world matcher: "
+                    + element.getString(), e);
+        }
     }
 }

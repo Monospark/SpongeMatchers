@@ -12,9 +12,7 @@ public final class DataViewType extends MatcherType<DataView> {
 
     private MatcherType<Map<String, Object>> type;
 
-    DataViewType() {
-        super("data view");
-    }
+    DataViewType() {}
 
     private MatcherType<Map<String, Object>> getMatcherType() {
         if (type == null) {
@@ -40,12 +38,16 @@ public final class DataViewType extends MatcherType<DataView> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return getMatcherType().canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return getMatcherType().acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<DataView> parse(StringElement element) throws SpongeMatcherParseException {
-        return DataViewMatcher.create(getMatcherType().parseMatcher(element));
+        try {
+            return DataViewMatcher.create(getMatcherType().parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse data view matcher: " + element.getString(), e);
+        }
     }
 }

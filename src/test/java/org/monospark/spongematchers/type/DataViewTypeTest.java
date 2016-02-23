@@ -46,24 +46,6 @@ public class DataViewTypeTest {
     }
 
     @Test
-    public void canParse_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("absent");
-
-        boolean canParse = MatcherType.DATA_VIEW.canParse(element, false);
-
-        assertThat(canParse, is(false));
-    }
-
-    @Test
-    public void canParse_DeepAndUnparseableMapValue_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{'test':matchAny:matchAny:1}");
-
-        boolean canParse = MatcherType.DATA_VIEW.canParse(element, true);
-
-        assertThat(canParse, is(false));
-    }
-
-    @Test
     public void parseMatcher_ValidMapEntries_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement(
                 "{'boolean':true,'integer':1,'fp':1.5f,'string':'test','list':[1,2],'dataview':{'nested':1}}");

@@ -17,7 +17,6 @@ public final class DefinedMapType extends MatcherType<Map<String, Object>> {
     private Set<MapTypeEntry<?>> entries;
 
     private DefinedMapType(Set<MapTypeEntry<?>> entries) {
-        super("map");
         this.entries = entries;
     }
 
@@ -39,9 +38,14 @@ public final class DefinedMapType extends MatcherType<Map<String, Object>> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
+    protected boolean checkElement(StringElement element) {
+        return element instanceof MapElement;
+    }
+
+    @Override
+    protected SpongeMatcher<Map<String, Object>> parse(StringElement element) throws SpongeMatcherParseException {
         if (!(element instanceof MapElement)) {
-            return false;
+            throw new SpongeMatcherParseException("Invalid map matcher: " + element.getString());
         }
 
         MapElement map = (MapElement) element;
@@ -52,32 +56,13 @@ public final class DefinedMapType extends MatcherType<Map<String, Object>> {
                 }
             }
 
-            //The map element contains an unknown entry
-            return false;
+            throw new SpongeMatcherParseException("The map matcher " + element.getString()
+                    + " contains an unknown key: " + key);
         }
 
-        if (!deep) {
-            return true;
-        }
-
-        for (MapTypeEntry<?> entry : entries) {
-            Optional<StringElement> value = map.getElement(entry.getKey());
-            if (value.isPresent()) {
-                boolean canParse = entry.getType().canParse(value.get(), true);
-                if (!canParse) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    @Override
-    protected SpongeMatcher<Map<String, Object>> parse(StringElement element) throws SpongeMatcherParseException {
         MapMatcher.Builder builder = MapMatcher.builder();
-        MapElement mapElement = (MapElement) element;
         for (MapTypeEntry<?> entry : entries) {
-            addMapEntry(mapElement, builder, entry);
+            addMapEntry(map, builder, entry);
         }
         return builder.build();
     }
@@ -86,8 +71,13 @@ public final class DefinedMapType extends MatcherType<Map<String, Object>> {
             throws SpongeMatcherParseException {
         Optional<StringElement> value = mapElement.getElement(entry.getKey());
         if (value.isPresent()) {
-            builder.addOptionalMatcher(entry.getKey(), entry.getType(),
-                    MatcherType.optional(entry.getType()).parseMatcher(value.get()));
+            try {
+                builder.addOptionalMatcher(entry.getKey(), entry.getType(),
+                        MatcherType.optional(entry.getType()).parseMatcher(value.get()));
+            } catch (SpongeMatcherParseException e) {
+                throw new SpongeMatcherParseException("Couldn't parse the value for the key " + entry.getKey()
+                        + " in the map matcher: " + mapElement.getString(), e);
+            }
         } else {
             builder.addOptionalMatcher(entry.getKey(), entry.getType(), SpongeMatcher.wildcard());
         }

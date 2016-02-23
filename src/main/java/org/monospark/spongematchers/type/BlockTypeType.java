@@ -15,9 +15,7 @@ public final class BlockTypeType extends MatcherType<BlockType> {
             .addEntry("properties", MatcherType.PROPERTY_HOLDER)
             .build();
 
-    BlockTypeType() {
-        super("block type");
-    }
+    BlockTypeType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -25,12 +23,16 @@ public final class BlockTypeType extends MatcherType<BlockType> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<BlockType> parse(StringElement element) throws SpongeMatcherParseException {
-        return BlockTypeMatcher.create(TYPE.parseMatcher(element));
+        try {
+            return BlockTypeMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse block type matcher: " + element.getString(), e);
+        }
     }
 }

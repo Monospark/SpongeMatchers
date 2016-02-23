@@ -9,6 +9,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
+import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 public class BaseTypeTest {
 
@@ -30,26 +31,47 @@ public class BaseTypeTest {
         assertThat(canMatch, is(true));
     }
 
+
+
     @Test
-    public void canParse_NonBaseElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void checkElement_NonBaseElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        boolean canParse = MatcherType.BOOLEAN.canParse(element, false);
-
-        assertThat(canParse, is(false));
+        assertThat(MatcherType.BOOLEAN.acceptsElement(element), is(false));
     }
 
     @Test
-    public void canParse_DifferentBaseType_ReturnsFalse() throws SpongeMatcherParseException {
+    public void checkElement_DifferentBaseType_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("1");
 
-        boolean canParse = MatcherType.BOOLEAN.canParse(element, false);
-
-        assertThat(canParse, is(false));
+        assertThat(MatcherType.BOOLEAN.acceptsElement(element), is(false));
     }
 
     @Test
-    public void parseMatcher_ValidBaseElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+    public void checkElement_ValidBaseElement_ReturnsTrue() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("false");
+
+        assertThat(MatcherType.BOOLEAN.acceptsElement(element), is(true));
+    }
+
+
+
+    @Test
+    public void parse_NonBaseElement_ThrowsException() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("absent");
+
+        ExceptionChecker.check(SpongeMatcherParseException.class, () -> MatcherType.BOOLEAN.parseMatcher(element));
+    }
+
+    @Test
+    public void parse_DifferentBaseType_ThrowsException() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("1");
+
+        ExceptionChecker.check(SpongeMatcherParseException.class, () -> MatcherType.BOOLEAN.parseMatcher(element));
+    }
+
+    @Test
+    public void parse_ValidBaseElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("false");
 
         SpongeMatcher<Boolean> matcher = MatcherType.BOOLEAN.parseMatcher(element);

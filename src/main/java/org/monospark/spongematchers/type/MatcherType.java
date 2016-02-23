@@ -75,11 +75,7 @@ public abstract class MatcherType<T> {
         return new OptionalType<T>(type);
     }
 
-    private String name;
-
-    protected MatcherType(String name) {
-        this.name = name;
-    }
+    MatcherType() {}
 
     public abstract boolean canMatch(Object o);
 
@@ -105,18 +101,14 @@ public abstract class MatcherType<T> {
             }
         }
 
-        if (!canParse(element, false)) {
-            throw new SpongeMatcherParseException("Invalid " + name + " matcher: " + element.getString());
-        }
-
         return parse(element);
     }
 
-    public final boolean canParseMatcher(StringElement element, boolean deep) {
+    public final boolean acceptsElement(StringElement element) {
         if (element instanceof ConnectedElement) {
             ConnectedElement con = (ConnectedElement) element;
             for (StringElement e : con.getElements()) {
-                if (!canParseMatcher(e, deep)) {
+                if (!acceptsElement(e)) {
                     return false;
                 }
             }
@@ -124,21 +116,19 @@ public abstract class MatcherType<T> {
         } else if (element instanceof PatternElement) {
             PatternElement p = (PatternElement) element;
             if (p.getType() == Type.NOT || p.getType() == Type.PARANTHESES) {
-                return canParseMatcher(p.getElement(), deep);
+                return acceptsElement(p.getElement());
             }
         } else if (element instanceof LiteralElement) {
             LiteralElement l = (LiteralElement) element;
-            return l.getType() == LiteralElement.Type.WILDCARD;
+            if (l.getType() == LiteralElement.Type.WILDCARD) {
+                return true;
+            }
         }
 
-        return canParse(element, deep);
+        return checkElement(element);
     }
 
-    protected abstract boolean canParse(StringElement element, boolean deep);
+    protected abstract boolean checkElement(StringElement element);
 
     protected abstract SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException;
-
-    public final String getName() {
-        return name;
-    }
 }

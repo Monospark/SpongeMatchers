@@ -11,6 +11,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
+import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -44,53 +45,94 @@ public class ListTypeTest {
         assertThat(canMatch, is(true));
     }
 
+
+
     @Test
-    public void canParse_NonListElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void checkElement_NonListElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("1");
 
-        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, false);
-
-        assertThat(canParse, is(false));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(false));
     }
 
     @Test
-    public void canParse_DifferentLiteralElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void checkElement_DifferentLiteralElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, false);
-
-        assertThat(canParse, is(false));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(false));
     }
 
     @Test
-    public void canParse_DeepAndDifferentElementType_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("[1,2]");
+    public void checkElement_NoneLiteral_ReturnsTrue() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("none");
 
-        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, true);
-
-        assertThat(canParse, is(false));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(true));
     }
 
     @Test
-    public void canParse_ListMatchAnyAndDeepAndDifferentElementType_ReturnsFalse() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("matchAny:1");
+    public void checkElement_ListMatchAnyLiteral_ReturnsTrue() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("matchAny: 1");
 
-        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, true);
-
-        assertThat(canParse, is(false));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(true));
     }
 
     @Test
-    public void canParse_DeepAndValidListElement_ReturnsTrue() throws SpongeMatcherParseException {
+    public void checkElement_ListMatchAnyAll_ReturnsTrue() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("matchAll: 1");
+
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(true));
+    }
+
+    @Test
+    public void checkElement_ValidListElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("[true,false]");
 
-        boolean canParse = MatcherType.list(MatcherType.BOOLEAN).canParse(element, true);
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(true));
+    }
 
-        assertThat(canParse, is(true));
+
+
+    @Test
+    public void parse_NonListElement_ThrowsException() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("1");
+
+        ExceptionChecker.check(SpongeMatcherParseException.class,
+                () -> MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element));
     }
 
     @Test
-    public void parseMatcher_ValidListElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+    public void parse_DifferentLiteralElement_ThrowsException() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("absent");
+
+        ExceptionChecker.check(SpongeMatcherParseException.class,
+                () -> MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element));
+    }
+
+    @Test
+    public void parse_DifferentElementType_ThrowsException() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("[1,2]");
+
+        ExceptionChecker.check(SpongeMatcherParseException.class,
+                () -> MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element));
+    }
+
+    @Test
+    public void parse_ListMatchAnyAndDifferentElementType_ThrowsException() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("matchAny:1");
+
+        ExceptionChecker.check(SpongeMatcherParseException.class,
+                () -> MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element));
+    }
+
+    @Test
+    public void parse_ListMatchAllAndDifferentElementType_ThrowsException() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("matchAll:1");
+
+        ExceptionChecker.check(SpongeMatcherParseException.class,
+                () -> MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element));
+    }
+
+    @Test
+    public void parse_ValidListElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("[true,false]");
 
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
@@ -99,7 +141,7 @@ public class ListTypeTest {
     }
 
     @Test
-    public void parseMatcher_ListMatchAnyElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+    public void parse_ListMatchAnyElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("matchAny:false");
 
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
@@ -108,7 +150,7 @@ public class ListTypeTest {
     }
 
     @Test
-    public void parseMatcher_ListMatchAllElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+    public void parse_ListMatchAllElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("matchAll:false");
 
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
@@ -117,7 +159,7 @@ public class ListTypeTest {
     }
 
     @Test
-    public void parseMatcher_NoneElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+    public void parse_NoneElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("none");
 
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);

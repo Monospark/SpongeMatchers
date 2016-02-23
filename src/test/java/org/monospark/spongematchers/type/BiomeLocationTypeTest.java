@@ -34,6 +34,8 @@ public class BiomeLocationTypeTest {
         assertThat(canMatch, is(true));
     }
 
+
+
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("{'x': 1, 'y': 1, 'world':"

@@ -20,9 +20,7 @@ public final class DimensionType extends MatcherType<Dimension> {
             .addEntry("buildHeight", MatcherType.INTEGER)
             .build();
 
-    protected DimensionType() {
-        super("dimension");
-    }
+    DimensionType() {}
 
     @Override
     public boolean canMatch(Object o) {
@@ -30,12 +28,16 @@ public final class DimensionType extends MatcherType<Dimension> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
-        return TYPE.canParseMatcher(element, deep);
+    protected boolean checkElement(StringElement element) {
+        return TYPE.acceptsElement(element);
     }
 
     @Override
     protected SpongeMatcher<Dimension> parse(StringElement element) throws SpongeMatcherParseException {
-        return DimensionMatcher.create(TYPE.parseMatcher(element));
+        try {
+            return DimensionMatcher.create(TYPE.parseMatcher(element));
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse dimension matcher: " + element.getString(), e);
+        }
     }
 }

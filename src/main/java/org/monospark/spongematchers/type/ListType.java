@@ -18,7 +18,6 @@ public final class ListType<T> extends MatcherType<List<T>> {
     private MatcherType<T> type;
 
     ListType(MatcherType<T> type) {
-        super(type.getName() + " list");
         this.type = type;
     }
 
@@ -39,22 +38,17 @@ public final class ListType<T> extends MatcherType<List<T>> {
     }
 
     @Override
-    protected boolean canParse(StringElement element, boolean deep) {
+    protected boolean checkElement(StringElement element) {
         if (element instanceof ListElement) {
-            if (!deep) {
-                return true;
-            }
-
-            ListElement list = (ListElement) element;
-            for (StringElement e : list.getElements()) {
-                if (!type.canParse(e, true)) {
+            for (StringElement listElement : ((ListElement) element).getElements()) {
+                if (!type.acceptsElement(listElement)) {
                     return false;
                 }
             }
             return true;
         } else if (element instanceof PatternElement) {
             PatternElement pattern = (PatternElement) element;
-            return deep ? type.canParse(pattern.getElement(), true) : true;
+            return pattern.getType() == Type.LIST_MATCH_ALL || pattern.getType() == Type.LIST_MATCH_ANY;
         } else if (element instanceof LiteralElement) {
             return ((LiteralElement) element).getType() == LiteralElement.Type.NONE;
         } else {
@@ -68,17 +62,15 @@ public final class ListType<T> extends MatcherType<List<T>> {
             ListElement list = (ListElement) element;
             List<SpongeMatcher<T>> matchers = Lists.newArrayList();
             for (StringElement listElement : list.getElements()) {
-                matchers.add(type.parseMatcher(listElement));
+                matchers.add(parseElement(listElement));
             }
             return ListMatcher.matchExactly(matchers);
         } else if (element instanceof PatternElement) {
             PatternElement pattern = (PatternElement) element;
             if (pattern.getType().equals(Type.LIST_MATCH_ANY)) {
-                SpongeMatcher<T> matcher = type.parseMatcher(pattern.getElement());
-                return ListMatcher.matchAny(matcher);
+                return ListMatcher.matchAny(parseElement(pattern.getElement()));
             } else if (pattern.getType().equals(Type.LIST_MATCH_ALL)) {
-                SpongeMatcher<T> matcher = type.parseMatcher(pattern.getElement());
-                return ListMatcher.matchAll(matcher);
+                return ListMatcher.matchAll(parseElement(pattern.getElement()));
             }
         } else if (element instanceof LiteralElement) {
             LiteralElement literal = (LiteralElement) element;
@@ -86,6 +78,15 @@ public final class ListType<T> extends MatcherType<List<T>> {
                 return ListMatcher.none();
             }
         }
-        throw new AssertionError();
+        throw new SpongeMatcherParseException("Invalid list matcher: " + element.getString());
+    }
+
+    private SpongeMatcher<T> parseElement(StringElement element) throws SpongeMatcherParseException {
+        try {
+            return type.parseMatcher(element);
+        } catch (SpongeMatcherParseException e) {
+            throw new SpongeMatcherParseException("Couldn't parse list matcher: "
+                    + element.getString(), e);
+        }
     }
 }
