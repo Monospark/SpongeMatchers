@@ -16,7 +16,7 @@ public final class WorldMatcher extends SpongeObjectMatcher<World> {
                 .addMatcher("name", MatcherType.STRING, name)
                 .addMatcher("dimension", MatcherType.DIMENSION, dimension)
                 .addMatcher("seed", MatcherType.INTEGER, seed)
-                .addMatcher("gameRules", MatcherType.undefinedMap().addType(MatcherType.STRING).build(),
+                .addMatcher("gameRules", MatcherType.variableMap(MatcherType.STRING),
                         SpongeMatcher.genericWrapper(gameRules))
                 .build();
         return new WorldMatcher(matcher);

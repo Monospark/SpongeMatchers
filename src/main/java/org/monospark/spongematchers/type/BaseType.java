@@ -20,7 +20,7 @@ public final class BaseType<T> extends MatcherType<T> {
     }
 
     @Override
-    protected boolean checkElement(StringElement element) {
+    protected boolean canParse(StringElement element) {
         if (element instanceof BaseElement) {
             BaseElement<?> base = (BaseElement<?>) element;
             return base.getParser().equals(parser);

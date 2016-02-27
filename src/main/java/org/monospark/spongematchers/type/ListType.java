@@ -38,10 +38,10 @@ public final class ListType<T> extends MatcherType<List<T>> {
     }
 
     @Override
-    protected boolean checkElement(StringElement element) {
+    protected boolean canParse(StringElement element) {
         if (element instanceof ListElement) {
             for (StringElement listElement : ((ListElement) element).getElements()) {
-                if (!type.acceptsElement(listElement)) {
+                if (!type.canParseMatcher(listElement)) {
                     return false;
                 }
             }

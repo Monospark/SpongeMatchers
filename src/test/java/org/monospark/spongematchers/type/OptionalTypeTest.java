@@ -45,24 +45,24 @@ public class OptionalTypeTest {
 
 
     @Test
-    public void checkElement_ElementOfDifferentType_ReturnsFalse() throws SpongeMatcherParseException {
+    public void canParse_ElementOfDifferentType_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("true");
 
-        assertThat(MatcherType.optional(MatcherType.INTEGER).checkElement(element), is(false));
+        assertThat(MatcherType.optional(MatcherType.INTEGER).canParse(element), is(false));
     }
 
     @Test
-    public void checkElement_ElementOfSameType_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_ElementOfSameType_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("1");
 
-        assertThat(MatcherType.optional(MatcherType.INTEGER).checkElement(element), is(true));
+        assertThat(MatcherType.optional(MatcherType.INTEGER).canParse(element), is(true));
     }
 
     @Test
-    public void checkElement_AbsentElement_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_AbsentElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        assertThat(MatcherType.optional(MatcherType.INTEGER).checkElement(element), is(true));
+        assertThat(MatcherType.optional(MatcherType.INTEGER).canParse(element), is(true));
     }
 
 

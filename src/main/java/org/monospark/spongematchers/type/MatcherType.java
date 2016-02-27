@@ -1,6 +1,7 @@
 package org.monospark.spongematchers.type;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -63,16 +64,20 @@ public abstract class MatcherType<T> {
         return new ListType<T>(type);
     }
 
-    public static DefinedMapType.Builder definedMap() {
-        return DefinedMapType.builder();
+    public static FixedMapType.Builder fixedMap() {
+        return FixedMapType.builder();
     }
 
-    public static UndefinedMapType.Builder undefinedMap() {
-        return UndefinedMapType.builder();
+    public static MatcherType<Map<String, Object>> variableMap(MatcherType<?> type) {
+        return new VariableMapType(type);
     }
 
     public static <T> MatcherType<Optional<T>> optional(MatcherType<T> type) {
         return new OptionalType<T>(type);
+    }
+
+    public static <T> MultiType.Builder multi() {
+        return MultiType.builder();
     }
 
     MatcherType() {}
@@ -104,11 +109,11 @@ public abstract class MatcherType<T> {
         return parse(element);
     }
 
-    public final boolean acceptsElement(StringElement element) {
+    public final boolean canParseMatcher(StringElement element) {
         if (element instanceof ConnectedElement) {
             ConnectedElement con = (ConnectedElement) element;
             for (StringElement e : con.getElements()) {
-                if (!acceptsElement(e)) {
+                if (!canParseMatcher(e)) {
                     return false;
                 }
             }
@@ -116,7 +121,7 @@ public abstract class MatcherType<T> {
         } else if (element instanceof PatternElement) {
             PatternElement p = (PatternElement) element;
             if (p.getType() == Type.NOT || p.getType() == Type.PARANTHESES) {
-                return acceptsElement(p.getElement());
+                return canParseMatcher(p.getElement());
             }
         } else if (element instanceof LiteralElement) {
             LiteralElement l = (LiteralElement) element;
@@ -125,10 +130,10 @@ public abstract class MatcherType<T> {
             }
         }
 
-        return checkElement(element);
+        return canParse(element);
     }
 
-    protected abstract boolean checkElement(StringElement element);
+    protected abstract boolean canParse(StringElement element);
 
     protected abstract SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException;
 }

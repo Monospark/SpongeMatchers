@@ -15,13 +15,13 @@ import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 import com.google.common.collect.ImmutableMap;
 
-public class DefinedMapTypeTest {
+public class FixedMapTypeTest {
 
     @Test
     public void canMatch_NonMap_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
 
-        boolean canMatch = MatcherType.definedMap()
+        boolean canMatch = MatcherType.fixedMap()
                 .addEntry("test", MatcherType.BOOLEAN)
                 .build()
                 .canMatch(o);
@@ -33,7 +33,7 @@ public class DefinedMapTypeTest {
     public void canMatch_MapWithValueOfDifferentType_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = ImmutableMap.of("test", 1);
 
-        boolean canMatch = MatcherType.definedMap()
+        boolean canMatch = MatcherType.fixedMap()
                 .addEntry("test", MatcherType.BOOLEAN)
                 .build()
                 .canMatch(o);
@@ -45,7 +45,7 @@ public class DefinedMapTypeTest {
     public void canMatch_MapWithValueOfSameType_ReturnsTrue() throws SpongeMatcherParseException {
         Object o = ImmutableMap.of("test", true);
 
-        boolean canMatch = MatcherType.definedMap()
+        boolean canMatch = MatcherType.fixedMap()
                 .addEntry("test", MatcherType.BOOLEAN)
                 .build()
                 .canMatch(o);
@@ -56,18 +56,18 @@ public class DefinedMapTypeTest {
 
 
     @Test
-    public void checkElement_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void canParse_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        assertThat(MatcherType.definedMap().addEntry("test", MatcherType.BOOLEAN).build().acceptsElement(element),
+        assertThat(MatcherType.fixedMap().addEntry("test", MatcherType.BOOLEAN).build().canParseMatcher(element),
                 is(false));
     }
 
     @Test
-    public void checkElement_MapElement_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_MapElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("{'testing':true}");
 
-        assertThat(MatcherType.definedMap().addEntry("testing", MatcherType.BOOLEAN).build().acceptsElement(element),
+        assertThat(MatcherType.fixedMap().addEntry("testing", MatcherType.BOOLEAN).build().canParseMatcher(element),
                 is(true));
     }
 
@@ -78,7 +78,7 @@ public class DefinedMapTypeTest {
         StringElement element = StringElementParser.parseStringElement("{'wrong':true}");
 
         ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> MatcherType.definedMap().addEntry("test", MatcherType.BOOLEAN).build().parseMatcher(element));
+                () -> MatcherType.fixedMap().addEntry("test", MatcherType.BOOLEAN).build().parseMatcher(element));
     }
 
     @Test
@@ -86,14 +86,14 @@ public class DefinedMapTypeTest {
         StringElement element = StringElementParser.parseStringElement("{'test':1}");
 
         ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> MatcherType.definedMap().addEntry("test", MatcherType.BOOLEAN).build().parseMatcher(element));
+                () -> MatcherType.fixedMap().addEntry("test", MatcherType.BOOLEAN).build().parseMatcher(element));
     }
 
     @Test
     public void parse_ValidMapElements_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("{'boolean':true,'integer':1}");
 
-        SpongeMatcher<Map<String, Object>> matcher = MatcherType.definedMap()
+        SpongeMatcher<Map<String, Object>> matcher = MatcherType.fixedMap()
                 .addEntry("boolean", MatcherType.BOOLEAN)
                 .addEntry("integer", MatcherType.INTEGER)
                 .build()

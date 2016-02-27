@@ -15,16 +15,13 @@ import org.monospark.spongematchers.testutil.ExceptionChecker;
 
 import com.google.common.collect.ImmutableMap;
 
-public class UndefinedMapTypeTest {
+public class VariableMapTypeTest {
 
     @Test
     public void canMatch_NonMap_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = 5;
 
-        boolean canMatch = MatcherType.undefinedMap()
-                .addType(MatcherType.BOOLEAN)
-                .build()
-                .canMatch(o);
+        boolean canMatch = MatcherType.variableMap(MatcherType.BOOLEAN).canMatch(o);
 
         assertThat(canMatch, is(false));
     }
@@ -33,10 +30,7 @@ public class UndefinedMapTypeTest {
     public void canMatch_MapWithValueOfDifferentType_ReturnsFalse() throws SpongeMatcherParseException {
         Object o = ImmutableMap.of("test", 1);
 
-        boolean canMatch = MatcherType.undefinedMap()
-                .addType(MatcherType.BOOLEAN)
-                .build()
-                .canMatch(o);
+        boolean canMatch = MatcherType.variableMap(MatcherType.BOOLEAN).canMatch(o);
 
         assertThat(canMatch, is(false));
     }
@@ -45,10 +39,7 @@ public class UndefinedMapTypeTest {
     public void canMatch_MapWithValueOfSameType_ReturnsTrue() throws SpongeMatcherParseException {
         Object o = ImmutableMap.of("test", true);
 
-        boolean canMatch = MatcherType.undefinedMap()
-                .addType(MatcherType.BOOLEAN)
-                .build()
-                .canMatch(o);
+        boolean canMatch = MatcherType.variableMap(MatcherType.BOOLEAN).canMatch(o);
 
         assertThat(canMatch, is(true));
     }
@@ -56,17 +47,17 @@ public class UndefinedMapTypeTest {
 
 
     @Test
-    public void checkElement_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void canParse_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        assertThat(MatcherType.undefinedMap().addType(MatcherType.BOOLEAN).build().checkElement(element), is(false));
+        assertThat(MatcherType.variableMap(MatcherType.BOOLEAN).canParse(element), is(false));
     }
 
     @Test
-    public void checkElement_ValidMapElement_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_ValidMapElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("{'test':true}");
 
-        assertThat(MatcherType.undefinedMap().addType(MatcherType.BOOLEAN).build().checkElement(element), is(true));
+        assertThat(MatcherType.variableMap(MatcherType.BOOLEAN).canParse(element), is(true));
     }
 
 
@@ -76,10 +67,7 @@ public class UndefinedMapTypeTest {
         StringElement element = StringElementParser.parseStringElement("absent");
 
         ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> MatcherType.undefinedMap()
-                        .addType(MatcherType.BOOLEAN)
-                        .build()
-                        .parseMatcher(element));
+                () -> MatcherType.variableMap(MatcherType.BOOLEAN).parseMatcher(element));
     }
 
     @Test
@@ -87,10 +75,10 @@ public class UndefinedMapTypeTest {
         StringElement element = StringElementParser.parseStringElement("{'test':1}");
 
         ExceptionChecker.check(SpongeMatcherParseException.class,
-                () -> MatcherType.undefinedMap()
+                () -> MatcherType.variableMap(MatcherType.multi()
                         .addType(MatcherType.BOOLEAN)
                         .addType(MatcherType.FLOATING_POINT)
-                        .build()
+                        .build())
                         .parseMatcher(element));
     }
 
@@ -99,11 +87,11 @@ public class UndefinedMapTypeTest {
         StringElement element = StringElementParser.parseStringElement(
                 "{'boolean':true,'integer':1,'string':'string'}");
 
-        SpongeMatcher<Map<String, Object>> matcher = MatcherType.undefinedMap()
+        SpongeMatcher<Map<String, Object>> matcher = MatcherType.variableMap(MatcherType.multi()
                 .addType(MatcherType.BOOLEAN)
                 .addType(MatcherType.INTEGER)
                 .addType(MatcherType.STRING)
-                .build()
+                .build())
                 .parseMatcher(element);
 
         assertThat(matcher, matches(ImmutableMap.of("boolean", true, "integer", 1L, "string", "string")));

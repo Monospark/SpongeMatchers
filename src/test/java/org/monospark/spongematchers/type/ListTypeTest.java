@@ -48,45 +48,45 @@ public class ListTypeTest {
 
 
     @Test
-    public void checkElement_NonListElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void canParse_NonListElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("1");
 
-        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(false));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(false));
     }
 
     @Test
-    public void checkElement_DifferentLiteralElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void canParse_DifferentLiteralElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(false));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(false));
     }
 
     @Test
-    public void checkElement_NoneLiteral_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_NoneLiteral_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("none");
 
-        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(true));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(true));
     }
 
     @Test
-    public void checkElement_ListMatchAnyLiteral_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_ListMatchAnyLiteral_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("matchAny: 1");
 
-        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(true));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(true));
     }
 
     @Test
-    public void checkElement_ListMatchAnyAll_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_ListMatchAnyAll_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("matchAll: 1");
 
-        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(true));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(true));
     }
 
     @Test
-    public void checkElement_ValidListElement_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_ValidListElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("[true,false]");
 
-        assertThat(MatcherType.list(MatcherType.BOOLEAN).acceptsElement(element), is(true));
+        assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(true));
     }
 
 

@@ -28,10 +28,10 @@ public final class OptionalType<T> extends MatcherType<Optional<T>> {
     }
 
     @Override
-    protected boolean checkElement(StringElement element) {
+    protected boolean canParse(StringElement element) {
         boolean isAbsentOptional = element instanceof LiteralElement
                 && ((LiteralElement) element).getType() == Type.ABSENT;
-        return !isAbsentOptional ? type.acceptsElement(element) : true;
+        return !isAbsentOptional ? type.canParseMatcher(element) : true;
     }
 
     @Override

@@ -34,24 +34,24 @@ public class BaseTypeTest {
 
 
     @Test
-    public void checkElement_NonBaseElement_ReturnsFalse() throws SpongeMatcherParseException {
+    public void canParse_NonBaseElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        assertThat(MatcherType.BOOLEAN.acceptsElement(element), is(false));
+        assertThat(MatcherType.BOOLEAN.canParseMatcher(element), is(false));
     }
 
     @Test
-    public void checkElement_DifferentBaseType_ReturnsFalse() throws SpongeMatcherParseException {
+    public void canParse_DifferentBaseType_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("1");
 
-        assertThat(MatcherType.BOOLEAN.acceptsElement(element), is(false));
+        assertThat(MatcherType.BOOLEAN.canParseMatcher(element), is(false));
     }
 
     @Test
-    public void checkElement_ValidBaseElement_ReturnsTrue() throws SpongeMatcherParseException {
+    public void canParse_ValidBaseElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("false");
 
-        assertThat(MatcherType.BOOLEAN.acceptsElement(element), is(true));
+        assertThat(MatcherType.BOOLEAN.canParseMatcher(element), is(true));
     }
 
 
