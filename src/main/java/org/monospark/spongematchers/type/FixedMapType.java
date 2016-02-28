@@ -72,8 +72,7 @@ public final class FixedMapType extends MatcherType<Map<String, Object>> {
         Optional<StringElement> value = mapElement.getElement(key);
         if (value.isPresent()) {
             try {
-                builder.addOptionalMatcher(key, type,
-                        MatcherType.optional(type).parseMatcher(value.get()));
+                builder.addMatcher(key, type, type.parseMatcher(value.get()));
             } catch (SpongeMatcherParseException e) {
                 throw new SpongeMatcherParseException("Couldn't parse the value for the key \"" + key
                         + "\" in the map matcher: " + mapElement.getString(), e);

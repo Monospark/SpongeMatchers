@@ -34,12 +34,23 @@ public class PositionLocationTypeTest {
         assertThat(canMatch, is(true));
     }
 
+
+
+    public static final Location<World> TEST_POSITION_LOCATION = createTestPositionLocation();
+
+    private static Location<World> createTestPositionLocation() {
+        return new Location<World>(WorldTypeTest.TEST_WORLD, new Vector3d(1.0, 1.0, 1.0));
+    }
+
+    public static final String TEST_POSITION_LOCATION_MATCHER = "{'x': 1.0f,'y': >0.5f,'z': !2f, 'world': "
+            + WorldTypeTest.TEST_WORLD_MATCHER + "}";
+
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("{'x':1.0f,'y':1.0f,'z':1.0f}");
+        StringElement element = StringElementParser.parseStringElement(TEST_POSITION_LOCATION_MATCHER);
 
         SpongeMatcher<Location<World>> matcher = MatcherType.POSITION_LOCATION.parseMatcher(element);
 
-        assertThat(matcher, matches(new Location<World>(WorldTypeTest.TEST_WORLD, new Vector3d(1.0, 1.0, 1.0))));
+        assertThat(matcher, matches(TEST_POSITION_LOCATION));
     }
 }

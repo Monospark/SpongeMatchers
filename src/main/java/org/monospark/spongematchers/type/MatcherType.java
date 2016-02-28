@@ -19,6 +19,7 @@ import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.data.property.PropertyHolder;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.world.Dimension;
 import org.spongepowered.api.world.Location;
@@ -59,6 +60,8 @@ public abstract class MatcherType<T> {
     public static final MatcherType<Location<World>> POSITION_LOCATION = new PositionLocationType();
 
     public static final MatcherType<BlockSnapshot> BLOCK = new BlockType();
+
+    public static final MatcherType<Entity> ENTITY = new EntityType();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
