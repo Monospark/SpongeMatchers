@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -6,6 +6,7 @@ import java.util.function.Function;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
+import org.monospark.spongematchers.type.MatcherType;
 
 public abstract class SpongeObjectType<T> extends MatcherType<T> {
 
@@ -40,13 +41,13 @@ public abstract class SpongeObjectType<T> extends MatcherType<T> {
 
     @Override
     protected final boolean canParse(StringElement element) {
-        return getType().canParse(element);
+        return getType().canParseMatcher(element);
     }
 
     @Override
     protected final SpongeMatcher<T> parse(StringElement element) throws SpongeMatcherParseException {
         try {
-            return creationFunction.apply(getType().parse(element));
+            return creationFunction.apply(getType().parseMatcher(element));
         } catch (SpongeMatcherParseException e) {
             throw new SpongeMatcherParseException("Couldn't parse " + name + " matcher: " + element.getString(), e);
         }

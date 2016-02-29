@@ -1,13 +1,14 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.sponge.WorldMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.World;
 
 public final class WorldType extends SpongeObjectType<World> {
 
-    WorldType() {
+    public WorldType() {
         super("world", World.class, m -> WorldMatcher.create(m));
     }
 

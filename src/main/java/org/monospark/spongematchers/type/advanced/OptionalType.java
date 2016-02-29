@@ -1,19 +1,20 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.advanced;
 
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.OptionalMatcher;
+import org.monospark.spongematchers.matcher.advanced.OptionalMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.LiteralElement.Type;
+import org.monospark.spongematchers.type.MatcherType;
 import org.monospark.spongematchers.parser.element.StringElement;
 
 public final class OptionalType<T> extends MatcherType<Optional<T>> {
 
     private MatcherType<T> type;
 
-    OptionalType(MatcherType<T> type) {
+    public OptionalType(MatcherType<T> type) {
         this.type = type;
     }
 

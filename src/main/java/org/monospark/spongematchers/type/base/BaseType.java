@@ -1,16 +1,17 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.base;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.base.BaseMatcherParser;
 import org.monospark.spongematchers.parser.element.BaseElement;
 import org.monospark.spongematchers.parser.element.StringElement;
+import org.monospark.spongematchers.type.MatcherType;
 
 public final class BaseType<T> extends MatcherType<T> {
 
     private BaseMatcherParser<T> parser;
 
-    BaseType(BaseMatcherParser<T> parser) {
+    public BaseType(BaseMatcherParser<T> parser) {
         this.parser = parser;
     }
 

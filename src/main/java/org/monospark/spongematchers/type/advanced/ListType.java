@@ -1,14 +1,15 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.advanced;
 
 import java.util.List;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.ListMatcher;
+import org.monospark.spongematchers.matcher.advanced.ListMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.ListElement;
 import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElement.Type;
+import org.monospark.spongematchers.type.MatcherType;
 import org.monospark.spongematchers.parser.element.StringElement;
 
 import com.google.common.collect.Lists;
@@ -17,7 +18,7 @@ public final class ListType<T> extends MatcherType<List<T>> {
 
     private MatcherType<T> type;
 
-    ListType(MatcherType<T> type) {
+    public ListType(MatcherType<T> type) {
         this.type = type;
     }
 

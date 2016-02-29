@@ -1,10 +1,11 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.advanced;
 
 import java.util.Set;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
+import org.monospark.spongematchers.type.MatcherType;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
@@ -13,7 +14,7 @@ public final class MultiType extends MatcherType<Object> {
 
     private Set<MatcherType<?>> types;
 
-    private MultiType(Set<MatcherType<?>> types) {
+    public MultiType(Set<MatcherType<?>> types) {
         this.types = types;
     }
 
@@ -30,7 +31,7 @@ public final class MultiType extends MatcherType<Object> {
     @Override
     protected boolean canParse(StringElement element) {
         for (MatcherType<?> type : types) {
-            if (type.canParse(element)) {
+            if (type.canParseMatcher(element)) {
                 return true;
             }
         }
@@ -41,7 +42,7 @@ public final class MultiType extends MatcherType<Object> {
     @Override
     protected SpongeMatcher<Object> parse(StringElement element) throws SpongeMatcherParseException {
         for (MatcherType<?> type : types) {
-            if (type.canParse(element)) {
+            if (type.canParseMatcher(element)) {
                 return (SpongeMatcher<Object>) type.parseMatcher(element);
             }
         }

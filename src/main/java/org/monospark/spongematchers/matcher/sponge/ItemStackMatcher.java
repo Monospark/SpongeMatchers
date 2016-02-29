@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
+import org.monospark.spongematchers.matcher.advanced.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;

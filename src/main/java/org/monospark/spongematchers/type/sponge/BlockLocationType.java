@@ -1,14 +1,15 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.sponge.BlockLocationMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 public final class BlockLocationType extends SpongeObjectType<Location<World>> {
 
-    BlockLocationType() {
+    public BlockLocationType() {
         super("block location", Location.class, m -> BlockLocationMatcher.create(m));
     }
 

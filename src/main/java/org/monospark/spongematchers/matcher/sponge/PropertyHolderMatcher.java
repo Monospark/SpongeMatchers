@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
+import org.monospark.spongematchers.matcher.advanced.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.Property;
 import org.spongepowered.api.data.property.PropertyHolder;

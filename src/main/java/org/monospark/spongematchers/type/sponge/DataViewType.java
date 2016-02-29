@@ -1,13 +1,14 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.sponge.DataViewMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.DataView;
 
 public final class DataViewType extends SpongeObjectType<DataView> {
 
-    DataViewType() {
+    public DataViewType() {
         super("data view", DataView.class, m -> DataViewMatcher.create(m));
     }
 

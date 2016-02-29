@@ -1,13 +1,14 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.sponge.BlockTypeMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockType;
 
 public final class BlockTypeType extends SpongeObjectType<BlockType> {
 
-    BlockTypeType() {
+    public BlockTypeType() {
         super("block type", BlockType.class, m -> BlockTypeMatcher.create(m));
     }
 

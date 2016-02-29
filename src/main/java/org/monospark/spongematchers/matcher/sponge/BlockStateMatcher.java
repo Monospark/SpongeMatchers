@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
+import org.monospark.spongematchers.matcher.advanced.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;

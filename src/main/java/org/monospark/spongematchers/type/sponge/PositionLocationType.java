@@ -1,14 +1,15 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.sponge.PositionLocationMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 public final class PositionLocationType extends SpongeObjectType<Location<World>> {
 
-    PositionLocationType() {
+    public PositionLocationType() {
         super("position location", Location.class, m -> PositionLocationMatcher.create(m));
     }
 

@@ -1,11 +1,11 @@
-package org.monospark.spongematchers.matcher.complex;
+package org.monospark.spongematchers.matcher.advanced;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.type.FixedMapType;
 import org.monospark.spongematchers.type.MatcherType;
+import org.monospark.spongematchers.type.advanced.FixedMapType;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;

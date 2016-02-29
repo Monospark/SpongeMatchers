@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.matcher.complex;
+package org.monospark.spongematchers.matcher.advanced;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.type.MatcherType;

@@ -13,6 +13,25 @@ import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElement.Type;
+import org.monospark.spongematchers.type.advanced.FixedMapType;
+import org.monospark.spongematchers.type.advanced.ListType;
+import org.monospark.spongematchers.type.advanced.MultiType;
+import org.monospark.spongematchers.type.advanced.OptionalType;
+import org.monospark.spongematchers.type.advanced.VariableMapType;
+import org.monospark.spongematchers.type.base.BaseType;
+import org.monospark.spongematchers.type.sponge.BiomeLocationType;
+import org.monospark.spongematchers.type.sponge.BlockLocationType;
+import org.monospark.spongematchers.type.sponge.BlockStateType;
+import org.monospark.spongematchers.type.sponge.BlockType;
+import org.monospark.spongematchers.type.sponge.BlockTypeType;
+import org.monospark.spongematchers.type.sponge.DataViewType;
+import org.monospark.spongematchers.type.sponge.DimensionType;
+import org.monospark.spongematchers.type.sponge.EntityType;
+import org.monospark.spongematchers.type.sponge.ItemEnchantmentType;
+import org.monospark.spongematchers.type.sponge.ItemStackType;
+import org.monospark.spongematchers.type.sponge.PositionLocationType;
+import org.monospark.spongematchers.type.sponge.PropertyHolderType;
+import org.monospark.spongematchers.type.sponge.WorldType;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
@@ -31,7 +50,7 @@ public abstract class MatcherType<T> {
 
     public static final MatcherType<Boolean> BOOLEAN = new BaseType<>(BaseMatcherParser.BOOLEAN);
 
-    public static final MatcherType<Long> INTEGER = new BaseType<>(BaseMatcherParser.INTEGER);
+    public static final MatcherType<Long> INTEGER = new BaseType<Long>(BaseMatcherParser.INTEGER);
 
     public static final MatcherType<Double> FLOATING_POINT = new BaseType<>(BaseMatcherParser.FLOATING_POINT);
 
@@ -83,7 +102,7 @@ public abstract class MatcherType<T> {
         return MultiType.builder();
     }
 
-    MatcherType() {}
+    protected MatcherType() {}
 
     public abstract boolean canMatch(Object o);
 

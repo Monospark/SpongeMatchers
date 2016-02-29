@@ -1,17 +1,19 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 import java.util.function.Function;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.sponge.EntityMatcher;
-import org.monospark.spongematchers.type.FixedMapType.Builder;
+import org.monospark.spongematchers.type.MatcherType;
+import org.monospark.spongematchers.type.advanced.FixedMapType;
+import org.monospark.spongematchers.type.advanced.FixedMapType.Builder;
 import org.spongepowered.api.entity.Entity;
 
 public class EntityType<T extends Entity> extends SpongeObjectType<T> {
 
     @SuppressWarnings("unchecked")
-    EntityType() {
+    public EntityType() {
         super("entity", Entity.class, m -> (SpongeMatcher<T>) EntityMatcher.create(m));
     }
 

@@ -1,13 +1,14 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.sponge.DimensionMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.Dimension;
 
 public final class DimensionType extends SpongeObjectType<Dimension> {
 
-    DimensionType() {
+    public DimensionType() {
         super("dimension", Dimension.class, m -> DimensionMatcher.create(m));
     }
 

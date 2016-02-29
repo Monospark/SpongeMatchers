@@ -1,14 +1,15 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.advanced;
 
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
+import org.monospark.spongematchers.matcher.advanced.FixedMapMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.MapElement;
 import org.monospark.spongematchers.parser.element.StringElement;
+import org.monospark.spongematchers.type.MatcherType;
 
 import com.google.common.collect.Maps;
 

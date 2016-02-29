@@ -1,13 +1,14 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.sponge.BlockStateMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockState;
 
 public final class BlockStateType extends SpongeObjectType<BlockState> {
 
-    BlockStateType() {
+    public BlockStateType() {
         super("block state", BlockState.class, m -> BlockStateMatcher.create(m));
     }
 

@@ -1,13 +1,14 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.sponge.ItemStackMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.item.inventory.ItemStack;
 
 public final class ItemStackType extends SpongeObjectType<ItemStack> {
 
-    ItemStackType() {
+    public ItemStackType() {
         super("item stack", ItemStack.class, m -> ItemStackMatcher.create(m));
     }
 

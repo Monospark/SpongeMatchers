@@ -1,21 +1,22 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.advanced;
 
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.VariableMapMatcher;
+import org.monospark.spongematchers.matcher.advanced.VariableMapMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.MapElement;
 import org.monospark.spongematchers.parser.element.StringElement;
+import org.monospark.spongematchers.type.MatcherType;
 import org.monospark.spongematchers.util.GenericsHelper;
 
 public final class VariableMapType extends MatcherType<Map<String, Object>> {
 
     private MatcherType<?> type;
 
-    VariableMapType(MatcherType<?> type) {
+    public VariableMapType(MatcherType<?> type) {
         this.type = type;
     }
 
