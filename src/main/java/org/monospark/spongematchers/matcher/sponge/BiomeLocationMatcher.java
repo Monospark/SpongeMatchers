@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
@@ -12,10 +12,10 @@ public final class BiomeLocationMatcher extends SpongeObjectMatcher<Location<Wor
 
     public static SpongeMatcher<Location<World>> create(SpongeMatcher<Long> x, SpongeMatcher<Long> y,
             SpongeMatcher<World> world) {
-        SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
-                .addMatcher("x", MatcherType.INTEGER, x)
-                .addMatcher("y", MatcherType.INTEGER, y)
-                .addMatcher("world", MatcherType.WORLD, world)
+        SpongeMatcher<Map<String, Object>> matcher = FixedMapMatcher.builder()
+                .addMatcher("x", x)
+                .addMatcher("y", y)
+                .addMatcher("world", world)
                 .build();
         return new BiomeLocationMatcher(matcher);
     }
@@ -25,7 +25,7 @@ public final class BiomeLocationMatcher extends SpongeObjectMatcher<Location<Wor
     }
 
     private BiomeLocationMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.BIOME_LOCATION, matcher);
     }
 
     @Override

@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
@@ -12,11 +12,11 @@ public final class BlockLocationMatcher extends SpongeObjectMatcher<Location<Wor
 
     public static SpongeMatcher<Location<World>> create(SpongeMatcher<Long> x, SpongeMatcher<Long> y,
             SpongeMatcher<Long> z, SpongeMatcher<World> world) {
-        SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
-                .addMatcher("x", MatcherType.INTEGER, x)
-                .addMatcher("y", MatcherType.INTEGER, y)
-                .addMatcher("z", MatcherType.INTEGER, z)
-                .addMatcher("world", MatcherType.WORLD, world)
+        SpongeMatcher<Map<String, Object>> matcher = FixedMapMatcher.builder()
+                .addMatcher("x", x)
+                .addMatcher("y", y)
+                .addMatcher("z", z)
+                .addMatcher("world", world)
                 .build();
         return new BlockLocationMatcher(matcher);
     }
@@ -26,7 +26,7 @@ public final class BlockLocationMatcher extends SpongeObjectMatcher<Location<Wor
     }
 
     private BlockLocationMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.BLOCK_LOCATION, matcher);
     }
 
     @Override

@@ -1,8 +1,9 @@
 package org.monospark.spongematchers.matcher.base;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 
-public final class BooleanMatcher implements SpongeMatcher<Boolean> {
+public final class BooleanMatcher extends SpongeMatcher<Boolean> {
 
     public static SpongeMatcher<Boolean> trueValue() {
         return new BooleanMatcher(true);
@@ -15,6 +16,7 @@ public final class BooleanMatcher implements SpongeMatcher<Boolean> {
     private boolean value;
 
     private BooleanMatcher(boolean value) {
+        super(MatcherType.BOOLEAN);
         this.value = value;
     }
 

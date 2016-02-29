@@ -3,14 +3,16 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 
 import com.google.common.collect.Maps;
 
-public abstract class SpongeObjectMatcher<T> implements SpongeMatcher<T> {
+public abstract class SpongeObjectMatcher<T> extends SpongeMatcher<T> {
 
     private SpongeMatcher<Map<String, Object>> matcher;
 
-    public SpongeObjectMatcher(SpongeMatcher<Map<String, Object>> matcher) {
+    public SpongeObjectMatcher(MatcherType<T> type, SpongeMatcher<Map<String, Object>> matcher) {
+        super(type);
         this.matcher = matcher;
     }
 

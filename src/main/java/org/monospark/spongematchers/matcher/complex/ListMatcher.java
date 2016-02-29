@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 
 public final class ListMatcher {
 
     private ListMatcher() {}
 
-    public static <T> SpongeMatcher<List<T>> none() {
-        return new SpongeMatcher<List<T>>() {
+    public static <T> SpongeMatcher<List<T>> none(MatcherType<T> type) {
+        return new SpongeMatcher<List<T>>(MatcherType.list(type)) {
 
             @Override
             public boolean matches(List<T> o) {
@@ -28,7 +29,7 @@ public final class ListMatcher {
     }
 
     public static <T> SpongeMatcher<List<T>> createFromSingleMatcher(SpongeMatcher<T> matcher, boolean allMatch) {
-        return new SpongeMatcher<List<T>>() {
+        return new SpongeMatcher<List<T>>(MatcherType.list(matcher.getType())) {
 
             @Override
             public boolean matches(List<T> o) {
@@ -56,7 +57,17 @@ public final class ListMatcher {
     }
 
     public static <T> SpongeMatcher<List<T>> matchExactly(List<SpongeMatcher<T>> matchers) {
-        return new SpongeMatcher<List<T>>() {
+        if (matchers.size() == 0) {
+            throw new IllegalArgumentException("Matcher list must contain at least one matcher");
+        }
+        MatcherType<?> type = matchers.get(0).getType();
+        for (int i = 1; i < matchers.size(); i++) {
+            if (!matchers.get(i).getType().equals(type)) {
+                throw new IllegalArgumentException("All matchers in the list must have the same matcher type");
+            }
+        }
+
+        return new SpongeMatcher<List<T>>(MatcherType.list(matchers.get(0).getType())) {
 
             @Override
             public boolean matches(List<T> o) {

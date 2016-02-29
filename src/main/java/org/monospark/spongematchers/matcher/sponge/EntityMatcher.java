@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.world.Location;
@@ -16,15 +16,15 @@ public final class EntityMatcher extends SpongeObjectMatcher<Entity> {
             SpongeMatcher<Double> rotX, SpongeMatcher<Double> rotY, SpongeMatcher<Double> rotZ,
             SpongeMatcher<Optional<Entity>> vehicle, SpongeMatcher<Optional<Entity>> passenger,
             SpongeMatcher<Entity> baseVehicle) {
-        SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
-                .addMatcher("type", MatcherType.STRING, type)
-                .addMatcher("location", MatcherType.POSITION_LOCATION, location)
-                .addMatcher("rotX", MatcherType.FLOATING_POINT, rotX)
-                .addMatcher("rotY", MatcherType.FLOATING_POINT, rotY)
-                .addMatcher("rotZ", MatcherType.FLOATING_POINT, rotZ)
-                .addMatcher("vehicle", MatcherType.optional(MatcherType.ENTITY), vehicle)
-                .addMatcher("passenger", MatcherType.optional(MatcherType.ENTITY), passenger)
-                .addMatcher("baseVehicle", MatcherType.ENTITY, baseVehicle)
+        SpongeMatcher<Map<String, Object>> matcher = FixedMapMatcher.builder()
+                .addMatcher("type", type)
+                .addMatcher("location", location)
+                .addMatcher("rotX", rotX)
+                .addMatcher("rotY", rotY)
+                .addMatcher("rotZ", rotZ)
+                .addMatcher("vehicle", vehicle)
+                .addMatcher("passenger", passenger)
+                .addMatcher("baseVehicle", baseVehicle)
                 .build();
 
         return new EntityMatcher(matcher);
@@ -35,7 +35,7 @@ public final class EntityMatcher extends SpongeObjectMatcher<Entity> {
     }
 
     private EntityMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.ENTITY, matcher);
     }
 
     @Override

@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.Dimension;
 
@@ -12,14 +12,14 @@ public final class DimensionMatcher extends SpongeObjectMatcher<Dimension> {
     public static SpongeMatcher<Dimension> create(SpongeMatcher<String> name, SpongeMatcher<String> type,
             SpongeMatcher<Boolean> respawnAllowed, SpongeMatcher<Boolean> waterEvaporating,
             SpongeMatcher<Boolean> sky, SpongeMatcher<Long> height, SpongeMatcher<Long> buildHeight) {
-        SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
-                .addMatcher("name", MatcherType.STRING, name)
-                .addMatcher("type", MatcherType.STRING, type)
-                .addMatcher("respawnAllowed", MatcherType.BOOLEAN, respawnAllowed)
-                .addMatcher("waterEvaporating", MatcherType.BOOLEAN, waterEvaporating)
-                .addMatcher("sky", MatcherType.BOOLEAN, sky)
-                .addMatcher("height", MatcherType.INTEGER, height)
-                .addMatcher("buildHeight", MatcherType.INTEGER, buildHeight)
+        SpongeMatcher<Map<String, Object>> matcher = FixedMapMatcher.builder()
+                .addMatcher("name", name)
+                .addMatcher("type", type)
+                .addMatcher("respawnAllowed", respawnAllowed)
+                .addMatcher("waterEvaporating", waterEvaporating)
+                .addMatcher("sky", sky)
+                .addMatcher("height", height)
+                .addMatcher("buildHeight", buildHeight)
                 .build();
         return new DimensionMatcher(matcher);
     }
@@ -29,7 +29,7 @@ public final class DimensionMatcher extends SpongeObjectMatcher<Dimension> {
     }
 
     private DimensionMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.DIMENSION, matcher);
     }
 
     @Override

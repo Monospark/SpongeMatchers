@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.Dimension;
 import org.spongepowered.api.world.World;
@@ -12,12 +12,11 @@ public final class WorldMatcher extends SpongeObjectMatcher<World> {
 
     public static SpongeMatcher<World> create(SpongeMatcher<String> name, SpongeMatcher<Dimension> dimension,
             SpongeMatcher<Long> seed, SpongeMatcher<Map<String, String>> gameRules) {
-        SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
-                .addMatcher("name", MatcherType.STRING, name)
-                .addMatcher("dimension", MatcherType.DIMENSION, dimension)
-                .addMatcher("seed", MatcherType.INTEGER, seed)
-                .addMatcher("gameRules", MatcherType.variableMap(MatcherType.STRING),
-                        SpongeMatcher.genericWrapper(gameRules))
+        SpongeMatcher<Map<String, Object>> matcher = FixedMapMatcher.builder()
+                .addMatcher("name", name)
+                .addMatcher("dimension", dimension)
+                .addMatcher("seed", seed)
+                .addMatcher("gameRules", gameRules)
                 .build();
         return new WorldMatcher(matcher);
     }
@@ -27,7 +26,7 @@ public final class WorldMatcher extends SpongeObjectMatcher<World> {
     }
 
     private WorldMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.WORLD, matcher);
     }
 
     @Override

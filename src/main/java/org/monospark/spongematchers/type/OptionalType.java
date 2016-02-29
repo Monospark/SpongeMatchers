@@ -37,7 +37,7 @@ public final class OptionalType<T> extends MatcherType<Optional<T>> {
     @Override
     protected SpongeMatcher<Optional<T>> parse(StringElement element) throws SpongeMatcherParseException {
         if (element instanceof LiteralElement && ((LiteralElement) element).getType() == Type.ABSENT) {
-            return OptionalMatcher.matchEmpty();
+            return OptionalMatcher.matchEmpty(type);
         } else {
             return OptionalMatcher.wrapper(type.parseMatcher(element));
         }

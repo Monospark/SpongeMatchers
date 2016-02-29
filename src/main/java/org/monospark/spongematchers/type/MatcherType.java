@@ -61,7 +61,7 @@ public abstract class MatcherType<T> {
 
     public static final MatcherType<BlockSnapshot> BLOCK = new BlockType();
 
-    public static final MatcherType<Entity> ENTITY = new EntityType();
+    public static final MatcherType<Entity> ENTITY = new EntityType<Entity>();
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);
@@ -105,7 +105,7 @@ public abstract class MatcherType<T> {
         } else if (element instanceof LiteralElement) {
             LiteralElement l = (LiteralElement) element;
             if (l.getType() == LiteralElement.Type.WILDCARD) {
-                return SpongeMatcher.wildcard();
+                return SpongeMatcher.wildcard(this);
             }
         }
 

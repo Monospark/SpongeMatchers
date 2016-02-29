@@ -3,16 +3,16 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 
 public final class ItemEnchantmentMatcher extends SpongeObjectMatcher<ItemEnchantment> {
 
     public static SpongeMatcher<ItemEnchantment> create(SpongeMatcher<String> id, SpongeMatcher<Long> level) {
-        return new ItemEnchantmentMatcher(MapMatcher.builder()
-                .addMatcher("id", MatcherType.STRING, id)
-                .addMatcher("level", MatcherType.INTEGER, level)
+        return new ItemEnchantmentMatcher(FixedMapMatcher.builder()
+                .addMatcher("id", id)
+                .addMatcher("level", level)
                 .build());
     }
 
@@ -21,7 +21,7 @@ public final class ItemEnchantmentMatcher extends SpongeObjectMatcher<ItemEnchan
     }
 
     private ItemEnchantmentMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.ITEM_ENCHANTMENT, matcher);
     }
 
     @Override

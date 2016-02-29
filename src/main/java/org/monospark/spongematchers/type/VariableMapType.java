@@ -5,10 +5,11 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.VariableMapMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.MapElement;
 import org.monospark.spongematchers.parser.element.StringElement;
+import org.monospark.spongematchers.util.GenericsHelper;
 
 public final class VariableMapType extends MatcherType<Map<String, Object>> {
 
@@ -30,11 +31,12 @@ public final class VariableMapType extends MatcherType<Map<String, Object>> {
                 return false;
             }
 
-            Object value = entry.getValue();
-            if (type.canMatch(value)) {
+            Optional<?> value = Optional.of(entry.getValue());
+            if (MatcherType.optional(type).canMatch(value)) {
                 continue out;
+            } else {
+                return false;
             }
-            return false;
         }
 
         return true;
@@ -52,11 +54,12 @@ public final class VariableMapType extends MatcherType<Map<String, Object>> {
         }
 
         MapElement mapElement = (MapElement) element;
-        MapMatcher.Builder builder = MapMatcher.builder();
+        VariableMapMatcher.Builder builder = VariableMapMatcher.builder();
         for (Entry<String, StringElement> entry : mapElement.getElements().entrySet()) {
             try {
                 if (MatcherType.optional(type).canParseMatcher(entry.getValue())) {
-                    addMatcher(entry.getKey(), type, builder, entry.getValue());
+                    builder.addMatcher(entry.getKey(),
+                            GenericsHelper.genericWrapper(MatcherType.optional(type).parseMatcher(entry.getValue())));
                 } else {
                     throw new SpongeMatcherParseException("Invalid matcher for key \"" + entry.getKey() + "\": "
                             + entry.getValue().getString());
@@ -65,12 +68,6 @@ public final class VariableMapType extends MatcherType<Map<String, Object>> {
                 throw new SpongeMatcherParseException("Couldn't parse map matcher: " + element.getString(), e);
             }
         }
-        return builder.build();
-    }
-
-    private <T> void addMatcher(String name, MatcherType<T> type, MapMatcher.Builder builder, StringElement element)
-            throws SpongeMatcherParseException {
-        SpongeMatcher<Optional<T>> matcher = MatcherType.optional(type).parseMatcher(element);
-        builder.addOptionalMatcher(name, type, matcher);
+        return builder.build(type);
     }
 }

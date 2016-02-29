@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
@@ -19,14 +19,10 @@ public final class BlockStateMatcher extends SpongeObjectMatcher<BlockState> {
 
     public static SpongeMatcher<BlockState> create(SpongeMatcher<BlockType> type,
             SpongeMatcher<Map<String, Object>> traits, SpongeMatcher<Optional<DataView>> data) {
-        return new BlockStateMatcher(MapMatcher.builder()
-                .addMatcher("type", MatcherType.BLOCK_TYPE, type)
-                .addMatcher("traits", MatcherType.variableMap(MatcherType.multi()
-                        .addType(MatcherType.BOOLEAN)
-                        .addType(MatcherType.INTEGER)
-                        .addType(MatcherType.STRING)
-                        .build()), traits)
-                .addOptionalMatcher("data", MatcherType.DATA_VIEW, data)
+        return new BlockStateMatcher(FixedMapMatcher.builder()
+                .addMatcher("type", type)
+                .addMatcher("traits", traits)
+                .addMatcher("data", data)
                 .build());
     }
 
@@ -35,7 +31,7 @@ public final class BlockStateMatcher extends SpongeObjectMatcher<BlockState> {
     }
 
     private BlockStateMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.BLOCK_STATE, matcher);
     }
 
     @Override

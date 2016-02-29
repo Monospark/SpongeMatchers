@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.Property;
 import org.spongepowered.api.data.property.PropertyHolder;
@@ -15,7 +15,7 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
     }
 
     private PropertyHolderMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.PROPERTY_HOLDER, matcher);
     }
 
     @Override
@@ -49,29 +49,29 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
 
     public static final class Builder {
 
-        private MapMatcher.Builder builder;
+        private FixedMapMatcher.Builder builder;
 
         private Builder() {
-            builder = MapMatcher.builder();
+            builder = FixedMapMatcher.builder();
         }
 
         public Builder addBooleanProperty(String name, SpongeMatcher<Boolean> matcher) {
-            builder.addMatcher(name, MatcherType.BOOLEAN, matcher);
+            builder.addMatcher(name, matcher);
             return this;
         }
 
         public Builder addIntegerProperty(String name, SpongeMatcher<Long> matcher) {
-            builder.addMatcher(name, MatcherType.INTEGER, matcher);
+            builder.addMatcher(name, matcher);
             return this;
         }
 
         public Builder addFloatingPointProperty(String name, SpongeMatcher<Double> matcher) {
-            builder.addMatcher(name, MatcherType.FLOATING_POINT, matcher);
+            builder.addMatcher(name, matcher);
             return this;
         }
 
         public <T> Builder addAbstractProperty(String name, MatcherType<T> type, SpongeMatcher<T> matcher) {
-            builder.addMatcher(name, type, matcher);
+            builder.addMatcher(name, matcher);
             return this;
         }
 

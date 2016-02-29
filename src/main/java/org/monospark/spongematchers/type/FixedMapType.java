@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.MapElement;
 import org.monospark.spongematchers.parser.element.StringElement;
@@ -60,26 +60,19 @@ public final class FixedMapType extends MatcherType<Map<String, Object>> {
                     + " contains an unknown key: " + key);
         }
 
-        MapMatcher.Builder builder = MapMatcher.builder();
+        FixedMapMatcher.Builder builder = FixedMapMatcher.builder();
         for (Entry<String, MatcherType<?>> entry : entries.entrySet()) {
-            addMapEntry(map, builder, entry.getKey(), entry.getValue());
+            Optional<StringElement> value = map.getElement(entry.getKey());
+            if (value.isPresent()) {
+                try {
+                    builder.addMatcher(entry.getKey(), entry.getValue().parseMatcher(value.get()));
+                } catch (SpongeMatcherParseException e) {
+                    throw new SpongeMatcherParseException("Couldn't parse the value for the key \"" + entry.getKey()
+                            + "\" in the map matcher: " + map.getString(), e);
+                }
+            }
         }
         return builder.build();
-    }
-
-    private <T> void addMapEntry(MapElement mapElement, MapMatcher.Builder builder, String key, MatcherType<T> type)
-            throws SpongeMatcherParseException {
-        Optional<StringElement> value = mapElement.getElement(key);
-        if (value.isPresent()) {
-            try {
-                builder.addMatcher(key, type, type.parseMatcher(value.get()));
-            } catch (SpongeMatcherParseException e) {
-                throw new SpongeMatcherParseException("Couldn't parse the value for the key \"" + key
-                        + "\" in the map matcher: " + mapElement.getString(), e);
-            }
-        } else {
-            builder.addOptionalMatcher(key, type, SpongeMatcher.wildcard());
-        }
     }
 
     public static Builder builder() {

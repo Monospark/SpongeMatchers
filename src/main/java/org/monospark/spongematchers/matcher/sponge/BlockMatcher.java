@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
@@ -14,9 +14,9 @@ public final class BlockMatcher extends SpongeObjectMatcher<BlockSnapshot> {
 
     public static SpongeMatcher<BlockSnapshot> create(SpongeMatcher<BlockState> state,
             SpongeMatcher<Location<World>> location) {
-        SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
-                .addMatcher("state", MatcherType.BLOCK_STATE, state)
-                .addMatcher("location", MatcherType.BLOCK_LOCATION, location)
+        SpongeMatcher<Map<String, Object>> matcher = FixedMapMatcher.builder()
+                .addMatcher("state", state)
+                .addMatcher("location", location)
                 .build();
         return new BlockMatcher(matcher);
     }
@@ -26,7 +26,7 @@ public final class BlockMatcher extends SpongeObjectMatcher<BlockSnapshot> {
     }
 
     private BlockMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.BLOCK, matcher);
     }
 
     @Override

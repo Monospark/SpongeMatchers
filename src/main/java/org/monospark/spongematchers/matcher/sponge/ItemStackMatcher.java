@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
@@ -16,12 +16,12 @@ public final class ItemStackMatcher extends SpongeObjectMatcher<ItemStack> {
     public static SpongeMatcher<ItemStack> create(SpongeMatcher<String> type, SpongeMatcher<Long> damage,
             SpongeMatcher<Long> amount, SpongeMatcher<PropertyHolder> properties,
             SpongeMatcher<Optional<DataView>> data) {
-        return new ItemStackMatcher(MapMatcher.builder()
-                .addMatcher("type", MatcherType.STRING, type)
-                .addMatcher("durability", MatcherType.INTEGER, damage)
-                .addMatcher("quantity", MatcherType.INTEGER, amount)
-                .addMatcher("properties", MatcherType.PROPERTY_HOLDER, properties)
-                .addOptionalMatcher("data", MatcherType.DATA_VIEW, data)
+        return new ItemStackMatcher(FixedMapMatcher.builder()
+                .addMatcher("type", type)
+                .addMatcher("durability", damage)
+                .addMatcher("quantity", amount)
+                .addMatcher("properties", properties)
+                .addMatcher("data", data)
                 .build());
     }
 
@@ -30,7 +30,7 @@ public final class ItemStackMatcher extends SpongeObjectMatcher<ItemStack> {
     }
 
     private ItemStackMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.ITEM_STACK, matcher);
     }
 
     @Override
@@ -61,11 +61,11 @@ public final class ItemStackMatcher extends SpongeObjectMatcher<ItemStack> {
         private SpongeMatcher<Optional<DataView>> dataMatcher;
 
         private Builder() {
-            typeMatcher = SpongeMatcher.wildcard();
-            durabilityMatcher = SpongeMatcher.wildcard();
-            quantityMatcher = SpongeMatcher.wildcard();
-            propertiesMatcher = SpongeMatcher.wildcard();
-            dataMatcher = SpongeMatcher.wildcard();
+            typeMatcher = SpongeMatcher.wildcard(MatcherType.STRING);
+            durabilityMatcher = SpongeMatcher.wildcard(MatcherType.INTEGER);
+            quantityMatcher = SpongeMatcher.wildcard(MatcherType.INTEGER);
+            propertiesMatcher = SpongeMatcher.wildcard(MatcherType.PROPERTY_HOLDER);
+            dataMatcher = SpongeMatcher.wildcard(MatcherType.optional(MatcherType.DATA_VIEW));
         }
 
         public Builder type(SpongeMatcher<String> typeMatcher) {

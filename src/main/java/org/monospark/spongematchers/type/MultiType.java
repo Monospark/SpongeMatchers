@@ -4,7 +4,6 @@ import java.util.Set;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
-import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.StringElement;
 
 import com.google.common.base.Joiner;
@@ -41,13 +40,6 @@ public final class MultiType extends MatcherType<Object> {
     @SuppressWarnings("unchecked")
     @Override
     protected SpongeMatcher<Object> parse(StringElement element) throws SpongeMatcherParseException {
-        if (element instanceof LiteralElement) {
-            LiteralElement l = (LiteralElement) element;
-            if (l.getType() == LiteralElement.Type.WILDCARD) {
-                return SpongeMatcher.wildcard();
-            }
-        }
-
         for (MatcherType<?> type : types) {
             if (type.canParse(element)) {
                 return (SpongeMatcher<Object>) type.parseMatcher(element);

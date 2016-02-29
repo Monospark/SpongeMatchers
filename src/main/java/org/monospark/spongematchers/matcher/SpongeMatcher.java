@@ -2,12 +2,34 @@ package org.monospark.spongematchers.matcher;
 
 import java.util.Set;
 
-public interface SpongeMatcher<T> {
+import org.monospark.spongematchers.type.MatcherType;
 
-    boolean matches(T o);
+public abstract class SpongeMatcher<T> {
 
-    static <T> SpongeMatcher<T> or(Set<SpongeMatcher<T>> matchers) {
-        return new SpongeMatcher<T>() {
+    private MatcherType<T> type;
+
+    protected SpongeMatcher(MatcherType<T> type) {
+        this.type = type;
+    }
+
+    public abstract boolean matches(T o);
+
+    public final MatcherType<T> getType() {
+        return type;
+    }
+
+    public static <T> SpongeMatcher<T> or(Set<SpongeMatcher<T>> matchers) {
+        if (matchers.size() == 0) {
+            throw new IllegalArgumentException("Matcher set must contain at least one matcher");
+        }
+        MatcherType<?> type = matchers.iterator().next().getType();
+        for (SpongeMatcher<?> matcher : matchers) {
+            if (!matcher.getType().equals(type)) {
+                throw new IllegalArgumentException("All matchers in the set must have the same matcher type");
+            }
+        }
+
+        return new SpongeMatcher<T>(matchers.iterator().next().getType()) {
 
             @Override
             public boolean matches(T o) {
@@ -31,8 +53,18 @@ public interface SpongeMatcher<T> {
         };
     }
 
-    static <T> SpongeMatcher<T> and(Set<SpongeMatcher<T>> matchers) {
-        return new SpongeMatcher<T>() {
+    public static <T> SpongeMatcher<T> and(Set<SpongeMatcher<T>> matchers) {
+        if (matchers.size() == 0) {
+            throw new IllegalArgumentException("Matcher set must contain at least one matcher");
+        }
+        MatcherType<?> type = matchers.iterator().next().getType();
+        for (SpongeMatcher<?> matcher : matchers) {
+            if (!matcher.getType().equals(type)) {
+                throw new IllegalArgumentException("All matchers in the set must have the same matcher type");
+            }
+        }
+
+        return new SpongeMatcher<T>(matchers.iterator().next().getType()) {
 
             @Override
             public boolean matches(T o) {
@@ -56,8 +88,8 @@ public interface SpongeMatcher<T> {
         };
     }
 
-    static <T> SpongeMatcher<T> not(SpongeMatcher<T> matcher) {
-        return new SpongeMatcher<T>() {
+    public static <T> SpongeMatcher<T> not(SpongeMatcher<T> matcher) {
+        return new SpongeMatcher<T>(matcher.getType()) {
 
             @Override
             public boolean matches(T o) {
@@ -71,9 +103,8 @@ public interface SpongeMatcher<T> {
         };
     }
 
-    static <T, M extends SpongeMatcher<T>> M wildcard() {
-        @SuppressWarnings("unchecked")
-        M matcher = (M) new SpongeMatcher<T>() {
+    public static <T> SpongeMatcher<T> wildcard(MatcherType<T> type) {
+        return new SpongeMatcher<T>(type) {
 
             @Override
             public boolean matches(T o) {
@@ -83,18 +114,6 @@ public interface SpongeMatcher<T> {
             @Override
             public String toString() {
                 return "*";
-            }
-        };
-        return matcher;
-    }
-
-    static <T, U> SpongeMatcher<T> genericWrapper(SpongeMatcher<U> matcher) {
-        return new SpongeMatcher<T>() {
-
-            @SuppressWarnings("unchecked")
-            @Override
-            public boolean matches(T o) {
-                return matcher.matches((U) o);
             }
         };
     }

@@ -3,21 +3,17 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.property.PropertyHolder;
 
 public final class BlockTypeMatcher extends SpongeObjectMatcher<BlockType> {
 
-    public static SpongeMatcher<BlockType> id(SpongeMatcher<String> id) {
-        return create(id, SpongeMatcher.wildcard());
-    }
-
     public static SpongeMatcher<BlockType> create(SpongeMatcher<String> id, SpongeMatcher<PropertyHolder> properties) {
-        return new BlockTypeMatcher(MapMatcher.builder()
-                .addMatcher("id", MatcherType.STRING, id)
-                .addMatcher("properties", MatcherType.PROPERTY_HOLDER, properties)
+        return new BlockTypeMatcher(FixedMapMatcher.builder()
+                .addMatcher("id", id)
+                .addMatcher("properties", properties)
                 .build());
     }
 
@@ -26,7 +22,7 @@ public final class BlockTypeMatcher extends SpongeObjectMatcher<BlockType> {
     }
 
     private BlockTypeMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.BLOCK_TYPE, matcher);
     }
 
     @Override

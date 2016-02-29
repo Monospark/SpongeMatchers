@@ -3,13 +3,14 @@ package org.monospark.spongematchers.matcher.base;
 import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
+import org.monospark.spongematchers.type.MatcherType;
 
 public final class StringMatcher {
 
     private StringMatcher() {}
 
     public static SpongeMatcher<String> literal(String literal) {
-        return new SpongeMatcher<String>() {
+        return new SpongeMatcher<String>(MatcherType.STRING) {
 
             @Override
             public boolean matches(String o) {
@@ -25,7 +26,7 @@ public final class StringMatcher {
 
     public static SpongeMatcher<String> regex(String regex) {
         Pattern pattern = Pattern.compile(regex);
-        return new SpongeMatcher<String>() {
+        return new SpongeMatcher<String>(MatcherType.STRING) {
 
             @Override
             public boolean matches(String o) {

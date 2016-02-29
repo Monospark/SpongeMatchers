@@ -3,24 +3,23 @@ package org.monospark.spongematchers.matcher.complex;
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 
-public final class MultiMatcher implements SpongeMatcher<Object> {
+public final class MultiMatcher extends SpongeMatcher<Object> {
 
     public static SpongeMatcher<Object> create(MatcherType<?> type, SpongeMatcher<?> matcher) {
         return new MultiMatcher(type, matcher);
     }
 
-    private MatcherType<?> type;
-
     private SpongeMatcher<?> matcher;
 
+    @SuppressWarnings("unchecked")
     private MultiMatcher(MatcherType<?> type, SpongeMatcher<?> matcher) {
-        this.type = type;
+        super((MatcherType<Object>) type);
         this.matcher = matcher;
     }
 
     @Override
     public boolean matches(Object o) {
-        if (type.canMatch(o)) {
+        if (getType().canMatch(o)) {
             return matchesObject(o, matcher);
         } else {
             return false;

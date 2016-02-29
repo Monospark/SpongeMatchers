@@ -3,7 +3,7 @@ package org.monospark.spongematchers.matcher.sponge;
 import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
-import org.monospark.spongematchers.matcher.complex.MapMatcher;
+import org.monospark.spongematchers.matcher.complex.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
@@ -12,11 +12,11 @@ public final class PositionLocationMatcher extends SpongeObjectMatcher<Location<
 
     public static SpongeMatcher<Location<World>> create(SpongeMatcher<Double> x, SpongeMatcher<Double> y,
             SpongeMatcher<Double> z, SpongeMatcher<World> world) {
-        SpongeMatcher<Map<String, Object>> matcher = MapMatcher.builder()
-                .addMatcher("x", MatcherType.FLOATING_POINT, x)
-                .addMatcher("y", MatcherType.FLOATING_POINT, y)
-                .addMatcher("z", MatcherType.FLOATING_POINT, z)
-                .addMatcher("world", MatcherType.WORLD, world)
+        SpongeMatcher<Map<String, Object>> matcher = FixedMapMatcher.builder()
+                .addMatcher("x", x)
+                .addMatcher("y", y)
+                .addMatcher("z", z)
+                .addMatcher("world", world)
                 .build();
         return new PositionLocationMatcher(matcher);
     }
@@ -26,7 +26,7 @@ public final class PositionLocationMatcher extends SpongeObjectMatcher<Location<
     }
 
     private PositionLocationMatcher(SpongeMatcher<Map<String, Object>> matcher) {
-        super(matcher);
+        super(MatcherType.POSITION_LOCATION, matcher);
     }
 
     @Override

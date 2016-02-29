@@ -75,7 +75,7 @@ public final class ListType<T> extends MatcherType<List<T>> {
         } else if (element instanceof LiteralElement) {
             LiteralElement literal = (LiteralElement) element;
             if (literal.getType() == LiteralElement.Type.NONE) {
-                return ListMatcher.none();
+                return ListMatcher.none(type);
             }
         }
         throw new SpongeMatcherParseException("Invalid list matcher: " + element.getString());
