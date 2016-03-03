@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.advanced;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -12,6 +12,7 @@ import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
 import org.monospark.spongematchers.testutil.ExceptionChecker;
+import org.monospark.spongematchers.type.MatcherType;
 
 public class OptionalTypeTest {
 
@@ -48,21 +49,21 @@ public class OptionalTypeTest {
     public void canParse_ElementOfDifferentType_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("true");
 
-        assertThat(MatcherType.optional(MatcherType.INTEGER).canParse(element), is(false));
+        assertThat(MatcherType.optional(MatcherType.INTEGER).canParseMatcher(element), is(false));
     }
 
     @Test
     public void canParse_ElementOfSameType_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("1");
 
-        assertThat(MatcherType.optional(MatcherType.INTEGER).canParse(element), is(true));
+        assertThat(MatcherType.optional(MatcherType.INTEGER).canParseMatcher(element), is(true));
     }
 
     @Test
     public void canParse_AbsentElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        assertThat(MatcherType.optional(MatcherType.INTEGER).canParse(element), is(true));
+        assertThat(MatcherType.optional(MatcherType.INTEGER).canParseMatcher(element), is(true));
     }
 
 

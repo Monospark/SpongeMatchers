@@ -13,6 +13,7 @@ import org.monospark.spongematchers.parser.element.ConnectedElement.Operator;
 import org.monospark.spongematchers.parser.element.LiteralElement;
 import org.monospark.spongematchers.parser.element.PatternElement;
 import org.monospark.spongematchers.parser.element.PatternElement.Type;
+import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.type.advanced.FixedMapType;
 import org.monospark.spongematchers.type.advanced.ListType;
 import org.monospark.spongematchers.type.advanced.MultiType;
@@ -29,16 +30,20 @@ import org.monospark.spongematchers.type.sponge.DimensionType;
 import org.monospark.spongematchers.type.sponge.EntityType;
 import org.monospark.spongematchers.type.sponge.ItemEnchantmentType;
 import org.monospark.spongematchers.type.sponge.ItemStackType;
+import org.monospark.spongematchers.type.sponge.LivingType;
+import org.monospark.spongematchers.type.sponge.PlayerType;
 import org.monospark.spongematchers.type.sponge.PositionLocationType;
 import org.monospark.spongematchers.type.sponge.PropertyHolderType;
 import org.monospark.spongematchers.type.sponge.WorldType;
-import org.monospark.spongematchers.parser.element.StringElement;
+import org.monospark.spongematchers.util.GenericsHelper;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.meta.ItemEnchantment;
 import org.spongepowered.api.data.property.PropertyHolder;
 import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.entity.living.Living;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.world.Dimension;
 import org.spongepowered.api.world.Location;
@@ -56,21 +61,21 @@ public abstract class MatcherType<T> {
 
     public static final MatcherType<String> STRING = new BaseType<>(BaseMatcherParser.STRING);
 
+
     public static final MatcherType<DataView> DATA_VIEW = new DataViewType();
 
     public static final MatcherType<PropertyHolder> PROPERTY_HOLDER = new PropertyHolderType();
+
 
     public static final MatcherType<ItemStack> ITEM_STACK = new ItemStackType();
 
     public static final MatcherType<ItemEnchantment> ITEM_ENCHANTMENT = new ItemEnchantmentType();
 
-    public static final MatcherType<org.spongepowered.api.block.BlockType> BLOCK_TYPE = new BlockTypeType();
-
-    public static final MatcherType<BlockState> BLOCK_STATE = new BlockStateType();
 
     public static final MatcherType<Dimension> DIMENSION = new DimensionType();
 
     public static final MatcherType<World> WORLD = new WorldType();
+
 
     public static final MatcherType<Location<World>> BIOME_LOCATION = new BiomeLocationType();
 
@@ -78,9 +83,30 @@ public abstract class MatcherType<T> {
 
     public static final MatcherType<Location<World>> POSITION_LOCATION = new PositionLocationType();
 
+
+    public static final MatcherType<org.spongepowered.api.block.BlockType> BLOCK_TYPE = new BlockTypeType();
+
+    public static final MatcherType<BlockState> BLOCK_STATE = new BlockStateType();
+
     public static final MatcherType<BlockSnapshot> BLOCK = new BlockType();
 
+
     public static final MatcherType<Entity> ENTITY = new EntityType<Entity>();
+
+    public static final MatcherType<Living> LIVING = new LivingType<Living>();
+
+    public static final MatcherType<Player> PLAYER = new PlayerType();
+
+    public static final MatcherType<Entity> ANY_ENTITY = GenericsHelper.genericWrapper(multi()
+            .addType(ENTITY)
+            .addType(LIVING)
+            .addType(PLAYER)
+            .build());
+
+    public static final MatcherType<Entity> ANY_LIVING = GenericsHelper.genericWrapper(multi()
+            .addType(LIVING)
+            .addType(PLAYER)
+            .build());
 
     public static <T> MatcherType<List<T>> list(MatcherType<T> type) {
         return new ListType<T>(type);

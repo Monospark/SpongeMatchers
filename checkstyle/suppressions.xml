@@ -4,6 +4,7 @@
 <suppressions>
     <!-- Suppress JavaDocs only temporarily -->
     <suppress checks="Javadoc.+" files="src[\\/]main[\\/]java"/>
+    <suppress checks="DesignForExtension" files="(Entity|Living)Matcher|LivingType"/>
     <suppress checks="MethodName|Javadoc.+|DesignForExtension|MagicNumber|ParameterNumber|HideUtilityClassConstructor" files="src[\\/]test[\\/]java"/>
 </suppressions>
 

@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -9,6 +9,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.MemoryDataContainer;

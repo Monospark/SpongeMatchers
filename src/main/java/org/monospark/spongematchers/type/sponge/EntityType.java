@@ -14,7 +14,7 @@ public class EntityType<T extends Entity> extends SpongeObjectType<T> {
 
     @SuppressWarnings("unchecked")
     public EntityType() {
-        super("entity", Entity.class, m -> (SpongeMatcher<T>) EntityMatcher.create(m));
+        super("entity", Entity.class, m -> (SpongeMatcher<T>) EntityMatcher.createEntityMatcher(m));
     }
 
     EntityType(String name, Class<?> typeClass, Function<SpongeMatcher<Map<String, Object>>,

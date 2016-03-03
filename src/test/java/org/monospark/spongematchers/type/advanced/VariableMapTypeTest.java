@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.advanced;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -12,6 +12,7 @@ import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
 import org.monospark.spongematchers.testutil.ExceptionChecker;
+import org.monospark.spongematchers.type.MatcherType;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -50,14 +51,14 @@ public class VariableMapTypeTest {
     public void canParse_NonMapElement_ReturnsFalse() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("absent");
 
-        assertThat(MatcherType.variableMap(MatcherType.BOOLEAN).canParse(element), is(false));
+        assertThat(MatcherType.variableMap(MatcherType.BOOLEAN).canParseMatcher(element), is(false));
     }
 
     @Test
     public void canParse_ValidMapElement_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("{'test':true}");
 
-        assertThat(MatcherType.variableMap(MatcherType.BOOLEAN).canParse(element), is(true));
+        assertThat(MatcherType.variableMap(MatcherType.BOOLEAN).canParseMatcher(element), is(true));
     }
 
 

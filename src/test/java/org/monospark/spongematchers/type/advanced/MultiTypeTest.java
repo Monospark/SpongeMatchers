@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.advanced;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -10,6 +10,7 @@ import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
 import org.monospark.spongematchers.testutil.ExceptionChecker;
+import org.monospark.spongematchers.type.MatcherType;
 
 public class MultiTypeTest {
 
@@ -49,7 +50,7 @@ public class MultiTypeTest {
                 .addType(MatcherType.BOOLEAN)
                 .addType(MatcherType.INTEGER)
                 .build()
-                .canParse(element);
+                .canParseMatcher(element);
 
         assertThat(canParse, is(false));
     }
@@ -63,7 +64,7 @@ public class MultiTypeTest {
                 .addType(MatcherType.INTEGER)
                 .addType(MatcherType.STRING)
                 .build()
-                .canParse(element);
+                .canParseMatcher(element);
 
         assertThat(canParse, is(true));
     }
@@ -79,7 +80,7 @@ public class MultiTypeTest {
                         .addType(MatcherType.BOOLEAN)
                         .addType(MatcherType.INTEGER)
                         .build()
-                        .parse(element));
+                        .parseMatcher(element));
     }
 
     @Test
@@ -90,7 +91,7 @@ public class MultiTypeTest {
                 .addType(MatcherType.BOOLEAN)
                 .addType(MatcherType.INTEGER)
                 .build()
-                .parse(element);
+                .parseMatcher(element);
 
         assertThat(matcher, matches(true));
     }

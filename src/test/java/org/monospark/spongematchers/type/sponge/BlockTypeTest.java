@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -13,7 +13,9 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockSnapshot;
+import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -46,7 +48,8 @@ public class BlockTypeTest {
         SpongeMatcher<BlockSnapshot> matcher = MatcherType.BLOCK.parseMatcher(element);
 
         BlockSnapshot snapshot = mock(BlockSnapshot.class);
-        when(snapshot.getExtendedState()).thenReturn(BlockStateTypeTest.TEST_BLOCK_STATE);
+        BlockState state = BlockStateTypeTest.TEST_BLOCK_STATE;
+        when(snapshot.getExtendedState()).thenReturn(state);
         Location<World> location = BlockLocationTypeTest.TEST_BLOCK_LOCATION;
         when(snapshot.getLocation()).thenReturn(Optional.of(location));
 

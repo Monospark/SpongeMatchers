@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -13,6 +13,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.trait.BlockTrait;
@@ -50,10 +51,10 @@ public class BlockStateTypeTest {
         BlockState state = mock(BlockState.class);
         when(state.getType()).thenReturn(type);
         BlockTrait<Integer> trait1 = mock(BlockTrait.class);
-        when(trait1.getId()).thenReturn("trait1");
+        when(trait1.getName()).thenReturn("trait1");
         when(trait1.getValueClass()).thenReturn(Integer.class);
         BlockTrait<Boolean> trait2 = mock(BlockTrait.class);
-        when(trait2.getId()).thenReturn("trait2");
+        when(trait2.getName()).thenReturn("trait2");
         when(trait2.getValueClass()).thenReturn(Boolean.class);
         Map traits = Maps.newHashMap();
         traits.put(trait1, 1);

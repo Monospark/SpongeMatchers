@@ -46,7 +46,7 @@ public final class BlockStateMatcher extends SpongeObjectMatcher<BlockState> {
     private Map<String, Object> createTraits(BlockState state) {
         Map<String, Object> map = Maps.newHashMap();
         for (Entry<BlockTrait<?>, ?> entry : state.getTraitMap().entrySet()) {
-            map.put(entry.getKey().getId(), makeMatchable(entry.getKey(), entry.getValue()));
+            map.put(entry.getKey().getName(), makeMatchable(entry.getKey(), entry.getValue()));
         }
         return map;
     }

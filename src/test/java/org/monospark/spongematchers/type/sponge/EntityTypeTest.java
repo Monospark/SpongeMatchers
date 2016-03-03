@@ -1,4 +1,4 @@
-package org.monospark.spongematchers.type;
+package org.monospark.spongematchers.type.sponge;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -13,6 +13,7 @@ import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
+import org.monospark.spongematchers.type.MatcherType;
 import org.spongepowered.api.entity.Entity;
 
 import com.flowpowered.math.vector.Vector3d;
