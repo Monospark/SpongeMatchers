@@ -60,9 +60,9 @@ public class PlayerTypeTest {
                 + " 'type': 'entity'"
                 + ",'location':" + PositionLocationTypeTest.TEST_POSITION_LOCATION_MATCHER
                 + ",'name': 'Test'"
-//                + ",'uuid': '" + uuid + "'"
-//                + ",'permissions': {'permission1': true, 'permission2': false, 'permission3': absent}"
-//                + ",'gamemode': 'survival'"
+                + ",'uuid': '" + uuid + "'"
+                + ",'permissions': {'permission1': true, 'permission2': false, 'permission3': absent}"
+                + ",'gamemode': 'survival'"
                 + ",'helmet':" + ItemStackTypeTest.TEST_ITEM_STACK_MATCHER
                 + ",'chestplate':" + ItemStackTypeTest.TEST_ITEM_STACK_MATCHER
                 + ",'leggings':" + ItemStackTypeTest.TEST_ITEM_STACK_MATCHER

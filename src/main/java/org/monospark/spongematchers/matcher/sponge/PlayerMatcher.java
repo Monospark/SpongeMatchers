@@ -26,7 +26,7 @@ public final class PlayerMatcher extends LivingMatcher<Player> {
         map.put("name", o.getName());
         map.put("uuid", o.getUniqueId().toString());
         map.put("permissions", getPlayerPermissions(o));
-        map.put("gamemode", o.gameMode().get().toString().toLowerCase());
+        map.put("gamemode", o.gameMode().get().getId().toLowerCase());
         map.put("helmet", o.getHelmet());
         map.put("chestplate", o.getChestplate());
         map.put("leggings", o.getLeggings());
