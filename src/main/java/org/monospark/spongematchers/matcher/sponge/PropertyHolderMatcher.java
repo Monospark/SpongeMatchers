@@ -1,14 +1,23 @@
 package org.monospark.spongematchers.matcher.sponge;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.matcher.advanced.FixedMapMatcher;
 import org.monospark.spongematchers.type.MatcherType;
+import org.monospark.spongematchers.util.PatternBuilder;
 import org.spongepowered.api.data.Property;
 import org.spongepowered.api.data.property.PropertyHolder;
 
 public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHolder> {
+
+    private static final Pattern PROPERTY_NAME_PATTERN = new PatternBuilder()
+            .appendCapturingPart(".", "firstChar")
+            .appendCapturingPart(".+?", "rest")
+            .appendNonCapturingPart("Property")
+            .build();
 
     public static SpongeMatcher<PropertyHolder> create(SpongeMatcher<Map<String, Object>> matcher) {
         return new PropertyHolderMatcher(matcher);
@@ -21,8 +30,14 @@ public final class PropertyHolderMatcher extends SpongeObjectMatcher<PropertyHol
     @Override
     protected void fillMap(PropertyHolder o, Map<String, Object> map) {
         for (Property<?, ?> property : o.getApplicableProperties()) {
-            map.put(property.getKey().toString(), makeMatchable(property.getValue()));
+            map.put(convertPropertyName(property.getKey().toString()), makeMatchable(property.getValue()));
         }
+    }
+
+    private String convertPropertyName(String name) {
+        Matcher matcher = PROPERTY_NAME_PATTERN.matcher(name);
+        matcher.matches();
+        return matcher.group("firstChar").toLowerCase() + matcher.group("rest");
     }
 
     private Object makeMatchable(Object o) {

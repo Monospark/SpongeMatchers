@@ -44,10 +44,10 @@ public class BlockTypeTypeTest {
         BlockType type = mock(BlockType.class);
         when(type.getId()).thenReturn("minecraft:apple");
         Property<String, Integer> p1 = mock(Property.class);
-        when(p1.getKey()).thenReturn("test1");
+        when(p1.getKey()).thenReturn("Test1Property");
         when(p1.getValue()).thenReturn(1);
         Property<String, Boolean> p2 = mock(Property.class);
-        when(p2.getKey()).thenReturn("test2");
+        when(p2.getKey()).thenReturn("Test2Property");
         when(p2.getValue()).thenReturn(false);
         when(type.getApplicableProperties()).thenReturn(ImmutableSet.of(p1, p2));
         return type;

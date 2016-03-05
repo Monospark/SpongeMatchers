@@ -51,7 +51,7 @@ public class ItemStackTypeTest {
         when(stack.getItem()).thenReturn(type);
         when(stack.getQuantity()).thenReturn(1);
         Property<String, Boolean> p = mock(Property.class);
-        when(p.getKey()).thenReturn("test");
+        when(p.getKey()).thenReturn("TestProperty");
         when(p.getValue()).thenReturn(false);
         when(stack.getApplicableProperties()).thenReturn(ImmutableSet.of(p));
         DataContainer container1 = new MemoryDataContainer();

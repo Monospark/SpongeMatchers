@@ -47,16 +47,16 @@ public class PropertyHolderTest {
         SpongeMatcher<PropertyHolder> matcher = MatcherType.PROPERTY_HOLDER.parseMatcher(element);
 
         Property<String, Boolean> p1 = mock(Property.class);
-        when(p1.getKey()).thenReturn("test1");
+        when(p1.getKey()).thenReturn("Test1Property");
         when(p1.getValue()).thenReturn(false);
         Property<String, Integer> p2 = mock(Property.class);
-        when(p2.getKey()).thenReturn("test2");
+        when(p2.getKey()).thenReturn("Test2Property");
         when(p2.getValue()).thenReturn(1);
         Property<String, Double> p3 = mock(Property.class);
-        when(p3.getKey()).thenReturn("test3");
+        when(p3.getKey()).thenReturn("Test3Property");
         when(p3.getValue()).thenReturn(2.0);
         Property<String, MatterProperty.Matter> p4 = mock(Property.class);
-        when(p4.getKey()).thenReturn("test4");
+        when(p4.getKey()).thenReturn("Test4Property");
         when(p4.getValue()).thenReturn(MatterProperty.Matter.LIQUID);
         PropertyHolder holder = mock(PropertyHolder.class);
         when(holder.getApplicableProperties()).thenReturn(ImmutableSet.of(p1, p2, p3, p4));
