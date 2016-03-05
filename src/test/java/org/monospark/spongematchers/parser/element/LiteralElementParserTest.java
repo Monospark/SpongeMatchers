@@ -30,18 +30,8 @@ public class LiteralElementParserTest {
     }
 
     @Test
-    public void parseElements_NoneLowerCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
-        String input = "none";
-
-        StringElement element = StringElementParser.parseStringElement(input);
-
-        LiteralElement e = (LiteralElement) element;
-        assertThat(e.getType(), is(Type.NONE));
-    }
-
-    @Test
-    public void parseElements_NoneUpperCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
-        String input = "None";
+    public void parseElements_EmptyList_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
+        String input = "[]";
 
         StringElement element = StringElementParser.parseStringElement(input);
 

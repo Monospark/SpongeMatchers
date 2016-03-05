@@ -20,7 +20,7 @@ public final class LiteralElement extends StringElement {
 
         ABSENT(Pattern.compile("(?:A|a)bsent")),
 
-        NONE(Pattern.compile("(?:N|n)one")),
+        NONE(Pattern.compile("\\[\\s*\\]")),
 
         WILDCARD(Pattern.compile("\\*"));
 

@@ -63,8 +63,8 @@ public class ListTypeTest {
     }
 
     @Test
-    public void canParse_NoneLiteral_ReturnsTrue() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("none");
+    public void canParse_EmptyListLiteral_ReturnsTrue() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("[]");
 
         assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(true));
     }
@@ -160,8 +160,8 @@ public class ListTypeTest {
     }
 
     @Test
-    public void parse_NoneElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
-        StringElement element = StringElementParser.parseStringElement("none");
+    public void parse_EmptyListLiteral_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("[]");
 
         SpongeMatcher<List<Boolean>> matcher = MatcherType.list(MatcherType.BOOLEAN).parseMatcher(element);
 
