@@ -9,12 +9,11 @@ import org.spongepowered.api.world.Dimension;
 
 public final class DimensionMatcher extends SpongeObjectMatcher<Dimension> {
 
-    public static SpongeMatcher<Dimension> create(SpongeMatcher<String> name, SpongeMatcher<String> type,
-            SpongeMatcher<Boolean> respawnAllowed, SpongeMatcher<Boolean> waterEvaporating,
-            SpongeMatcher<Boolean> sky, SpongeMatcher<Long> height, SpongeMatcher<Long> buildHeight) {
+    public static SpongeMatcher<Dimension> create(SpongeMatcher<String> name, SpongeMatcher<Boolean> respawnAllowed,
+            SpongeMatcher<Boolean> waterEvaporating, SpongeMatcher<Boolean> sky, SpongeMatcher<Long> height,
+            SpongeMatcher<Long> buildHeight) {
         SpongeMatcher<Map<String, Object>> matcher = FixedMapMatcher.builder()
                 .addMatcher("name", name)
-                .addMatcher("type", type)
                 .addMatcher("respawnAllowed", respawnAllowed)
                 .addMatcher("waterEvaporating", waterEvaporating)
                 .addMatcher("sky", sky)
@@ -34,8 +33,7 @@ public final class DimensionMatcher extends SpongeObjectMatcher<Dimension> {
 
     @Override
     protected void fillMap(Dimension o, Map<String, Object> map) {
-        map.put("name", o.getName());
-        map.put("type", o.getType().getId());
+        map.put("name", o.getType().getId());
         map.put("respawnAllowed", o.allowsPlayerRespawns());
         map.put("waterEvaporating", o.doesWaterEvaporate());
         map.put("sky", o.hasSky());

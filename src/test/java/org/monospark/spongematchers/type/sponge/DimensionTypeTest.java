@@ -38,7 +38,6 @@ public class DimensionTypeTest {
 
     private static Dimension createTestDimension() {
         Dimension dimension = mock(Dimension.class);
-        when(dimension.getName()).thenReturn("dimension");
         org.spongepowered.api.world.DimensionType type = mock(org.spongepowered.api.world.DimensionType.class);
         when(type.getId()).thenReturn("dimensionType");
         when(dimension.getType()).thenReturn(type);
@@ -50,8 +49,8 @@ public class DimensionTypeTest {
         return dimension;
     }
 
-    public static final String TEST_DIMENSION_MATCHER = "{'name': 'dimension', 'type': 'dimensionType',"
-            + "'respawnAllowed': true, 'waterEvaporating': false, 'sky': true, 'height': 200, 'buildHeight': 100}";
+    public static final String TEST_DIMENSION_MATCHER = "{'name': 'dimensionType', 'respawnAllowed': true,"
+            + "'waterEvaporating': false, 'sky': true, 'height': 200, 'buildHeight': 100}";
 
     @Test
     public void parseMatcher_ValidMapElement_ReturnsCorrectSpongeMatcher() throws SpongeMatcherParseException {

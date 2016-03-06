@@ -16,7 +16,6 @@ public final class DimensionType extends SpongeObjectType<Dimension> {
     protected MatcherType<Map<String, Object>> createType() {
         return MatcherType.fixedMap()
                 .addEntry("name", MatcherType.STRING)
-                .addEntry("type", MatcherType.STRING)
                 .addEntry("respawnAllowed", MatcherType.BOOLEAN)
                 .addEntry("waterEvaporating", MatcherType.BOOLEAN)
                 .addEntry("sky", MatcherType.BOOLEAN)
