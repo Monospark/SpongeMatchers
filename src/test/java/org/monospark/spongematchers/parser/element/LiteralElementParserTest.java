@@ -30,6 +30,26 @@ public class LiteralElementParserTest {
     }
 
     @Test
+    public void parseElements_ExistentLowerCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
+        String input = "existent";
+
+        StringElement element = StringElementParser.parseStringElement(input);
+
+        LiteralElement e = (LiteralElement) element;
+        assertThat(e.getType(), is(Type.EXISTENT));
+    }
+
+    @Test
+    public void parseElements_ExistentUpperCase_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
+        String input = "Existent";
+
+        StringElement element = StringElementParser.parseStringElement(input);
+
+        LiteralElement e = (LiteralElement) element;
+        assertThat(e.getType(), is(Type.EXISTENT));
+    }
+
+    @Test
     public void parseElements_EmptyList_ReturnsCorrectStringElement() throws SpongeMatcherParseException {
         String input = "[]";
 

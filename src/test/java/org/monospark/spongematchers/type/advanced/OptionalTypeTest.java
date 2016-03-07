@@ -66,6 +66,13 @@ public class OptionalTypeTest {
         assertThat(MatcherType.optional(MatcherType.INTEGER).canParseMatcher(element), is(true));
     }
 
+    @Test
+    public void canParse_ExistentElement_ReturnsTrue() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("existent");
+
+        assertThat(MatcherType.optional(MatcherType.INTEGER).canParseMatcher(element), is(true));
+    }
+
 
 
     @Test
@@ -92,5 +99,14 @@ public class OptionalTypeTest {
         SpongeMatcher<Optional<Boolean>> matcher = MatcherType.optional(MatcherType.BOOLEAN).parseMatcher(element);
 
         assertThat(matcher, matches(Optional.empty()));
+    }
+
+    @Test
+    public void parse_ExistentElement_ReturnsCorrectMatcher() throws SpongeMatcherParseException {
+        StringElement element = StringElementParser.parseStringElement("existent");
+
+        SpongeMatcher<Optional<Boolean>> matcher = MatcherType.optional(MatcherType.BOOLEAN).parseMatcher(element);
+
+        assertThat(matcher, matches(Optional.of(true)));
     }
 }

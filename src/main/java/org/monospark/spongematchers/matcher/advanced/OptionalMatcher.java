@@ -9,7 +9,22 @@ public final class OptionalMatcher {
 
     private OptionalMatcher() {}
 
-    public static <T> SpongeMatcher<Optional<T>> matchEmpty(MatcherType<T> type) {
+    public static <T> SpongeMatcher<Optional<T>> existent(MatcherType<T> type) {
+        return new SpongeMatcher<Optional<T>>(MatcherType.optional(type)) {
+
+            @Override
+            public boolean matches(Optional<T> o) {
+                return o.isPresent();
+            }
+
+            @Override
+            public String toString() {
+                return "existent";
+            }
+        };
+    }
+
+    public static <T> SpongeMatcher<Optional<T>> absent(MatcherType<T> type) {
         return new SpongeMatcher<Optional<T>>(MatcherType.optional(type)) {
 
             @Override

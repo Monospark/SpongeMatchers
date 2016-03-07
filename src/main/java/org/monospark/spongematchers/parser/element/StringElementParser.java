@@ -25,6 +25,7 @@ public abstract class StringElementParser {
         oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.FLOATING_POINT));
         oneTimeParsers.add(new BaseElementParser<>(BaseMatcherParser.INTEGER));
         oneTimeParsers.add(new LiteralElementParser(LiteralElement.Type.ABSENT));
+        oneTimeParsers.add(new LiteralElementParser(LiteralElement.Type.EXISTENT));
         oneTimeParsers.add(new LiteralElementParser(LiteralElement.Type.NONE));
         oneTimeParsers.add(new LiteralElementParser(LiteralElement.Type.WILDCARD));
         return oneTimeParsers;

@@ -30,17 +30,24 @@ public final class OptionalType<T> extends MatcherType<Optional<T>> {
 
     @Override
     protected boolean canParse(StringElement element) {
-        boolean isAbsentOptional = element instanceof LiteralElement
-                && ((LiteralElement) element).getType() == Type.ABSENT;
-        return !isAbsentOptional ? type.canParseMatcher(element) : true;
+        if (element instanceof LiteralElement) {
+            LiteralElement literal = (LiteralElement) element;
+            return literal.getType() == Type.ABSENT || literal.getType() == Type.EXISTENT;
+        }
+        return type.canParseMatcher(element);
     }
 
     @Override
     protected SpongeMatcher<Optional<T>> parse(StringElement element) throws SpongeMatcherParseException {
-        if (element instanceof LiteralElement && ((LiteralElement) element).getType() == Type.ABSENT) {
-            return OptionalMatcher.matchEmpty(type);
-        } else {
-            return OptionalMatcher.wrapper(type.parseMatcher(element));
+        if (element instanceof LiteralElement) {
+            LiteralElement literal = (LiteralElement) element;
+            if (literal.getType() == Type.ABSENT) {
+                return OptionalMatcher.absent(type);
+            } else if (literal.getType() == Type.EXISTENT) {
+                return OptionalMatcher.existent(type);
+            }
         }
+
+        return OptionalMatcher.wrapper(type.parseMatcher(element));
     }
 }
