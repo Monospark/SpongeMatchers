@@ -73,14 +73,14 @@ public class ListTypeTest {
     public void canParse_ListMatchAnyLiteral_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("matchAny: 1");
 
-        assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(true));
+        assertThat(MatcherType.list(MatcherType.INTEGER).canParseMatcher(element), is(true));
     }
 
     @Test
     public void canParse_ListMatchAnyAll_ReturnsTrue() throws SpongeMatcherParseException {
         StringElement element = StringElementParser.parseStringElement("matchAll: 1");
 
-        assertThat(MatcherType.list(MatcherType.BOOLEAN).canParseMatcher(element), is(true));
+        assertThat(MatcherType.list(MatcherType.INTEGER).canParseMatcher(element), is(true));
     }
 
     @Test

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'org.monospark'
-version = '1.2-SNAPSHOT'
+version = '1.2'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -30,7 +30,7 @@ configurations {
 }
 
 dependencies {
-	compile 'org.spongepowered:spongeapi:4.0.3'
+	compile 'org.spongepowered:spongeapi:5.0.0-20160924.140951-128'
     testCompile 'junit:junit:4.11'
     testCompile 'org.mockito:mockito-core:1.10.19'
     customCheckstyle 'com.puppycrawl.tools:checkstyle:6.13'

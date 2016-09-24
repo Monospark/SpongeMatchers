@@ -59,7 +59,6 @@ public class LivingTypeTest {
         when(living.getLocation()).thenReturn(location);
         when(living.getRotation()).thenReturn(new Vector3d(1.5f, 2f, 1f));
         when(living.getVehicle()).thenReturn(Optional.empty());
-        when(living.getPassenger()).thenReturn(Optional.empty());
         when(living.getBaseVehicle()).thenReturn(living);
         MutableBoundedValue<Double> health = mock(MutableBoundedValue.class);
         when(health.get()).thenReturn(10D);

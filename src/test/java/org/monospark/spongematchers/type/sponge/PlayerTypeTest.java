@@ -16,6 +16,7 @@ import org.monospark.spongematchers.parser.SpongeMatcherParseException;
 import org.monospark.spongematchers.parser.element.StringElement;
 import org.monospark.spongematchers.parser.element.StringElementParser;
 import org.monospark.spongematchers.type.MatcherType;
+import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.data.value.mutable.MutableBoundedValue;
 import org.spongepowered.api.data.value.mutable.Value;
 import org.spongepowered.api.entity.living.player.Player;
@@ -67,7 +68,7 @@ public class PlayerTypeTest {
                 + ",'chestplate':" + ItemStackTypeTest.TEST_ITEM_STACK_MATCHER
                 + ",'leggings':" + ItemStackTypeTest.TEST_ITEM_STACK_MATCHER
                 + ",'boots':" + ItemStackTypeTest.TEST_ITEM_STACK_MATCHER
-                + ",'itemInHand':" + ItemStackTypeTest.TEST_ITEM_STACK_MATCHER
+                + ",'itemInMainHand':" + ItemStackTypeTest.TEST_ITEM_STACK_MATCHER
                 + "}");
 
         SpongeMatcher<Player> matcher = MatcherType.PLAYER.parseMatcher(element);
@@ -80,7 +81,6 @@ public class PlayerTypeTest {
         when(player.getLocation()).thenReturn(location);
         when(player.getRotation()).thenReturn(new Vector3d(1.5f, 2f, 1f));
         when(player.getVehicle()).thenReturn(Optional.empty());
-        when(player.getPassenger()).thenReturn(Optional.empty());
         when(player.getBaseVehicle()).thenReturn(player);
 
         MutableBoundedValue<Double> health = mock(MutableBoundedValue.class);
@@ -113,7 +113,7 @@ public class PlayerTypeTest {
         when(player.getChestplate()).thenReturn(Optional.of(testStack));
         when(player.getLeggings()).thenReturn(Optional.of(testStack));
         when(player.getBoots()).thenReturn(Optional.of(testStack));
-        when(player.getItemInHand()).thenReturn(Optional.of(testStack));
+        when(player.getItemInHand(HandTypes.MAIN_HAND)).thenReturn(Optional.of(testStack));
 
         assertThat(matcher, matches(player));
     }

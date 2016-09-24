@@ -49,7 +49,11 @@ public final class ListType<T> extends MatcherType<List<T>> {
             return true;
         } else if (element instanceof PatternElement) {
             PatternElement pattern = (PatternElement) element;
-            return pattern.getType() == Type.LIST_MATCH_ALL || pattern.getType() == Type.LIST_MATCH_ANY;
+            if (pattern.getType() == Type.LIST_MATCH_ALL || pattern.getType() == Type.LIST_MATCH_ANY) {
+                return type.canParseMatcher(pattern.getElement());
+            } else {
+                return false;
+            }
         } else if (element instanceof LiteralElement) {
             return ((LiteralElement) element).getType() == LiteralElement.Type.NONE;
         } else {

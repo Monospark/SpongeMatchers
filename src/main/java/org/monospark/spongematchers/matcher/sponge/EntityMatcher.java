@@ -46,7 +46,6 @@ public class EntityMatcher<T extends Entity> extends SpongeObjectMatcher<T> {
         map.put("rotY", o.getRotation().getY());
         map.put("rotZ", o.getRotation().getZ());
         map.put("vehicle", o.getVehicle());
-        map.put("passenger", o.getPassenger());
         map.put("baseVehicle", o.getBaseVehicle());
     }
 }

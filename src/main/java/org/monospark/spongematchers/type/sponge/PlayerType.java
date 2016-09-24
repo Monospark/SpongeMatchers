@@ -23,6 +23,7 @@ public final class PlayerType extends LivingType<Player> {
                 .addEntry("chestplate", MatcherType.optional(MatcherType.ITEM_STACK))
                 .addEntry("leggings", MatcherType.optional(MatcherType.ITEM_STACK))
                 .addEntry("boots", MatcherType.optional(MatcherType.ITEM_STACK))
-                .addEntry("itemInHand", MatcherType.optional(MatcherType.ITEM_STACK));
+                .addEntry("itemInMainHand", MatcherType.optional(MatcherType.ITEM_STACK))
+                .addEntry("itemInOffHand", MatcherType.optional(MatcherType.ITEM_STACK));
     }
 }

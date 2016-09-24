@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.monospark.spongematchers.matcher.SpongeMatcher;
 import org.monospark.spongematchers.type.MatcherType;
+import org.spongepowered.api.data.type.HandType;
+import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.service.permission.Subject;
 import org.spongepowered.api.service.permission.SubjectData;
@@ -31,7 +33,8 @@ public final class PlayerMatcher extends LivingMatcher<Player> {
         map.put("chestplate", o.getChestplate());
         map.put("leggings", o.getLeggings());
         map.put("boots", o.getBoots());
-        map.put("itemInHand", o.getItemInHand());
+        map.put("itemInMainHand", o.getItemInHand(HandTypes.MAIN_HAND));
+        map.put("itemInOffHand", o.getItemInHand(HandTypes.OFF_HAND));
     }
 
     private Map<String, Boolean> getPlayerPermissions(Player p) {

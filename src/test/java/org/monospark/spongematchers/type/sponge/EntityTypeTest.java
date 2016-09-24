@@ -52,7 +52,6 @@ public class EntityTypeTest {
         when(entity.getLocation()).thenReturn(PositionLocationTypeTest.TEST_POSITION_LOCATION);
         when(entity.getRotation()).thenReturn(new Vector3d(1.5f, 2f, 1f));
         when(entity.getVehicle()).thenReturn(Optional.of(OTHER_ENTITY));
-        when(entity.getPassenger()).thenReturn(Optional.of(OTHER_ENTITY));
         when(entity.getBaseVehicle()).thenReturn(OTHER_ENTITY);
         return entity;
     }
@@ -65,7 +64,6 @@ public class EntityTypeTest {
         when(entity.getLocation()).thenReturn(PositionLocationTypeTest.TEST_POSITION_LOCATION);
         when(entity.getRotation()).thenReturn(new Vector3d(0.0, 0.0, 0.0));
         when(entity.getVehicle()).thenReturn(Optional.empty());
-        when(entity.getPassenger()).thenReturn(Optional.empty());
         when(entity.getBaseVehicle()).thenReturn(entity);
         return entity;
     }
@@ -74,7 +72,7 @@ public class EntityTypeTest {
 
     public static final String TEST_ENTITY_MATCHER = "{'type': 'entity', 'location':"
             + PositionLocationTypeTest.TEST_POSITION_LOCATION_MATCHER + ",'rotX': >1f, 'rotY': 2f, 'rotZ': !2f,"
-            + "'vehicle': " + OTHER_ENTITY_MATCHER + ", 'passenger': " + OTHER_ENTITY_MATCHER + ", 'baseVehicle': "
+            + "'vehicle': " + OTHER_ENTITY_MATCHER + ", 'baseVehicle': "
             + OTHER_ENTITY_MATCHER + "}";
 
     @Test
